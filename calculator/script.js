@@ -27,30 +27,35 @@ class Calculator{
     }
 
     chooseOperation(operation){
+        this.operation = operation;
         if(this.currentOperand === '') {
-            this.operation = operation;
             return false;
         }
         if(this.previousOperand !== ''){
             this.compute();
         }
-        this.operation = operation;
         this.previousOperand = this.currentOperand;
         this.currentOperand = '';
     }
 
     compute(){
         let computation;
-        const prev = parseFloat(this.previousOperand);
+        let prev = parseFloat(this.previousOperand);
         const current = parseFloat(this.currentOperand);
 
-        if(isNaN(prev) || isNaN(current)) return false;
+        if( (this.operation == '+' || this.operation == '-') &&  isNaN(prev)) {
+            prev = 0;
+        }
+
+        if(this.operation !== '√' && (isNaN(prev) || isNaN(current))) return false;
 
         switch(this.operation){
             case '+': computation = prev + current; break;
             case '-': computation = prev - current; break;
             case '÷': computation = prev / current; break;
             case '*': computation = prev * current; break;
+            case '^': computation = prev ** current; break;
+            case '√': computation = Math.sqrt(prev || current); break;
             default: return false;
         }
         this.currentOperand = computation;
@@ -80,7 +85,7 @@ class Calculator{
             integerDisplay = integerDigits.toLocaleString('ru', {maximumFractionDigits: 0});
         }
 
-        if (decimalDigits !== null){
+        if (decimalDigits != null){
             return `${integerDisplay}.${decimalDigits}`;
         } else {
             return `${integerDisplay}`;
