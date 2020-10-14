@@ -4,6 +4,7 @@ class Calculator{
         this.currentOperandTextElement = currentOperandTextElement;
         this.readyToReset = false;
         this.clear();
+        this.showMantissa = true;
     }
 
     clear(){
@@ -21,7 +22,10 @@ class Calculator{
     }
 
     appendNumber(number){
-        if(number === '.' && this.currentOperand.includes('.')){
+        if (number === '.' && this.currentOperand.length == 0){
+            this.currentOperand = '0.';
+        }
+        if (number === '.' && this.currentOperand.includes('.')){
             return false;
         }
         this.currentOperand = this.currentOperand.toString() + number.toString();
@@ -45,6 +49,7 @@ class Calculator{
     }
 
     compute(){
+        this.showMantissa = !this.showMantissa;
         let computation;
         let prev = parseFloat(this.previousOperand);
         const current = parseFloat(this.currentOperand);
@@ -67,6 +72,10 @@ class Calculator{
     }
 
     updateDisplay(){
+        if (isNaN(this.currentOperand)){
+            this.showError();
+            return;
+        }
         this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
         if(this.operation != null){
             this.previousOperandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
@@ -75,12 +84,20 @@ class Calculator{
         }
     }
 
+    showError(){
+        this.previousOperand = '';
+        this.previousOperandTextElement.innerText = '';
+        this.currentOperandTextElement.innerText = 'You broke it';
+    }
+
     getDisplayNumber(number){
-        const stringNumber = number.toString();
+        const stringNumber = this.showMantissa ? number.toString() : this.toFixed(number) ;
         const digitsArray = stringNumber.split('.');
         const integerDigits = parseFloat(digitsArray[0]);
         const decimalDigits = digitsArray[1];
         let integerDisplay;
+
+        this.showMantissa = !this.showMantissa ? !this.showMantissa : this.showMantissa;
 
         if (isNaN(integerDigits)){
             integerDisplay = '';
@@ -94,6 +111,18 @@ class Calculator{
             return `${integerDisplay}`;
         }
     }
+
+    negative(){
+        if (!this.currentOperand) return false;
+        this.currentOperand = this.currentOperand < 0
+                            ? Math.abs(this.currentOperand)
+                            : this.currentOperand - 2 * this.currentOperand;
+    }
+
+    toFixed(value){
+        const power = 10 ** 14;
+        return String(Math.round(value * power) / power);
+    }
 }
 
 const numberButtons = document.querySelectorAll('[data-number');
@@ -101,6 +130,7 @@ const operationButtons = document.querySelectorAll('[data-operation');
 const equalsButton = document.querySelector('[data-equals');
 const deleteButton = document.querySelector('[data-delete');
 const allClearButton = document.querySelector('[data-all-clear');
+const negativeButton = document.querySelector('[data-negative');
 const previousOperandTextElement = document.querySelector('[data-previous-operand');
 const currentOperandTextElement = document.querySelector('[data-current-operand');
 
@@ -108,7 +138,7 @@ const calculator = new Calculator(previousOperandTextElement, currentOperandText
 
 const addNUmber = (number) => {
     if (
-        calculator.previousOperand === '' 
+        calculator.previousOperand === ''
         && calculator.currentOperand !== ""
         && calculator.readyToReset
     ){
@@ -124,6 +154,14 @@ const addOperation = (operation) => {
 };
 const compute = () => {
     calculator.compute();
+    calculator.updateDisplay();
+};
+const deleteOperation = () => {
+    calculator.delete();
+    calculator.updateDisplay();
+};
+const clearAll = () => {
+    calculator.clear();
     calculator.updateDisplay();
 }
 
@@ -144,21 +182,30 @@ equalsButton.addEventListener('click', () => {
 });
 
 allClearButton.addEventListener('click', () => {
-    calculator.clear();
-    calculator.updateDisplay();
+    clearAll();
 });
 
 deleteButton.addEventListener('click', () => {
-    calculator.delete();
+    deleteOperation();
+});
+
+negativeButton.addEventListener('click', () => {
+    calculator.negative();
     calculator.updateDisplay();
 });
 
-document.addEventListener('keypress', event => {
+document.addEventListener('keydown', event => {
     const key = event.key.toString().toLowerCase();
     const digit = /\d{1}/;
     const operation = /[/,*,-,+]{1}/;
     if(key === 'enter'){
         compute();
+    }
+    if(key === 'delete' || key === 'backspace'){
+        deleteOperation();
+    }
+    if(key === 'escape'){
+        clearAll();
     }
     if(key.match(digit) !== null){
         addNUmber(key);
