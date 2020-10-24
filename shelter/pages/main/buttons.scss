@@ -1,0 +1,56 @@
+@mixin round-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    outline: none;
+    border:none;
+    &:hover{
+        transition-duration: 0.3s;
+        border: none;
+        cursor:pointer;
+        background-color: $color-primary-light;
+    }
+
+}
+@mixin round-button-primary{
+    @include round-button;
+    box-shadow: 0 0 0 3px $color-primary;
+    background-color: transparent;
+}
+@mixin round-button-inactive{
+    @include round-button;
+    box-shadow: 0 0 0 2px $color-dark-s;
+    background-color: $color-primary-light;
+}
+
+@mixin button{
+    border-radius: 10rem;
+    box-sizing: border-box;
+    padding: 1.5rem 4.5rem;
+    @include font-secondary-button;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+@mixin button_secondary{
+    @include button;
+    background-color: transparent;
+    box-shadow: 0 0 0 2px $color-primary;
+    &:hover{
+        transition-duration: 0.3s;
+        @include button_hover;
+        border-color: $color-primary-light;
+    }
+}
+@mixin button_primary{
+    @include button;
+    background-color: $color-primary;
+    &:hover{
+        transition-duration: 0.3s;
+        @include button_hover;
+    }
+}
+@mixin button_hover{
+    background-color: $color-primary-light;
+}
