@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="./assets/css/owfont-regular.css">
+  <link rel="stylesheet" href="./style.css">
+  <title>Добро пожаловать </title>
+</head>
+<body>
+  <div class="buttons">
+    <button type="button" id="next-image" class="btn">
+      <img src="./assets/play-button.svg" alt="Next image">
+    </button>
+    <button type="button" id="next-quote" class="btn">"</button>
+  </div>
+  <div class="container">
+    <main class="card">
+      <time id="time"></time>
+      <strong id="date"></strong>
+      <h1>
+        <span id="greeting"></span>
+        <span id="name" contenteditable="true" class="clickable"></span>
+      </h1>
+      <h2>Какая цель на сегодня?</h2>
+      <h2 id="focus" contenteditable="true" class="clickable"></h2>
+    </main>
+    <div class="weather card">
+      <p id="city" contenteditable="true" class="clickable"></p>
+      <div class="weather-icon-container">
+        <i class="weather-icon owf owf-3x"></i>
+      </div>
+      <div class="weather-data">
+        <span id="temperature"></span> |
+        <span id="humidity"></span> |
+        <span id="wind-speed"></span>
+      </div>
+      <p id="weather-description"></p>
+    </div>
+  
+  
+    <blockquote class="card" id="blockquote"></blockquote>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>

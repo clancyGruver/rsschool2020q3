@@ -1,0 +1,134 @@
+:root{
+  font-size: 10px;
+}
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: 'Quicksand', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: black;
+  /*text-shadow: white 1px 1px 0, white -1px -1px 0, white -1px 1px 0, white 1px -1px 0;*/
+  background-position: center;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#time{
+  font-size: 12rem;
+}
+h1{
+  margin-bottom: 2rem;
+}
+h2{
+  opacity: 0.8; 
+  font-size: 2rem;
+}
+main{
+  display: flex;
+  flex-direction: column;
+}
+.btn{
+  width: 5rem;
+  height: 5rem;
+  border-radius: 10rem;
+  background-color: #a79086;
+  border: 0.2rem solid #6d031c;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 0.3s;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.btn:hover{
+  background-color: #673e37;
+}
+.btn:active{
+  transform: scale(1.1)
+}
+#next-image img{
+  width: 2.5rem;
+}
+#blockquote{
+  font-size: 2rem;
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 12rem;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+}
+#city{
+  margin: 1.5rem 0;
+  font-size: 2rem;
+}
+.card{
+  border-radius: 0.5rem;
+  background-color: rgba(255,255,255,0.5);
+  padding: 2rem;
+  box-shadow: 0 0 5px black;
+  flex: 1 1 auto;
+  margin: 1rem;
+  width: 48rem;
+}
+.weather{
+  font-size: 2rem;
+}
+.weather-data{
+  margin-bottom: 1rem;
+}
+#date{
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+.clickable{
+  cursor: pointer;
+}
+.clickable:hover{
+  transition: 0.3s;
+  color: darkblue;
+}
+.clickable:focus{
+  transition: 0.3s;
+  background-color: rgba(40, 70 , 140, 0.4);
+}
+
+@media(max-width: 700px){
+  #time{
+    font-size: 10rem;
+  }
+  .card{
+    width: 40rem;
+  }
+}
+@media(max-width: 500px){
+  #time{
+    font-size: 8rem;
+  }
+  .card{
+    width: 30rem;
+  }
+}
+@media(max-width: 400px){
+  #time{
+    font-size: 5rem;
+  }
+  .card{
+    width: 2  0rem;
+  }
+}
