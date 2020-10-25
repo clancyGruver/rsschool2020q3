@@ -220,7 +220,7 @@ body {
 .main .pets__slider .pets__cards {
   width: 100%;
   max-width: 99rem;
-  margin: 0 5.3rem;
+  margin: 0 5.5rem;
   display: flex;
   justify-content: space-between;
 }
@@ -290,8 +290,8 @@ body {
   border: none;
   box-shadow: 0 0 0 3px #F1CDB3;
   background-color: transparent;
-  width: 5.2rem;
-  height: 5.2rem;
+  width: 5rem;
+  height: 5rem;
 }
 .main .pets__slider .slider__button:hover {
   transition-duration: 0.3s;
@@ -321,6 +321,121 @@ body {
 .main .pets .pets__button:hover {
   transition-duration: 0.3s;
   background-color: #FDDCC4;
+}
+.main .help {
+  margin-top: 8rem;
+  margin-bottom: 10rem;
+}
+.main .help-wrapper {
+  flex-direction: column;
+}
+.main .help-wrapper .help__title {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 3.5rem;
+  line-height: 130%;
+  letter-spacing: 0.21rem;
+  color: #545454;
+  text-align: center;
+}
+.main .help-wrapper .help__title span {
+  display: block;
+}
+.main .help-wrapper .help-list {
+  margin-top: 6rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 12rem;
+  row-gap: 5.5rem;
+}
+.main .help-wrapper .help-element {
+  display: flex;
+  flex-direction: column;
+}
+.main .help-wrapper .help-element-text {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 115%;
+  letter-spacing: 0.12rem;
+  margin-top: 3rem;
+  color: #545454;
+  text-align: center;
+}
+.main .donate {
+  margin-top: 8rem;
+  margin-bottom: 10rem;
+}
+.main .donate-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.main .donate-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main .donate-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 3rem;
+  max-width: 38rem;
+}
+.main .donate-content h5 {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5rem;
+  line-height: 110%;
+  letter-spacing: 0.09rem;
+  margin: 2rem 0;
+}
+.main .donate-title {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 3.5rem;
+  line-height: 130%;
+  letter-spacing: 0.21rem;
+  color: #545454;
+}
+.main .donate-title span {
+  display: block;
+}
+.main .donate .credit-card-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  border-radius: 0.9rem;
+  background-color: #F1CDB3;
+  padding: 1rem 1.5rem;
+  max-width: 35rem;
+}
+.main .donate h4 {
+  display: flex;
+  flex-direction: row;
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 115%;
+  letter-spacing: 0.12rem;
+}
+.main .donate .credit-card-text-image {
+  padding-right: 1.5rem;
+}
+.main .donate .donate-description {
+  font-family: Arial;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 150%;
+  color: #B2B2B2;
 }
 
 @media screen and (max-width: 1100px) {

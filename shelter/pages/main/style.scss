@@ -190,7 +190,7 @@ body{
             .pets__cards{
                 width: 100%;
                 max-width: 99rem;
-                margin: 0 5.3rem;
+                margin: 0 5.5rem;
                 display: flex;
                 justify-content: space-between;
                 .pet__card{
@@ -226,8 +226,8 @@ body{
 
             .slider__button{
                 @include round-button-primary;
-                width: 5.2rem;
-                height: 5.2rem;
+                width: 5rem;
+                height: 5rem;
                 .arrow__right{
                     transform: rotate(180deg);
                 }
@@ -237,6 +237,96 @@ body{
             @include button_primary;
             letter-spacing: 0.1rem;
         }
+    }
+    .help{
+        margin-top: 8rem;
+        margin-bottom: 10rem;
+        &-wrapper{
+            flex-direction: column;
+            .help__title{
+                @include h3;
+                color: $color-dark-l;
+                text-align: center;
+                span{
+                    display: block;
+                    //letter-spacing: 0.209rem;
+                }
+            }
+            .help-list{
+                margin-top: 6rem;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                column-gap: 12rem;
+                row-gap: 5.5rem;
+            }
+            .help-element{
+                display: flex;
+                flex-direction: column;
+
+                &-text{
+                    @include h4;
+                    margin-top: 3rem;
+                    color: $color-dark-l;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .donate{
+        margin-top: 8rem;
+        margin-bottom: 10rem;
+        &-wrapper{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        &-image-wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        &-content{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 3rem;
+            max-width: 38rem;
+            h5{
+                @include h5;
+                margin: 2rem 0;
+            }
+        }
+        &-title{
+            @include h3;
+            color: $color-dark-l;
+            span{
+                display: block;
+                //letter-spacing: 0.209rem;
+            }
+        }
+        .credit-card-wrapper{
+            margin-bottom: 2rem;
+            display: flex;
+            border-radius: 0.9rem;
+            background-color: $color-primary;
+            padding: 1rem 1.5rem;
+            max-width: 35rem;
+        }
+        h4{
+            display: flex;
+            flex-direction: row;
+            @include h4;
+        }
+        .credit-card-text-image{
+            padding-right: 1.5rem;
+        }
+        .donate-description{
+            @include donation-description;
+            color: $color-dark-m;
+        }
+
     }
 }
 

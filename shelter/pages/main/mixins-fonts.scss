@@ -81,3 +81,12 @@
     line-height: 130%;
     letter-spacing: 0.108rem;
 }
+@mixin donation-description{
+    font: {
+        family: Arial;
+        style: italic;
+        weight: 400;
+        size: 1.2rem;
+    }
+    line-height: 150%;
+}
