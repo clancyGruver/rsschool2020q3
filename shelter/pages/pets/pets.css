@@ -25,9 +25,14 @@ body {
 
 .header {
   width: 100%;
+  position: -webkit-sticky;
   position: sticky;
+  height: 12rem;
+  top: 0;
+  background-color: white;
+}
+.header .wrapper {
   padding-top: 2.8rem;
-  padding-bottom: 3rem;
 }
 .header .logo {
   display: flex;
