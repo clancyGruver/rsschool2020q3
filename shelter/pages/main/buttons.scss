@@ -21,7 +21,15 @@
 @mixin round-button-inactive{
     @include round-button;
     box-shadow: 0 0 0 2px $color-dark-s;
-    background-color: $color-primary-light;
+    background-color: transparent;
+    cursor: auto;
+}
+@mixin round-button-active{
+    @include round-button;
+    box-shadow: none;
+    width: 5.2rem;
+    height: 5.2rem;
+    background-color: $color-primary;
 }
 
 @mixin button{

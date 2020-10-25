@@ -1,0 +1,210 @@
+@import '../main/colors.scss';
+@import '../main//mixins-fonts';
+@import '../main//buttons';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    font-weight: 400;
+}
+:root{
+    font-size: 10px;
+}
+body{
+    position: relative;
+}
+
+.wrapper{
+    display: flex;
+    margin: 0 auto;
+    max-width: 120rem;
+    justify-content: space-between;
+}
+.header{
+    width: 100%;
+    position: sticky;
+    padding-top: 2.8rem;
+    padding-bottom: 3rem;
+
+    .logo{
+        display: flex;
+        flex-direction: column;
+        &__title{
+            @include logo-title;
+            color: $color-dark-l;
+        }
+        &__subtitle{
+            @include logo-subtitle;
+            color: $color-dark-3xl;
+            margin-top: 1rem;
+            text-align: center;
+        }
+    }
+    .menu{
+        display: flex;
+        width: 443px;
+
+        .list{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            list-style-type: none;
+
+            &__item{
+                display: flex;
+                align-items: center;
+
+                .list__link{
+                    @include paragraph-l;
+                    color: $color-dark-3xl;
+                    text-decoration: none;
+                    &_disabled{
+                        color: $color-dark-l;
+                    }
+                    &_active{
+                        border-bottom: solid 3px $color-primary;
+                        letter-spacing: -0.0001rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+main{
+    background-color: $color-light-l;
+    .wrapper{
+        padding-top: 8rem;
+        padding-bottom: 10rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .main-title{
+            @include h3;
+            text-align: center;
+            color: $color-dark-l;
+            margin-bottom: 6rem;
+            span{
+                display: block;
+                padding-left: 0.3rem;
+            }
+        }
+        .pets__cards{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 4rem;
+            row-gap: 3rem;
+            .pet__card{
+                background-color: $color-pet-card;
+                display: flex;
+                flex-direction: column;
+                border-radius: 0.9rem;
+                height: 43.5rem;
+                &:hover{
+                    cursor: pointer;
+                    box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+                    transition-duration: 0.3s;
+                }
+                &-content{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding-bottom: 3.2rem;
+                    padding-left: 0.5rem;
+                }
+                &_button{
+                    @include button_secondary;
+                    @include font-secondary-button;
+                    padding: 1.4rem 4.3rem;
+                    letter-spacing: 0.1rem;
+                    color: $color-dark-3xl;
+                    margin: 0 auto;
+                }
+                &-title{
+                    @include h4;
+                    text-align: center;
+                    margin-top: 2.9rem;
+                    margin-bottom: 3.2rem;
+                }
+            }
+        }
+        .pagination{
+            margin-top: 6rem;
+            display: flex;
+            flex-direction: row;
+            column-gap: 2.3rem;
+            .pagination__button{
+                @include round-button-primary;
+                @include h4;
+                width: 4.8rem;
+                height: 4.8rem;
+                margin-left: 0rem;
+                color: $color-dark-3xl;
+                &:disabled{
+                    @include round-button-inactive;
+                    color: $color-dark-s;
+                    &:hover{
+                        color: $color-dark-s;
+                        transition-duration: 0;
+                        border: none;
+                        cursor:pointer;
+                        background-color: transparent;
+                        cursor: auto;
+                    }
+                }
+            }
+            .active{
+                @include round-button-active;
+            }
+        }
+    }
+}
+
+footer{
+    background: $start-screen-gradient-background;
+    padding-top: 5.6rem;
+    .footer-wrapper{
+        display: flex;
+        flex-direction: row;
+        h3{
+            @include h3;
+            color: $color-light-xl;
+            span{
+                display: block;
+            }
+        }
+        .row{
+            margin-top: 4.2rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            span, a{
+                text-decoration: none;
+                margin-left: 2rem;
+                color: $color-primary;
+                @include h4;
+            }
+        }
+        .second-column{
+            max-width: 30rem;
+        }
+        .third-column{
+            margin-top: -1.7rem;
+        }
+        .phone{
+            margin-top: 4.4rem;
+        }
+        .address{
+            margin-top: 3.4rem;
+        }
+        .address-second{
+            margin-top: 3.2rem;
+        }
+    }
+}
