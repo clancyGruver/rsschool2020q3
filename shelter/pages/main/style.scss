@@ -315,6 +315,10 @@ body{
             background-color: $color-primary;
             padding: 1rem 1.5rem;
             max-width: 35rem;
+            a{
+                text-decoration: none;
+                color: $color-dark-l;
+            }
         }
         h4{
             display: flex;
@@ -349,7 +353,8 @@ footer{
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            span{
+            span, a{
+                text-decoration: none;
                 margin-left: 2rem;
                 color: $color-primary;
                 @include h4;
