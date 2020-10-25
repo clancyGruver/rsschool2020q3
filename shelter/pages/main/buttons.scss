@@ -35,6 +35,7 @@
 }
 @mixin button_secondary{
     @include button;
+    padding: 1.4rem 4.2rem;
     background-color: transparent;
     box-shadow: 0 0 0 2px $color-primary;
     &:hover{

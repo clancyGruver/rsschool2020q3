@@ -116,8 +116,8 @@ body {
   font-size: 1.5rem;
   line-height: 160%;
   color: #cdcdcd;
-  margin-top: 4.3rem;
-  margin-bottom: 4.3rem;
+  margin-top: 4.2rem;
+  margin-bottom: 4.2rem;
   max-width: 46rem;
 }
 .main .hero .content-section__button {
@@ -173,7 +173,7 @@ body {
   letter-spacing: 0.21rem;
   color: #545454;
   max-width: 37rem;
-  line-height: 135%;
+  line-height: 132%;
 }
 .main .about__content .about__description p {
   font-family: Arial;
@@ -182,15 +182,12 @@ body {
   color: #4C4C4C;
   margin-top: 2.5rem;
 }
-.main .about__content .about__description p:nth-child(2) {
-  margin-top: 2.7rem;
-}
 .main .pets {
   background-color: #f6f6f6;
 }
 .main .pets__wrapper {
   padding-top: 8.1rem;
-  padding-bottom: 10rem;
+  padding-bottom: 9.9rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -240,6 +237,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding-bottom: 3rem;
+  padding-left: 0.5rem;
 }
 .main .pets__slider .pets__cards .pet__card_button {
   border-radius: 10rem;
@@ -254,6 +252,7 @@ body {
   cursor: pointer;
   outline: none;
   border: none;
+  padding: 1.4rem 4.2rem;
   background-color: transparent;
   box-shadow: 0 0 0 2px #F1CDB3;
   font-family: Georgia;
@@ -262,6 +261,7 @@ body {
   font-size: 1.7rem;
   line-height: 130%;
   letter-spacing: 0.108rem;
+  padding: 1.4rem 4.5rem;
   letter-spacing: 0.1rem;
   color: #292929;
   margin: 0 auto;
@@ -290,8 +290,9 @@ body {
   border: none;
   box-shadow: 0 0 0 3px #F1CDB3;
   background-color: transparent;
-  width: 5rem;
-  height: 5rem;
+  width: 4.6rem;
+  height: 4.6rem;
+  margin-left: 0.3rem;
 }
 .main .pets__slider .slider__button:hover {
   transition-duration: 0.3s;
@@ -362,13 +363,15 @@ body {
   font-size: 2rem;
   line-height: 115%;
   letter-spacing: 0.12rem;
+  line-height: 120%;
+  letter-spacing: 0.108rem;
   margin-top: 3rem;
   color: #545454;
   text-align: center;
 }
 .main .donate {
   margin-top: 8rem;
-  margin-bottom: 10rem;
+  margin-bottom: 10.1rem;
 }
 .main .donate-wrapper {
   display: flex;
@@ -458,15 +461,6 @@ footer .footer-wrapper h3 {
 footer .footer-wrapper h3 span {
   display: block;
 }
-footer .footer-wrapper .phone {
-  margin-top: 4.4rem;
-}
-footer .footer-wrapper .address {
-  margin-top: 3.4rem;
-}
-footer .footer-wrapper .address:nth-child(2) {
-  margin-top: 3.2rem;
-}
 footer .footer-wrapper .row {
   margin-top: 4.2rem;
   display: flex;
@@ -488,6 +482,15 @@ footer .footer-wrapper .second-column {
 }
 footer .footer-wrapper .third-column {
   margin-top: -1.7rem;
+}
+footer .footer-wrapper .phone {
+  margin-top: 4.4rem;
+}
+footer .footer-wrapper .address {
+  margin-top: 3.4rem;
+}
+footer .footer-wrapper .address-second {
+  margin-top: 3.2rem;
 }
 
 @media screen and (max-width: 1100px) {

@@ -106,8 +106,8 @@ body{
             &__subtitle{
                 @include paragraph-l;
                 color: $color-dark-s;
-                margin-top: 4.3rem;
-                margin-bottom: 4.3rem;
+                margin-top: 4.2rem;
+                margin-bottom: 4.2rem;
                 max-width: 46rem;
             }
 
@@ -146,16 +146,13 @@ body{
                 @include h3;
                 color: $color-dark-l;
                 max-width: 37rem;
-                line-height: 135%;
+                line-height: 132%;
             }
             .about__description{
                 p{
                     @include paragraph-l;
                     color: $color-dark-xl;
                     margin-top: 2.5rem;
-                }
-                p:nth-child(2){
-                    margin-top: 2.7rem;;
                 }
             }
         }
@@ -165,7 +162,7 @@ body{
         background-color: $color-light-l;
         &__wrapper{
             padding-top: 8.1rem;
-            padding-bottom: 10rem;
+            padding-bottom: 9.9rem;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -208,10 +205,12 @@ body{
                         flex-direction: column;
                         align-items: center;
                         padding-bottom: 3rem;
+                        padding-left: 0.5rem;
                     }
                     &_button{
                         @include button_secondary;
                         @include font-secondary-button;
+                        padding: 1.4rem 4.5rem;
                         letter-spacing: 0.1rem;
                         color: $color-dark-3xl;
                         margin: 0 auto;
@@ -226,8 +225,9 @@ body{
 
             .slider__button{
                 @include round-button-primary;
-                width: 5rem;
-                height: 5rem;
+                width: 4.6rem;
+                height: 4.6rem;
+                margin-left: 0.3rem;
                 .arrow__right{
                     transform: rotate(180deg);
                 }
@@ -267,6 +267,8 @@ body{
 
                 &-text{
                     @include h4;
+                    line-height: 120%;
+                    letter-spacing: 0.108rem;
                     margin-top: 3rem;
                     color: $color-dark-l;
                     text-align: center;
@@ -276,7 +278,7 @@ body{
     }
     .donate{
         margin-top: 8rem;
-        margin-bottom: 10rem;
+        margin-bottom: 10.1rem;
         &-wrapper{
             display: flex;
             flex-direction: row;
@@ -342,15 +344,6 @@ footer{
                 display: block;
             }
         }
-        .phone{
-            margin-top: 4.4rem;
-        }
-        .address{
-            margin-top: 3.4rem;
-        }
-        .address:nth-child(2){
-            margin-top: 3.2rem;
-        }
         .row{
             margin-top: 4.2rem;
             display: flex;
@@ -367,6 +360,15 @@ footer{
         }
         .third-column{
             margin-top: -1.7rem;
+        }
+        .phone{
+            margin-top: 4.4rem;
+        }
+        .address{
+            margin-top: 3.4rem;
+        }
+        .address-second{
+            margin-top: 3.2rem;
         }
     }
 }
