@@ -27,6 +27,7 @@ body{
 }
 
 .modal-overlay{
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -36,7 +37,7 @@ body{
       background-color: rgba(41,41,41,0.6);
 }
 .modal {
-    display: block;
+    display: none;
     position: fixed;
     z-index: 2;
     left: 50%;
