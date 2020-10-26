@@ -208,6 +208,9 @@ footer{
                 color: $color-primary;
                 @include h4;
             }
+            img{
+                min-width: 2.2rem;
+            }
         }
         .second-column{
             max-width: 30rem;
@@ -241,6 +244,9 @@ footer{
     main{
         .pets__cards{
             max-width: 58rem;
+            .pet__card:nth-child(1n+7){
+                display: none;
+            }
         }
     }
     footer{

@@ -200,6 +200,7 @@ body {
   line-height: 160%;
   color: #4C4C4C;
   margin-top: 2.5rem;
+  text-align: left;
 }
 .main .pets {
   background-color: #f6f6f6;
@@ -518,6 +519,9 @@ footer .footer-wrapper .row span, footer .footer-wrapper .row a {
   line-height: 115%;
   letter-spacing: 0.12rem;
 }
+footer .footer-wrapper .row img {
+  min-width: 2.2rem;
+}
 footer .footer-wrapper .second-column {
   max-width: 30rem;
 }
@@ -529,9 +533,11 @@ footer .footer-wrapper .phone {
 }
 footer .footer-wrapper .address {
   margin-top: 3.4rem;
+  justify-content: space-between !important;
 }
 footer .footer-wrapper .address-second {
   margin-top: 3.2rem;
+  justify-content: space-between !important;
 }
 
 @media screen and (max-width: 1279px) {

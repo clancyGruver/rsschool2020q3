@@ -173,6 +173,7 @@ body{
                     @include paragraph-l;
                     color: $color-dark-xl;
                     margin-top: 2.5rem;
+                    text-align: left;
                 }
             }
         }
@@ -395,6 +396,9 @@ footer{
                 color: $color-primary;
                 @include h4;
             }
+            img{
+                min-width: 2.2rem;
+            }
         }
         .second-column{
             max-width: 30rem;
@@ -407,9 +411,11 @@ footer{
         }
         .address{
             margin-top: 3.4rem;
+            justify-content: space-between !important;
         }
         .address-second{
             margin-top: 3.2rem;
+            justify-content: space-between !important;
         }
     }
 }

@@ -307,6 +307,9 @@ footer .footer-wrapper .row span, footer .footer-wrapper .row a {
   line-height: 115%;
   letter-spacing: 0.12rem;
 }
+footer .footer-wrapper .row img {
+  min-width: 2.2rem;
+}
 footer .footer-wrapper .second-column {
   max-width: 30rem;
 }
@@ -336,6 +339,9 @@ footer .footer-wrapper .address-second {
 
   main .pets__cards {
     max-width: 58rem;
+  }
+  main .pets__cards .pet__card:nth-child(1n+7) {
+    display: none;
   }
 
   footer .footer-wrapper {
