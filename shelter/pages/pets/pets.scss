@@ -198,6 +198,10 @@ footer{
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            text-decoration: none;
+            &:visited{
+                text-decoration: none;
+            }
             span, a{
                 text-decoration: none;
                 margin-left: 2rem;

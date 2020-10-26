@@ -502,6 +502,10 @@ footer .footer-wrapper .row {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  text-decoration: none;
+}
+footer .footer-wrapper .row:visited {
+  text-decoration: none;
 }
 footer .footer-wrapper .row span, footer .footer-wrapper .row a {
   text-decoration: none;
