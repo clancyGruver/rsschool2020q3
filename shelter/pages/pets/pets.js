@@ -159,7 +159,7 @@ async function loadPets(){
             tempArr.sort(() => Math.random() - 0.5);
             pets.push(...tempArr);
         }
-        nextSliderElements();
+        updateSlider();
     } else {
         alert('При загрузке петсов произошла ошибка');
     }
