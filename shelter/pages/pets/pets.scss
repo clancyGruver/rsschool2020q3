@@ -38,6 +38,7 @@ body{
     .logo{
         display: flex;
         flex-direction: column;
+        text-decoration: none;
         &__title{
             @include logo-title;
             color: $color-dark-l;
