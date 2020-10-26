@@ -625,7 +625,7 @@ footer .footer-wrapper .address-second {
     top: 8px;
   }
   .header .menu .list {
-    display: flex;
+    display: none;
     position: fixed;
     flex-direction: column;
     width: 32rem;

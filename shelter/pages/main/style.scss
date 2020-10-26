@@ -509,7 +509,7 @@ footer{
                 top: 8px;
             }
             .list{
-                display: flex;
+                display: none;
                 position: fixed;
                 flex-direction: column;
                 width: 32rem;
@@ -672,5 +672,4 @@ footer{
             }
         }
     }
-
 }
