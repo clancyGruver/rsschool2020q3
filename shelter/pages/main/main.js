@@ -21,6 +21,7 @@ function menuToggle() {
         mainHeader.style.visibility = "hidden";
         document.getElementById("mySidenav").style.width = "32rem";
         document.querySelector(".overlay").style.visibility = "visible";
+        document.body.style.overflow = 'hidden';
     } else {
         mainHeader.querySelector(".menu__btn").classList.remove("rotated");
         sideHeader.querySelector(".menu__btn").classList.remove("rotated");
@@ -28,6 +29,7 @@ function menuToggle() {
         sideHeader.style.visibility = "hidden";
         document.getElementById("mySidenav").style.width = "0";
         document.querySelector(".overlay").style.visibility = "hidden";
+        document.body.style.overflow = 'auto';
     }
 }
 
