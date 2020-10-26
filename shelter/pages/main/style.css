@@ -85,6 +85,10 @@ body {
   border-bottom: solid 3px #F1CDB3;
   letter-spacing: -0.0001rem;
 }
+.header .menu .list__item .list__link_disabled:hover {
+  color: #cdcdcd;
+  cursor: default;
+}
 
 .main {
   display: flex;

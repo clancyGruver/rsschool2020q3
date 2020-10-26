@@ -77,6 +77,12 @@ body{
                         border-bottom: solid 3px $color-primary;
                         letter-spacing: -0.0001rem;
                     }
+                    &_disabled{
+                        &:hover{
+                            color: $color-dark-l;
+                            cursor: default;
+                        }
+                    }
                 }
             }
         }
