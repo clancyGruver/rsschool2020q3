@@ -60,12 +60,14 @@ body{
 
                 .list__link{
                     @include paragraph-l;
-                    color: $color-light-xl;
+                    color: $color-light-l;
                     text-decoration: none;
-                    &_disabled{
-                        color: $color-dark-s;
+                    color: $color-dark-s;
+                    &:hover{
+                        color: $color-light-s;
                     }
                     &_active{
+                        color: $color-light-s;
                         border-bottom: solid 3px $color-primary;
                         letter-spacing: -0.0001rem;
                     }

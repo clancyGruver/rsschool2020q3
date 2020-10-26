@@ -1,0 +1,1 @@
+const disabledLinks = document.querySelectorAll('.list__link_disabled');

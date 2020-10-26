@@ -72,13 +72,15 @@ body {
   font-family: Arial;
   font-size: 1.5rem;
   line-height: 160%;
-  color: #fff;
+  color: #f6f6f6;
   text-decoration: none;
-}
-.header .menu .list__item .list__link_disabled {
   color: #cdcdcd;
 }
+.header .menu .list__item .list__link:hover {
+  color: #fafafa;
+}
 .header .menu .list__item .list__link_active {
+  color: #fafafa;
   border-bottom: solid 3px #F1CDB3;
   letter-spacing: -0.0001rem;
 }
