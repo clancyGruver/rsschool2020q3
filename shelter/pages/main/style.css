@@ -439,6 +439,9 @@ body {
   text-decoration: none;
   color: #545454;
 }
+.main .donate .credit-card-wrapper a:hover {
+  color: #f6f6f6;
+}
 .main .donate h4 {
   display: flex;
   flex-direction: row;

@@ -332,6 +332,9 @@ body{
             a{
                 text-decoration: none;
                 color: $color-dark-l;
+                &:hover{
+                    color: $color-light-l;
+                }
             }
         }
         h4{
