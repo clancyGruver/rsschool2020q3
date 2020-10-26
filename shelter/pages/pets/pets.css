@@ -78,11 +78,11 @@ body {
   font-family: Arial;
   font-size: 1.5rem;
   line-height: 160%;
-  color: #292929;
+  color: #545454;
   text-decoration: none;
 }
-.header .menu .list__item .list__link_disabled {
-  color: #545454;
+.header .menu .list__item .list__link:hover {
+  color: #292929;
 }
 .header .menu .list__item .list__link_active {
   border-bottom: solid 3px #F1CDB3;

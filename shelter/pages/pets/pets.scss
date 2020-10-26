@@ -67,10 +67,10 @@ body{
 
                 .list__link{
                     @include paragraph-l;
-                    color: $color-dark-3xl;
+                    color: $color-dark-l;
                     text-decoration: none;
-                    &_disabled{
-                        color: $color-dark-l;
+                    &:hover{
+                        color: $color-dark-3xl;
                     }
                     &_active{
                         border-bottom: solid 3px $color-primary;
