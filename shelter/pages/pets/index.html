@@ -7,8 +7,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="./pets.css">
 </head>
-<body>
-    
+<body id="start">
+    <div class="overlay"></div>
+    <nav id="mySidenav" class="sidenav">
+        <div class="side-header">
+            <div class="menu">
+                <a class="logo" href="#">
+                    <div class="logo__title">Cozy House</div>
+                    <div class="logo__subtitle">Shelter for pets in Boston</div>
+                </a>
+                <label class="menu__btn" for="menu__toggle">
+                  <span></span>
+                </label>
+            </div>
+        </div>
+        <ul class="list">
+            <li class="list__item">
+                <a href="../main" class="list__link">About the shelter</a>
+            </li>
+            <li class="list__item">
+                <a href="#start" class="list__link list__link_active" onclick="aboutHandler()">Our pets</a>
+            </li>
+            <li class="list__item">
+                <a href="" class="list__link list__link_disabled" onclick="return false">Help the shelter</a>
+            </li>
+            <li class="list__item">
+                <a href="" class="list__link list__link_disabled" onclick="return false">Contacts</a>
+            </li>
+        </ul>
+    </nav>
     <header class="header">
         <div class="wrapper">
             <a class="logo" href="../main/">
@@ -25,7 +52,7 @@
                         <a href="../main" class="list__link">About the shelter</a>
                     </li>
                     <li class="list__item">
-                        <a href="" class="list__link list__link_active">Our pets</a>
+                        <a href="#start" class="list__link list__link_active">Our pets</a>
                     </li>
                     <li class="list__item">
                         <a href="" class="list__link list__link_disabled" onclick="return false">Help the shelter</a>
@@ -135,11 +162,11 @@
 
             </div>
             <div class="pagination">
-                <button class="pagination__button" disabled><<</button>
-                <button class="pagination__button" disabled><</button>
-                <button class="pagination__button active">1</button>
-                <button class="pagination__button">></button>
-                <button class="pagination__button">>></button>
+                <button class="pagination__button first-page" onclick="firstPage()" disabled><<</button>
+                <button class="pagination__button previous-page" onclick="previousPage()" disabled><</button>
+                <button class="pagination__button current-page active">1</button>
+                <button class="pagination__button next-page" onclick="nextPage()">></button>
+                <button class="pagination__button last-page" onclick="lastPage()">>></button>
             </div>
         </div>
     </main>
@@ -178,5 +205,34 @@
             </div>
         </div>
     </footer>
+
+    <div class="modal-overlay"></div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-window">
+            <div class="modal-img-wrapper">
+                <img src="" alt="" class="modal-img">
+            </div>
+            <div class="pet-content">
+                <h3 class="pet-name"></h3>
+                <h4 class="breed">
+                    <span class="breed-type"></span> - <span class="breed-breed"></span>
+                </h4>
+                <h5 class="description"></h5>
+                <ul class="pet-parameters">
+                    <li><h5><strong>Age:</strong> <span class="age"></span></h5></li>
+                    <li><h5><strong>Inoculations:</strong> <span class="inoculations"></span></h5></li>
+                    <li><h5><strong>Diseases:</strong> <span class="diseases"></span></h5></li>
+                    <li><h5><strong>Parasites:</strong> <span class="parasites"></span></h5></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./pets.js"></script>
 </body>
 </html>
