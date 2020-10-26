@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body id="satrt">
+<body id="start">
     <div class="overlay"></div>
     <nav id="mySidenav" class="sidenav">
         <div class="side-header">
@@ -24,7 +24,7 @@
         </div>
         <ul class="list">
             <li class="list__item">
-                <a href="#satrt" class="list__link list__link_active" onclick="aboutHandler()">About the shelter</a>
+                <a href="#start" class="list__link list__link_active" onclick="aboutHandler()">About the shelter</a>
             </li>
             <li class="list__item">
                 <a href="../pets" class="list__link">Our pets</a>
@@ -50,7 +50,7 @@
                 </label>
                 <ul class="list">
                     <li class="list__item">
-                        <a href="#satrt" class="list__link list__link_active">About the shelter</a>
+                        <a href="#start" class="list__link list__link_active">About the shelter</a>
                     </li>
                     <li class="list__item">
                         <a href="../pets" class="list__link">Our pets</a>
@@ -116,7 +116,7 @@
                         <span>are looking for a house</span>
                     </h3>
                     <div class="pets__slider">
-                        <button class="slider__button" onclick="previousSliderElements()">
+                        <button class="slider__button" onclick="sliderElements2()">
                             <img
                                 src="../../assets/svg/Arrow.svg"
                                 alt="arrow left"
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="slider__button" onclick="nextSliderElements()">
+                        <button class="slider__button" onclick="sliderElements2()">
                             <img
                                 src="../../assets/svg/Arrow.svg"
                                 alt="arrow right"
@@ -166,13 +166,13 @@
                         </button>
                     </div>
                     <div class="bottom-arrows">
-                        <button class="slider__button" onclick="previousSliderElements()">
+                        <button class="slider__button" onclick="sliderElements2()">
                             <img
                                 src="../../assets/svg/Arrow.svg"
                                 alt="arrow left"
                             />
                         </button>
-                        <button class="slider__button" onclick="nextSliderElements()">
+                        <button class="slider__button" onclick="sliderElements2()">
                             <img
                                 src="../../assets/svg/Arrow.svg"
                                 alt="arrow right"
@@ -298,6 +298,34 @@
             </div>
         </div>
     </footer>
+
+    <div class="modal-overlay"></div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-window">
+            <div class="modal-img-wrapper">
+                <img src="" alt="" class="modal-img">
+            </div>
+            <div class="pet-content">
+                <h3 class="pet-name"></h3>
+                <h4 class="breed">
+                    <span class="breed-type"></span> - <span class="breed-breed"></span>
+                </h4>
+                <h5 class="description"></h5>
+                <ul class="pet-parameters">
+                    <li><h5><strong>Age:</strong> <span class="age"></span></h5></li>
+                    <li><h5><strong>Inoculations:</strong> <span class="inoculations"></span></h5></li>
+                    <li><h5><strong>Diseases:</strong> <span class="diseases"></span></h5></li>
+                    <li><h5><strong>Parasites:</strong> <span class="parasites"></span></h5></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+
     <script src="./main.js"></script>
 </body>
 </html>

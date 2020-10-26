@@ -1,17 +1,25 @@
 //constants
 const pets = []; // array of pets got from local json file
 const slider = []; //current slider elements
-let petCards = document.querySelectorAll('.pet__card'); //
 let sliderStartPosition = 0; //position from where starts filling
 let sliderElements = 3;
 
 //elements
 const menuBtn = document.querySelectorAll('.menu__btn');
-const overlay = document.querySelector('.overlay');
+const overlay = document.querySelector('.overlay'); //side nav overlay
+const overlayModal = document.querySelector('.modal-overlay'); // modal overlay
+const modal = document.querySelector(".modal"); //modalElement
+const closeModalBtn = document.querySelector(".close-modal");
+let petCards = document.querySelectorAll('.pet__card'); //
 
 //handlers
 menuBtn.forEach(el => el.addEventListener('click',menuToggle) );
 overlay.addEventListener('click',menuToggle);
+overlayModal.addEventListener('click',toggleModal);
+petCards.forEach(el => {
+    el.addEventListener('click',toggleModal)
+});
+closeModalBtn.addEventListener('click', toggleModal);
 
 window.onload = () => {
     setSliderElements();
@@ -85,13 +93,38 @@ function previousSliderElements(){
     renderSlider();
     sliderStartPosition = position;
 }
+
+function sliderElements2(){
+    const prevSlider = [...slider]
+    slider.length = 0;
+    for(let i = 0; i < sliderElements; i++){
+        let flag = true;
+        let candidate;
+        while(flag){
+            const randInt = getRandomInt(0, pets.length-1);
+            candidate = pets[randInt];
+            let isDouble = prevSlider.filter( el => el.name === candidate.name).length > 0 ? true : false;
+            let inCurrentList = slider.filter( el => el.name === candidate.name).length > 0 ? true : false;
+            flag = isDouble || inCurrentList;
+        }
+        slider.push(candidate);
+    }
+    renderSlider();
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function renderSlider(){
     petCards.forEach((el,index) => {
         const img = el.querySelector('img');
         const title = el.querySelector('.pet__card-title');
         const btn = el.querySelector('.pet__card_button');
         const currentPet = slider[index];
-        btn.dataset.petId = index;
+        el.dataset.petId = index;
         img.src = currentPet.img;
         title.textContent = currentPet.name;
     });
@@ -120,4 +153,42 @@ async function loadPets(){
     } else {
         alert('При загрузке петсов произошла ошибка');
     }
+}
+
+///modal functions
+function toggleModal(event){
+    let display = modal.style.display;
+    let id;
+    if(event.target.parentNode.classList.contains('pet__card')){
+        id = event.target.parentNode.dataset.petId;
+    } else {
+        id = event.target.parentNode.parentNode.dataset.petId;
+    }
+    const pet = slider[id];
+    fillModal(pet);
+    modal.style.display = display === 'block' ? 'none' : 'block';
+    document.body.style.overflow = display === 'block' ? 'auto' : 'hidden';
+    overlayModal.style.display = display === 'block' ? 'none' : 'block';
+}
+
+function fillModal(pet){
+    if(pet === undefined) return;
+    const img = modal.querySelector('.modal-img'),
+            name = modal.querySelector('.pet-name'),
+            type = modal.querySelector('.breed-type'),
+            breed = modal.querySelector('.breed-breed'),
+            description = modal.querySelector('.description'),
+            age = modal.querySelector('.age'),
+            inoculations = modal.querySelector('.inoculations'),
+            diseases = modal.querySelector('.diseases'),
+            parasites = modal.querySelector('.parasites');
+    img.src = pet.img || '';
+    name.textContent = pet.name || '';
+    type.textContent = pet.type || '';
+    breed.textContent = pet.breed || '';
+    description.textContent = pet.description || '';
+    age.textContent = pet.age || '';
+    inoculations.textContent = pet.inoculations || '';
+    diseases.textContent = pet.diseases || '';
+    parasites.textContent = pet.parasites || '';
 }
