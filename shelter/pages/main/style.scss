@@ -123,6 +123,8 @@ body{
                 padding: 1.5rem 1.5rem;
                 width: 207px;
                 color: $color-dark-3xl;
+                text-decoration: none;
+                text-align: center;
                 &:hover{
                     cursor: pointer;
                     background-color: $color-primary-light;
@@ -249,6 +251,12 @@ body{
         .pets__button{
             @include button_primary;
             letter-spacing: 0.1rem;
+            text-decoration: none;
+            text-align: center;
+            color: $color-dark-3xl;
+            &:visited{
+                color: $color-dark-3xl;
+            }
         }
     }
     .help{

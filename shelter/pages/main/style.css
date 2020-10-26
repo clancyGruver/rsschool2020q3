@@ -145,6 +145,8 @@ body {
   padding: 1.5rem 1.5rem;
   width: 207px;
   color: #292929;
+  text-decoration: none;
+  text-align: center;
 }
 .main .hero .content-section__button:hover {
   transition-duration: 0.3s;
@@ -333,10 +335,16 @@ body {
   border: none;
   background-color: #F1CDB3;
   letter-spacing: 0.1rem;
+  text-decoration: none;
+  text-align: center;
+  color: #292929;
 }
 .main .pets .pets__button:hover {
   transition-duration: 0.3s;
   background-color: #FDDCC4;
+}
+.main .pets .pets__button:visited {
+  color: #292929;
 }
 .main .help {
   margin-top: 8rem;
