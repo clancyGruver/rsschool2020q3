@@ -73,7 +73,7 @@ function showTime() {
     time.innerHTML = `${addZero(hour)}<span>:</span>${addZero(minutes)}<span>:</span>${addZero(seconds)}`;
 
     if(isTimeForChangeImage(today)){
-      currentImage = hour - 1;
+      currentImage = hour;
       changeImage();
     }
 
