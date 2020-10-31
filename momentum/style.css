@@ -16,6 +16,7 @@ body{
   color: black;
   /*text-shadow: white 1px 1px 0, white -1px -1px 0, white -1px 1px 0, white 1px -1px 0;*/
   background-position: center;
+  transition: ease 1.5s;
 }
 .container{
   display: flex;
