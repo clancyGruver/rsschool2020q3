@@ -345,4 +345,10 @@ export default [
       shift: null,
       code: 'EnRu',
     },
+    {
+      small: 'sound',
+      shift: null,
+      code: 'sound',
+      icon: 'volume_mute'
+    },
   ];

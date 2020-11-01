@@ -38,7 +38,8 @@ export default class Keyboard {
         const soundType = `${keyType}${eventType}`;
         if(this.sounds[soundType]){
             this.sounds[soundType].currentTime = 0;
-            const playPromise = this.sounds[soundType].play();
+            this.sounds[soundType].play();
+            /*const playPromise = this.sounds[soundType].play();
             if (playPromise !== undefined) {
                 playPromise.then(function() {
                     console.log(111);
@@ -48,7 +49,7 @@ export default class Keyboard {
                   // Automatic playback failed.
                   // Show a UI element to let the user manually start playback.
                 });
-              }
+              }*/
         }
 
     }
@@ -159,7 +160,6 @@ export default class Keyboard {
             keyObj.container.classList.remove('keyboard__key--press');
 
             if(type === 'mouseup' && this.shiftKey && !code.match(/Shift/)) {
-                console.log('mouseup')
                 this.shiftKey = false;
                 this.switchUpperCase(false);
             }

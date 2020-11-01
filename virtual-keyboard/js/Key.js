@@ -30,7 +30,7 @@ export default class Key{
 
     isFnKey () {
         const smallMatched = Boolean(this.small.match(/Ctrl|arr|Shift|Tab|Back|Del|Enter|Caps|Win|Alt|done|EnRu/));
-        const codeMatched = Boolean(this.code.match(/done|EnRu/));
+        const codeMatched = Boolean(this.code.match(/done|EnRu|sound/));
 
         return smallMatched || codeMatched;
     }
