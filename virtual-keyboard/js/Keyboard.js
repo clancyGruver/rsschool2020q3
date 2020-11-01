@@ -86,12 +86,18 @@ export default class Keyboard {
             //functional keys 
             if(code.match(/Control/)) this.ctrlKey = false;
             if(code.match(/Alt/)) this.altKey = false;
-            if(code.match(/Shift/)) {
+            if(code.match(/Shift/) && type === 'keyup') {
                 this.shiftKey = false;
                 this.switchUpperCase(false);
             }
 
             keyObj.container.classList.remove('keyboard__key--press');
+
+            if(type === 'mouseup' && this.shiftKey && !code.match(/Shift/)) {
+                console.log('mouseup')
+                this.shiftKey = false;
+                this.switchUpperCase(false);
+            }
         }
     }
 
