@@ -17,8 +17,62 @@ export default class Keyboard {
         this.output = document.querySelector('.keyboard-input');
         this.container = create('div', 'keyboard', null, main, ['language', langCode]);
         document.body.prepend(main);
+        this.soundsInit();
         this.hide();
         return this;
+    }
+
+    /**
+     * @param {Key class} keyObj
+     * @param {string(up|down)} eventType
+     */
+    playSound (keyObj, eventType) {
+        const code = keyObj.code;
+        let keyType;
+        if(code.match(/Shift/)) keyType = 'shift';
+        else if(code.match(/Caps/)) keyType = 'capsLock';
+        else if(code.match(/Backspace/)) keyType = 'backspace';
+        else if(code.match(/Enter/)) keyType = 'enter';
+        else keyType = 'key';
+
+        const soundType = `${keyType}${eventType}`;
+        if(this.sounds[soundType]){
+            this.sounds[soundType].currentTime = 0;
+            const playPromise = this.sounds[soundType].play();
+            if (playPromise !== undefined) {
+                playPromise.then(function() {
+                    console.log(111);
+                  // Automatic playback started!
+                }).catch(function(error) {
+                    console.log(222);
+                  // Automatic playback failed.
+                  // Show a UI element to let the user manually start playback.
+                });
+              }
+        }
+
+    }
+
+    /**
+     * звуки при печати в русской и английской раскладке отличаются. 
+     * Предусмотрены уникальные звуки для клавиш Shift, CapsLock, Backspace, Enter
+     */
+    soundsInit () {
+        const path = 'sounds/';
+        const lang = get('kbLang');
+        const soundTypes = [ 'shift', 'capsLock', 'backspace', 'enter', 'key' ];
+        const eventTypes = [ 'up', 'down' ];
+        this.sounds = {};
+        soundTypes.forEach( sound => {
+            eventTypes.forEach( event => {
+                const fullPath = `${path}${sound === 'key' ? lang + '_' : ''}${sound}${event}.wav`;
+                this.sounds[`${sound}${event}`] = create('audio', '', null, null, ['src', fullPath]);
+            });
+        });
+
+        for(const sound of Object.keys(this.sounds)){
+            document.body.prepend(this.sounds[sound]);
+        }
     }
 
     generateLayout () {
@@ -57,6 +111,7 @@ export default class Keyboard {
         if(!keyObj) return;
         this.output.focus();
         if (type.match(/keydown|mousedown/)){
+            this.playSound(keyObj, 'down');
             if (type.match(/keydown/)) e.preventDefault();
 
             keyObj.container.classList.add('keyboard__key--press');
@@ -89,6 +144,7 @@ export default class Keyboard {
                 }
             }
         } else if (type.match(/keyup|mouseup/)) {
+            this.playSound(keyObj, 'down');
             //functional keys 
             if(code.match(/Control/)) this.ctrlKey = false;
             if(code.match(/Alt/)) this.altKey = false;
@@ -154,6 +210,9 @@ export default class Keyboard {
             keyBtn.setKeyBase(keyObject);
             keyBtn.updateKey();
         })
+
+        this.shiftKey = false;
+        this.toggleShift();
 
         if (this.isCaps) this.switchUpperCase(true);
     }
@@ -293,6 +352,7 @@ export default class Keyboard {
 
 //todo: hidekeyboard long press
 //todo: selection with ctrl pressed
+//todo: selection delete
 /**
  * Озвучивание нажатия клавиш
  *

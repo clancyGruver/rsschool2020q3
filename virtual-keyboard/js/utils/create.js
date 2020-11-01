@@ -36,7 +36,7 @@
             if(attributeValue == ''){
                 element.setAttribute(attributeName, '');
             } else {
-                if (attributeName.match(/value|id|placeholder|cols|rows|autocorrect|spellcheck/)) {
+                if (attributeName.match(/value|id|placeholder|cols|rows|autocorrect|spellcheck|src/)) {
                     element.setAttribute(attributeName, attributeValue);
                 } else {
                     element.dataset[attributeName] = attributeValue;
