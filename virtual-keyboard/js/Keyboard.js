@@ -187,17 +187,19 @@ export default class Keyboard {
                 cursorPosition++;
             },
             ArrowLeft: () => {
-                cursorPosition -= cursorPosition > 0 ? 1 : 0;
                 if (this.shiftKey) {
                     this.selection(cursorPosition, 'left');
                     isSelection = true;
+                } else {
+                    cursorPosition -= cursorPosition > 0 ? 1 : 0;
                 }
             },
             ArrowRight: () => {
-                cursorPosition++;
                 if (this.shiftKey) {
                     this.selection(cursorPosition, 'right');
                     isSelection = true;
+                } else {
+                    cursorPosition++;
                 }
             },
             ArrowUp: () => {
@@ -245,7 +247,13 @@ export default class Keyboard {
     selection (startPosition, direction = null) {
         if(!direction){
             this.output.setSelectionRange(startPosition, startPosition);
+            this.selectionDirection = null;
             return;
+        }
+        if(direction !== this.selectionDirection){
+            this.selectionDirection = direction;
+            this.output.selectionStart = startPosition;
+            this.output.selectionEnd = startPosition;
         }
         const startSelectionPosition = this.output.selectionStart;
         const endSelectionPosition = this.output.selectionEnd;
@@ -262,3 +270,4 @@ export default class Keyboard {
 
 
 //todo: hidekeyboard long press
+//todo: selection with ctrl pressed
