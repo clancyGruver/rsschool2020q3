@@ -1,14 +1,10 @@
 import create from './utils/create.js';
 
-const iconElements = [
-
-];
-
 export default class Key{
     constructor ({ small, shift, code, icon }) {
-        this.code = code;
-        this.small = small;
-        this.shift = shift;
+        this.code = code || null;
+        this.small = small || null;
+        this.shift = shift || null;
         this.icon = icon || null;
         this.classNames = ['keyboard__key'];
         this.createKey();
@@ -30,7 +26,7 @@ export default class Key{
 
     isFnKey () {
         const smallMatched = Boolean(this.small.match(/Ctrl|arr|Shift|Tab|Back|Del|Enter|Caps|Win|Alt|done|EnRu/));
-        const codeMatched = Boolean(this.code.match(/done|EnRu|sound/));
+        const codeMatched = Boolean(this.code.match(/done|EnRu|sound|mic/));
 
         return smallMatched || codeMatched;
     }
@@ -71,6 +67,11 @@ export default class Key{
 
     changeSoundIcon(){
         this.icon = this.icon === 'volume_mute' ? 'volume_off' : 'volume_mute';
+        this.container.children[1].textContent = this.icon;
+    }
+
+    changeMicIcon(){
+        this.icon = this.icon === 'mic' ? 'mic_off' : 'mic';
         this.container.children[1].textContent = this.icon;
     }
 }

@@ -351,4 +351,10 @@ export default [
     code: 'sound',
     icon: 'volume_mute'
   },
+  {
+    small: 'mic',
+    shift: null,
+    code: 'mic',
+    icon: 'mic'
+  },
 ];

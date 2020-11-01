@@ -307,6 +307,11 @@ export default class Keyboard {
                 this.isPlaySound = !this.isPlaySound;
                 return;
             },
+            mic: () => {
+                keyObj.changeMicIcon();
+                this.record();
+                return;
+            },
         }
 
         if (fnButtonsHandler[keyObj.code]) fnButtonsHandler[keyObj.code]();
@@ -346,6 +351,10 @@ export default class Keyboard {
             this.output.setSelectionRange(min, max + 1);
         }
     }
+
+    record () {
+
+    }
 }
 
 
@@ -353,10 +362,6 @@ export default class Keyboard {
 //todo: selection with ctrl pressed
 //todo: selection delete
 /**
- * Клавиатура адаптируется под размер страницы
- *
- * размер клавиш виртуальной клавиатуры и шрифта на них адаптируется под размер экрана. Минимальная ширина страницы, при которой проверяется корректность отображения и работы клавиатуры - 500рх
- * размер шрифта на клавишах не меньше 14рх, достаточная контрастность шрифта и фона клавиш в активном и неактивном состоянии Colour contrast checking tools
  * Голосовой ввод текста
  *
  * на виртуальной клавиатуре есть отдельная клавиша, при клике по которой можно включить/отключить голосовой ввод текста. Активное и неактивное состояние клавиши отличаются визуально
