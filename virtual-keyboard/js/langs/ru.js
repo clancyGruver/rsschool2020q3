@@ -341,7 +341,7 @@ export default [
       icon: 'keyboard_hide',
     },
     {
-      small: 'ru',
+      small: 'РУС',
       shift: null,
       code: 'EnRu',
     },
