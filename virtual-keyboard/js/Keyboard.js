@@ -179,14 +179,27 @@ export default class Keyboard {
         let cursorPosition = this.output.selectionStart;
         const left = this.output.value.slice(0, cursorPosition);
         const right = this.output.value.slice(cursorPosition);
+        let isSelection = false;
 
         const fnButtonsHandler = {
             Tab: () => {
                 this.output.value = `${left}\t${right}`;
                 cursorPosition++;
             },
-            ArrowLeft: () => cursorPosition -= cursorPosition > 0 ? 1 : 0,
-            ArrowRight: () => cursorPosition++,
+            ArrowLeft: () => {
+                cursorPosition -= cursorPosition > 0 ? 1 : 0;
+                if (this.shiftKey) {
+                    this.selection(cursorPosition, 'left');
+                    isSelection = true;
+                }
+            },
+            ArrowRight: () => {
+                cursorPosition++;
+                if (this.shiftKey) {
+                    this.selection(cursorPosition, 'right');
+                    isSelection = true;
+                }
+            },
             ArrowUp: () => {
                 const positionFromLeft = this.output.value.slice(0, cursorPosition).match(/(\n).*$(?!\1)/g) || [[1]];
                 cursorPosition -= positionFromLeft[0].length;
@@ -219,7 +232,7 @@ export default class Keyboard {
             cursorPosition++;
             this.output.value = `${left}${symbol || ''}${right}`;
         }
-        this.output.setSelectionRange(cursorPosition, cursorPosition);
+        if(!isSelection) this.selection(cursorPosition);
     }
 
     resetPressedButtons = (targetCode) => {
@@ -227,6 +240,23 @@ export default class Keyboard {
         if (!this.isCaps) this.keysPressed[targetCode].div.classList.remove('keyboard__key--press');
         this.keysPressed[targetCode].container.removeEventListener('mouseleave', this.resetButtonState);
         delete this.keysPressed[targetCode];
+    }
+
+    selection (startPosition, direction = null) {
+        if(!direction){
+            this.output.setSelectionRange(startPosition, startPosition);
+            return;
+        }
+        const startSelectionPosition = this.output.selectionStart;
+        const endSelectionPosition = this.output.selectionEnd;
+        const min = Math.min(startSelectionPosition,endSelectionPosition);
+        const max = Math.max(startSelectionPosition,endSelectionPosition);
+        if(direction === 'left'){
+            this.output.setSelectionRange(min !== 0 ? min - 1 : 0, max);
+        }
+        if(direction === 'right'){
+            this.output.setSelectionRange(min, max + 1);
+        }
     }
 }
 
