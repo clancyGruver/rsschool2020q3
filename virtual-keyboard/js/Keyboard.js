@@ -215,6 +215,7 @@ export default class Keyboard {
         this.toggleShift();
 
         if (this.isCaps) this.switchUpperCase(true);
+        this.soundsInit();
     }
 
     switchUpperCase (isTrue) {
