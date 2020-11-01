@@ -50,7 +50,6 @@ export default class Key{
 
         this.letter = create('div', 'letter', this.small);
 
-        if(this.code == 'Space') this.classNames.push('keyboard__key--wide');
         if(this.code == 'CapsLock') this.classNames.push('keyboard__key--activatable');
         if(this.code.match(/Shift/)) this.classNames.push('keyboard__key--activatable');
         if(this.isFnKey) this.classNames.push('keyboard__key--functional');

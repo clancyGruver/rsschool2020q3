@@ -70,6 +70,7 @@ export default class Keyboard {
         this.keyButtons = [];
         this.rowsOrder.forEach( (row, i) => {
             const rowElement = create('div', 'keyboard__row keyboard__keys', null, this.container, ['row', i+1]);
+            rowElement.style.gridTemplateColumns = `repeat(${row.length}, 1fr)`;
             row.forEach( code => {
                 const keyObject = this.keyBase.find( key => key.code === code);
                 if (keyObject) {
@@ -352,11 +353,6 @@ export default class Keyboard {
 //todo: selection with ctrl pressed
 //todo: selection delete
 /**
- * Озвучивание нажатия клавиш
- *
- * при печати на виртуальной клавиатуре воспроизводится звук пишущей машинки, или другие звуки. Если звуки воспроизводятся и при печати на реальной клавиатуре, это не является ошибкой.
- * звуки при печати в русской и английской раскладке отличаются. Предусмотрены уникальные звуки для клавиш Shift, CapsLock, Backspace, Enter
- * есть возможность включить и отключить озвучивание нажатия клавиш, для этого на виртуальной клавиатуре предусмотрена отдельная клавиша. Активное и неактивное состояние данной клавиши отличается визуально и переключается кликом.
  * Клавиатура адаптируется под размер страницы
  *
  * размер клавиш виртуальной клавиатуры и шрифта на них адаптируется под размер экрана. Минимальная ширина страницы, при которой проверяется корректность отображения и работы клавиатуры - 500рх
