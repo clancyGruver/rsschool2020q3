@@ -102,5 +102,8 @@
 }
 .keyboard__key--press {
   transition: ease-in-out 0.1s;
-  background-color: #329c5f;
+  transform: scale(1.1);
+  border-color: #031106;
+  box-shadow: 0 0 1rem #0d2e14;
+  /*background-color: rgba(50, 156, 95, 1);*/
 }
