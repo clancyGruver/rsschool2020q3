@@ -69,11 +69,11 @@ export default class Keyboard {
                 else {
                     this.shiftKey = true;
                 }
-                //this.toggleShift();
             }
             if (code.match(/Caps/)) this.handleCapsLock(keyObj);
 
             this.shiftKey ? this.switchUpperCase(true) : this.switchUpperCase(false);
+            this.toggleShift();
 
             //change language
             if (code.match(/EnRu/)) this.switchLanguage();
@@ -95,6 +95,7 @@ export default class Keyboard {
             if(code.match(/Shift/) && type === 'keyup') {
                 this.shiftKey = false;
                 this.switchUpperCase(false);
+                this.toggleShift();
             }
 
             keyObj.container.classList.remove('keyboard__key--press');
@@ -108,9 +109,11 @@ export default class Keyboard {
     }
 
     toggleShift () {
-        const shiftButtons = this.keyButtons.filter( key => key.code.match(/shift/) );
+        const shiftButtons = this.keyButtons.filter( key => key.code.match(/Shift/) );
         shiftButtons.forEach( btn => {
-            btn.classList.toggle('keyboard__key--active');
+            this.shiftKey
+                ? btn.container.classList.add('keyboard__key--active')
+                : btn.container.classList.remove('keyboard__key--active');
         })
     }
 
