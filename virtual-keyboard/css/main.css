@@ -1,0 +1,106 @@
+.keyboard-input {
+  width: 100%;
+  background-color: black;
+  color: #6F0;
+  font-size: 1rem;
+  font-family: arial;
+  outline: none;
+  -moz-appearance: none;
+  border: 1px solid #999;
+}
+
+.keyboard {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 5px 0;
+  background: #80ce87;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  transition: bottom 0.4s;
+  border-top: 5px solid #020204;
+}
+.keyboard--hidden {
+  bottom: -100%;
+}
+.keyboard__keys {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.keyboard__key {
+  height: 45px;
+  width: 6%;
+  min-width: 90px;
+  margin: 3px;
+  border-radius: 4px;
+  border: none;
+  background-color: rgba(128, 206, 135, 0.5);
+  box-shadow: 0 0 0 2px #204829;
+  color: #020204;
+  font-size: 1.05rem;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.keyboard__key--inactive {
+  font-size: 0.5rem;
+  align-self: flex-end;
+  margin-right: 0.4rem;
+}
+.keyboard__key:active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.keyboard__key--wide {
+  width: 12%;
+}
+.keyboard__key--extra-wide {
+  width: 38%;
+  min-width: 500px;
+}
+.keyboard__key--activatable:after {
+  content: "";
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+}
+.keyboard__key--active:after {
+  background-color: rgba(40, 255, 0, 0.8);
+}
+.keyboard__key--dark {
+  background: rgba(0, 0, 0, 0.25);
+}
+.keyboard__key__sub {
+  font-size: 0.6em;
+  display: flex;
+  align-self: start;
+  margin-left: 1rem;
+  color: gray;
+}
+.keyboard__key__sub--active {
+  color: black;
+  align-self: center;
+  font-size: 1rem;
+}
+.keyboard__key--functional {
+  background-color: rgba(2, 2, 4, 0.4);
+}
+.keyboard__key--press {
+  transition: ease-in-out 0.1s;
+  background-color: #329c5f;
+}
