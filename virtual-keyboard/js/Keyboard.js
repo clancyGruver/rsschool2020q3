@@ -10,6 +10,7 @@ export default class Keyboard {
         this.rowsOrder = rowsOrder;
         this.keyPressed = {};
         this.isCaps = false;
+        this.isPlaySound = true;
     }
 
     init (langCode) {
@@ -36,20 +37,9 @@ export default class Keyboard {
         else keyType = 'key';
 
         const soundType = `${keyType}${eventType}`;
-        if(this.sounds[soundType]){
+        if(this.sounds[soundType] && this.isPlaySound){
             this.sounds[soundType].currentTime = 0;
             this.sounds[soundType].play();
-            /*const playPromise = this.sounds[soundType].play();
-            if (playPromise !== undefined) {
-                playPromise.then(function() {
-                    console.log(111);
-                  // Automatic playback started!
-                }).catch(function(error) {
-                    console.log(222);
-                  // Automatic playback failed.
-                  // Show a UI element to let the user manually start playback.
-                });
-              }*/
         }
 
     }
@@ -309,6 +299,11 @@ export default class Keyboard {
             },
             done: () => {
                 this.hide();
+                return;
+            },
+            sound: () => {
+                keyObj.changeSoundIcon();
+                this.isPlaySound = !this.isPlaySound;
                 return;
             },
         }
