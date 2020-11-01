@@ -102,6 +102,10 @@ export default class Keyboard {
         const { dataset: { code } } = keyDiv;
         keyDiv.addEventListener('mouseLeave', this.resetButtonState);
         this.handleEvent({ code, type: e.type });
+
+        const keyObj = this.keyButtons.find( key => key.code === code );
+        if(e.type.slice(-2) === 'up') this.playSound(keyObj, 'up');
+        else this.playSound(keyObj, 'down');
     }
 
     handleEvent = (e) => {
@@ -111,7 +115,6 @@ export default class Keyboard {
         if(!keyObj) return;
         this.output.focus();
         if (type.match(/keydown|mousedown/)){
-            this.playSound(keyObj, 'down');
             if (type.match(/keydown/)) e.preventDefault();
 
             keyObj.container.classList.add('keyboard__key--press');
@@ -144,7 +147,6 @@ export default class Keyboard {
                 }
             }
         } else if (type.match(/keyup|mouseup/)) {
-            this.playSound(keyObj, 'down');
             //functional keys 
             if(code.match(/Control/)) this.ctrlKey = false;
             if(code.match(/Alt/)) this.altKey = false;
