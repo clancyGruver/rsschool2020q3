@@ -2,6 +2,7 @@ import { get, set } from './storage.js';
 import create from './utils/create.js';
 import language from './langs/index.js';
 import Key from './Key.js';
+import Microphone from './microphone.js';
 
 const main = create('main', '');
 
@@ -11,6 +12,7 @@ export default class Keyboard {
         this.keyPressed = {};
         this.isCaps = false;
         this.isPlaySound = true;
+        this.isMicrophoneEnabled = false;
     }
 
     init (langCode) {
@@ -20,6 +22,8 @@ export default class Keyboard {
         document.body.prepend(main);
         this.soundsInit();
         this.hide();
+        this.mic = new Microphone();
+        this.mic.init(langCode);
         return this;
     }
 
@@ -209,6 +213,7 @@ export default class Keyboard {
 
         if (this.isCaps) this.switchUpperCase(true);
         this.soundsInit();
+        this.mic.changeLanguage(newLang);
     }
 
     switchUpperCase (isTrue) {
@@ -309,7 +314,7 @@ export default class Keyboard {
             },
             mic: () => {
                 keyObj.changeMicIcon();
-                this.record();
+                this.handleMicrophoneButton();
                 return;
             },
         }
@@ -320,6 +325,23 @@ export default class Keyboard {
             this.output.value = `${left}${symbol || ''}${right}`;
         }
         if(!isSelection) this.selection(cursorPosition);
+    }
+
+    handleMicrophoneButton () {
+        this.isMicrophoneEnabled = !this.isMicrophoneEnabled;
+        this.isMicrophoneEnabled ? this.startRecord() : this.stopRecord();
+    }
+
+    startRecord () {
+        this.mic.record(this.outputText);
+    }
+
+    stopRecord () {
+        this.mic.stop();
+    }
+
+    outputText = (text) => {
+        this.output.value += ` ${text}`;
     }
 
     resetPressedButtons = (targetCode) => {
