@@ -64,10 +64,16 @@ export default class Keyboard {
             //functional keys 
             if (code.match(/Control/)) this.ctrlKey = true;
             if (code.match(/Alt/)) this.altKey = true;
-            if (code.match(/Shift/)) this.shiftKey = true;
+            if (code.match(/Shift/)) {
+                if (this.shiftKey && type === 'mousedown') this.shiftKey = false;
+                else {
+                    this.shiftKey = true;
+                }
+                //this.toggleShift();
+            }
             if (code.match(/Caps/)) this.handleCapsLock(keyObj);
 
-            if (this.shiftKey) this.switchUpperCase(true);
+            this.shiftKey ? this.switchUpperCase(true) : this.switchUpperCase(false);
 
             //change language
             if (code.match(/EnRu/)) this.switchLanguage();
@@ -99,6 +105,13 @@ export default class Keyboard {
                 this.switchUpperCase(false);
             }
         }
+    }
+
+    toggleShift () {
+        const shiftButtons = this.keyButtons.filter( key => key.code.match(/shift/) );
+        shiftButtons.forEach( btn => {
+            btn.classList.toggle('keyboard__key--active');
+        })
     }
 
     handleCapsLock (keyObj) {
