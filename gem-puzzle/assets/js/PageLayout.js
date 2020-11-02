@@ -3,7 +3,7 @@ import create from './utils/create.js';
 export default class PageLayout{
     constructor(boardSize) {
         this.boardSize = boardSize;
-        this.optionButtons = [];
+        this.optionButtons = {};
     }
     init() {
         document.body.prepend(
@@ -60,7 +60,7 @@ export default class PageLayout{
             const btnParams = [['type', 'button'],['id', name]];
             const btn = create('button', 'field__list--btn', null, null, ...btnParams);
             btn.textContent = name;
-            this.optionButtons.push(btn);
+            this.optionButtons[name] = btn;
             const li = create('li', 'field__list--element', btn);
             return li;
         });

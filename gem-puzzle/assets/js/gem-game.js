@@ -22,5 +22,11 @@ export default class GemGame{
         this.board.init();
 
         this.pageLayout.mainContent.appendChild(this.board.board);
+
+        this.pageLayout.optionButtons['new'].addEventListener('click', () => this.newGame());
+    }
+
+    newGame () {
+        this.board.newGame();
     }
 }

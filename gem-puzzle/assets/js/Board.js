@@ -7,6 +7,11 @@ export default class Board{
     }
 
     init () {
+        this.newGame();
+    }
+
+    newGame () {
+        this.board.innerHTML = '';
         this.createBoard();
         this.boardRender();
     }
