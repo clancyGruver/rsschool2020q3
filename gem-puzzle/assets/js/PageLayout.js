@@ -4,6 +4,7 @@ export default class PageLayout{
     constructor(boardSize) {
         this.boardSize = boardSize;
         this.optionButtons = {};
+        this.movesCount = 0;
     }
     init() {
         document.body.prepend(
@@ -90,7 +91,7 @@ export default class PageLayout{
         movesText.textContent = 'moves';
         const movesCount = create('span', 'moves__move-count');
         movesCount.textContent = '00';
-        this.movesCount = movesCount;
+        this.movesElement = movesCount;
         const moves = create('div', 'moves', [movesText, movesCount]);
 
         return moves;
@@ -113,6 +114,31 @@ export default class PageLayout{
         const timer = create('div', 'time', [timeText, timeTimer]);
 
         return timer;
+    }
+
+    setTime (time) {
+        const { minutes, seconds } = this.createTimeFromSeconds(time);
+        this.minutesContainer.textContent = minutes;
+        this.secondsContainer.textContent = seconds;
+
+    }
+
+    createTimeFromSeconds (seconds) {
+        seconds = parseInt(seconds);
+        const minutes = Math.floor(seconds / 60);
+        seconds = seconds % 60;
+        return {
+            minutes: this.addZero(minutes),
+            seconds: this.addZero(seconds),
+        };
+    }
+
+    addZero (val) {
+        return parseInt(val) < 10 ? `0${val}` : val;
+    }
+
+    increaseMoves () {
+        this.movesElement.textContent = this.addZero(++this.movesCount);
     }
 
 }

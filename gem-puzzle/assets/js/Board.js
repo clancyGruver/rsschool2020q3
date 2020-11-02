@@ -85,7 +85,6 @@ export default class Board{
             `${row}_${cell - 1}`,
             `${row}_${cell + 1}`,
         ];
-        console.log(this.movable);
     }
 
     getShuffledArray () {

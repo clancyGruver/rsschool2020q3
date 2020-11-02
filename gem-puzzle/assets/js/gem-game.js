@@ -27,21 +27,35 @@ export default class GemGame{
         this.pageLayout.optionButtons['new'].addEventListener('click', () => this.newGame() );
 
         this.movableElements();
+        this.startTimer();
     }
 
     newGame () {
         this.board.newGame();
+        this.startTimer();
     }
 
     move (e) {
         const {row, cell} = e.target.dataset;
-        console.log(e.target.dataset);
         this.board.move(row, cell);
         this.movableElements();
+        this.pageLayout.increaseMoves();
     }
 
     movableElements () {
         this.movable = document.querySelectorAll('.board__cell--active');
         Array.from(this.movable).forEach( el => el.addEventListener('click', (e) => this.move(e) ) );
+    }
+
+    startTimer (){
+        this.timer = 0;
+        this.timerClick();
+    }
+
+    timerClick () {
+        this.pageLayout.setTime(this.timer++);
+        setTimeout(() => {
+            this.timerClick();
+        }, 1000);
     }
 }
