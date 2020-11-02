@@ -84,6 +84,13 @@ body {
   font-size: 2rem;
   border-radius: 0.5rem;
   border: 2px solid #000;
+  cursor: default;
+}
+.main .container .board__cell--active {
+  cursor: pointer;
+}
+.main .container .board__cell--active:hover {
+  background-color: rgba(187, 232, 250, 0.8);
 }
 .main .container .board__cell--img {
   width: 90%;

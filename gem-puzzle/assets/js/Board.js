@@ -4,6 +4,7 @@ export default class Board{
     constructor (boardSize) {
         this.boardSize = boardSize;
         this.board = create('div', 'board');
+        this.movable = [];
     }
 
     init () {
@@ -21,13 +22,18 @@ export default class Board{
             ['src', './assets/images/rec.svg'],
             ['alt', 'empty cell']
         ];
-        this.boardArray.forEach( row => {
+        this.boardArray.forEach( (row, rowIndex) => {
             const rowElement = create('div', 'board__row');
-            row.forEach( cell => {
+            row.forEach( (cell,cellIndex) => {
                 const cellElement = create('div', 'board__cell', null, rowElement);
                 if(cell === 'icon'){
+                    cellElement.classList.add('board__cell--disabled');
                     create('img', 'board__cell--img', null, cellElement, ...imgAttrs);
                 } else {
+                    const pos = `${rowIndex}_${cellIndex}`;
+                    if(this.movable.includes(pos)){
+                        cellElement.classList.add('board__cell--active');
+                    }
                     cellElement.textContent = cell;
                 }
             });
@@ -45,11 +51,24 @@ export default class Board{
         for(let i = 0; i < this.boardSize; i++){
             const row = [];
             for(let j = 0; j < this.boardSize; j++){
-                row.push(numbers.pop());
+                const value = numbers.pop();
+                if(value === 'icon'){
+                    this.updateMovableElements(i,j);
+                }
+                row.push(value);
             }
             this.boardArray.push(row);
         }
 
+    }
+
+    updateMovableElements (row, column){
+        this.movable = [
+            `${row - 1}_${column}`,
+            `${row + 1}_${column}`,
+            `${row}_${column - 1}`,
+            `${row}_${column + 1}`,
+        ];
     }
 
     getShuffledArray () {
@@ -81,5 +100,9 @@ export default class Board{
 
     getRandomInt (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    isIcon (val) {
+        return val === 'icon';
     }
 }
