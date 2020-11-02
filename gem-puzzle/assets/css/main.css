@@ -44,6 +44,10 @@ body {
 .header .statistics .time__timer {
   margin-left: 1rem;
 }
+.header .statistics .time__timer--colon {
+  -webkit-animation: blink 1s linear infinite;
+  animation: blink 1s linear infinite;
+}
 .header .statistics .moves {
   display: flex;
   justify-content: space-between;
@@ -81,6 +85,9 @@ body {
   border-radius: 0.5rem;
   border: 2px solid #000;
 }
+.main .container .board__cell--img {
+  width: 90%;
+}
 
 .field__list {
   display: flex;
@@ -111,5 +118,27 @@ body {
   }
   .field__list--btn {
     padding: 0.5rem;
+  }
+}
+@-webkit-keyframes blink {
+  50% {
+    color: #222222;
+  }
+  51% {
+    color: rgba(34, 34, 34, 0);
+  }
+  100% {
+    color: rgba(34, 34, 34, 0);
+  }
+}
+@keyframes blink {
+  50% {
+    color: #222222;
+  }
+  51% {
+    color: rgba(34, 34, 34, 0);
+  }
+  100% {
+    color: rgba(34, 34, 34, 0);
   }
 }

@@ -38,6 +38,10 @@ body{
             justify-content: space-between;
             &__timer{
                 margin-left: 1rem;
+                &--colon{
+                    -webkit-animation: blink 1s linear infinite;
+                    animation: blink 1s linear infinite;
+                }
             }
         }
         .moves{
@@ -75,6 +79,9 @@ body{
                 font-size: 2rem;
                 border-radius: 0.5rem;
                 border: 2px solid #000;
+                &--img{
+                    width: 90%;
+                }
             }
         }
     }
@@ -118,4 +125,15 @@ body{
             padding: 0.5rem
         }
     }
+}
+
+@-webkit-keyframes blink {
+50% { color: rgb(34, 34, 34); }
+51% { color: rgba(34, 34, 34, 0); }
+100% { color: rgba(34, 34, 34, 0); }
+}
+@keyframes blink {
+50% { color: rgb(34, 34, 34); }
+51% { color: rgba(34, 34, 34, 0); }
+100% { color: rgba(34, 34, 34, 0); }
 }
