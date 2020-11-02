@@ -1,0 +1,103 @@
+:root{
+    font-size: 10px;
+}
+
+html{
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #e2e2e2;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    &__caption{
+        text-transform: uppercase;
+        letter-spacing: 0.2rem;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    .statistics{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 1.6rem;
+        margin: 0;
+        .time{
+            display: flex;
+            justify-content: space-between;
+            &__timer{
+                margin-left: 1rem;
+            }
+        }
+        .moves{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
+.main{
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    .container{
+        display: flex;
+        .board{
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to right bottom, #ad5389, #3c1053);
+            border-radius: 1.5rem;
+            &__row{
+                display: flex;
+                flex-direction: row;
+            }
+            &__cell{
+                display: flex;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                margin: 0.25rem;
+                background-color: rgba(187, 232, 250, 0.6);
+                font-size: 2rem;
+                border-radius: 0.5rem;
+                border: 2px solid #000;
+            }
+        }
+    }
+}
+
+.footer{
+    &__container{
+    }
+}
+
+
+.field__list{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 0;
+    &--element{
+        list-style: none;
+        margin-left: 1rem;
+    }
+    &--btn{
+        border: 2px solid #ad5389;
+        border-radius: 1.5rem;
+        padding: 0.5rem 1.5rem;
+        background-color: rgba(187, 232, 250, 0.4);
+        cursor: pointer;
+        &:hover{
+            background-color: rgba(187, 232, 250, 1);
+        }
+    }
+}
