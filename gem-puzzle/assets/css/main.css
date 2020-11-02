@@ -2,9 +2,18 @@
   font-size: 10px;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html {
   font-family: "Josefin Sans", sans-serif;
-  background-color: #e2e2e2;
+}
+
+body {
+  background: linear-gradient(to right bottom, #ad5389, #3c1053);
+  height: 100vh;
 }
 
 .header {
@@ -18,14 +27,15 @@ html {
   text-transform: uppercase;
   letter-spacing: 0.2rem;
   font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
 }
 .header .statistics {
   display: flex;
   align-items: center;
   justify-content: space-around;
   font-size: 1.6rem;
-  margin: 0;
+  margin-top: 1.5rem;
 }
 .header .statistics .time {
   display: flex;
@@ -40,7 +50,7 @@ html {
 }
 
 .main {
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   display: flex;
   align-items: center;
   text-align: center;
@@ -50,10 +60,8 @@ html {
   display: flex;
 }
 .main .container .board {
-  padding: 3rem;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to right bottom, #ad5389, #3c1053);
   border-radius: 1.5rem;
 }
 .main .container .board__row {
@@ -80,6 +88,7 @@ html {
   text-align: center;
   justify-content: center;
   padding: 0;
+  flex-wrap: wrap;
 }
 .field__list--element {
   list-style: none;
@@ -94,4 +103,13 @@ html {
 }
 .field__list--btn:hover {
   background-color: #bbe8fa;
+}
+
+@media screen and (max-width: 480px) {
+  .field__list--element {
+    margin-left: 0.4rem;
+  }
+  .field__list--btn {
+    padding: 0.5rem;
+  }
 }

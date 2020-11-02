@@ -1,10 +1,17 @@
 :root{
     font-size: 10px;
 }
+*{
+    margin: 0;
+    padding: 0;
+}
 
 html{
     font-family: 'Josefin Sans', sans-serif;
-    background-color: #e2e2e2;
+}
+body{
+    background: linear-gradient(to right bottom, #ad5389, #3c1053);
+    height: 100vh;
 }
 
 .header{
@@ -17,14 +24,15 @@ html{
         text-transform: uppercase;
         letter-spacing: 0.2rem;
         font-size: 3rem;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
+        margin-top: 3rem;
     }
     .statistics{
         display: flex;
         align-items: center;
         justify-content: space-around;
         font-size: 1.6rem;
-        margin: 0;
+        margin-top: 1.5rem;
         .time{
             display: flex;
             justify-content: space-between;
@@ -40,7 +48,7 @@ html{
 }
 
 .main{
-    margin-bottom: 2rem;
+    margin: 2rem 0;
     display: flex;
     align-items: center;
     text-align: center;
@@ -48,10 +56,8 @@ html{
     .container{
         display: flex;
         .board{
-            padding: 3rem;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(to right bottom, #ad5389, #3c1053);
             border-radius: 1.5rem;
             &__row{
                 display: flex;
@@ -86,6 +92,7 @@ html{
     text-align: center;
     justify-content: center;
     padding: 0;
+    flex-wrap: wrap;
     &--element{
         list-style: none;
         margin-left: 1rem;
@@ -98,6 +105,17 @@ html{
         cursor: pointer;
         &:hover{
             background-color: rgba(187, 232, 250, 1);
+        }
+    }
+}
+
+@media screen and (max-width: 480px){
+    .field__list{
+        &--element{
+            margin-left: 0.4rem;
+        }
+        &--btn{
+            padding: 0.5rem
         }
     }
 }
