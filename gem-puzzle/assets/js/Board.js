@@ -95,6 +95,7 @@ export default class Board{
                 }
             }
         }
+        this.victoryArray = numberArray;
         this.boardArray = numberArray;
         do{
             this.shuffle();
@@ -142,6 +143,7 @@ export default class Board{
         this.empty.cell = cell;
         this.updateMovableElements();
         this.boardRender();
+        if (this.isSolved()) alert('ddd');
     }
 
     setSize (boardSize) {
@@ -150,6 +152,7 @@ export default class Board{
 
     setBoardArray (boardArray) {
         this.boardArray = boardArray;
+        this.setEmptyCell();
         this.boardRender();
     }
 
@@ -168,11 +171,33 @@ export default class Board{
             }
         }
         return countInversions % 2 === 0;
-      }
+    }
+
+    createVictoryArray () {
+        this.victoryArray = [];
+        for (let i = 0; i < this.boardSize; i++) {
+            const innerArr = [];
+            for (let j = 0; j < this.boardSize; j++) {
+                innerArr.push(i * 4 + j + 1);
+            }
+            this.victoryArray.push(innerArr);
+        }
+        this.victoryArray[this.boardSize-1][this.boardSize-1] = 'icon';
+    }
 
     /**
      * return boolean
      */
     isSolved() {
+        if (!this.victoryArray) this.createVictoryArray();
+        let victory = true;
+        const va = [].concat(...this.victoryArray);
+        const cb = [].concat(...this.boardArray);
+        const size = this.boardSize * this.boardSize;
+        for(let i = 0; i < size; i++){
+            if (va[i] !== cb[i]) return false;
+        }
+
+        return victory;
     }
 }

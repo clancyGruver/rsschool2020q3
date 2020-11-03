@@ -70,6 +70,7 @@ export default class GemGame{
         this.pageLayout.setMoves(loadData.moves);
 
         this.board.setBoardArray(loadData.board);
+        this.movableElements();
     }
 
     move (e) {
