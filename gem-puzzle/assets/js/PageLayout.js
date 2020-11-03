@@ -120,6 +120,14 @@ export default class PageLayout{
         return timer;
     }
 
+    getMoves () {
+        return this.movesCount;
+    }
+
+    getTime () {
+        return `${this.minutesContainer.textContent}:${this.secondsContainer.textContent}`;
+    }
+
     setTime (time) {
         const { minutes, seconds } = this.createTimeFromSeconds(time);
         this.minutesContainer.textContent = minutes;
@@ -128,6 +136,7 @@ export default class PageLayout{
     }
 
     setMoves (movesCount) {
+        this.movesCount = movesCount;
         this.movesElement.textContent = movesCount;
     }
 

@@ -2,6 +2,7 @@ import PageLayout from './PageLayout.js';
 import Board from './Board.js';
 import {get, set, check} from './utils/storage.js';
 import Modal from './Modal.js';
+import {declOfNum} from './utils/humanNums.js';
 
 export default class GemGame{
     /**
@@ -78,6 +79,7 @@ export default class GemGame{
         this.board.move(row, cell);
         this.movableElements();
         this.pageLayout.increaseMoves();
+        if (this.board.isSolved()) this.victory();
     }
 
     movableElements () {
@@ -96,5 +98,21 @@ export default class GemGame{
 
     timerClick (time = null) {
         this.pageLayout.setTime(time || this.timer++);
+    }
+
+    victory () {
+        const time = this.pageLayout.getTime();
+        const movesCount = this.pageLayout.getMoves();
+        const movesName = declOfNum(movesCount, ['ход', 'хода', 'ходов']);
+        this.modal.show('VICTORY!',`Ура! Вы решили головоломку за ${time} и ${movesCount} ${movesName}`);
+        this.saveResults(time, movesCount);
+    }
+
+    saveResults (time, movesCount) {
+        let results = [];
+        if(check('gemPuzzleResults')) results = get('gemPuzzleResults');
+        if (results.length >= 10) results.shift();
+        results.push([time, movesCount]);
+        set('gemPuzzleResults', results);
     }
 }

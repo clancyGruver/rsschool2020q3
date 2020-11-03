@@ -143,7 +143,6 @@ export default class Board{
         this.empty.cell = cell;
         this.updateMovableElements();
         this.boardRender();
-        if (this.isSolved()) alert('ddd');
     }
 
     setSize (boardSize) {

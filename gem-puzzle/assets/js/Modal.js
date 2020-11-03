@@ -41,6 +41,7 @@ export default class Modal {
     show (header, modalText) {
         this.header.textContent = header;
         this.body.textContent = modalText;
+        this.modalContainer.removeChild(this.footer);
         document.body.appendChild(this.modal);
     }
 
@@ -49,7 +50,7 @@ export default class Modal {
         this.header = create('h3', 'modal__window__header--caption', null, headerContainer);
         const close = create('span', 'modal__window__header--close', null, headerContainer);
         close.innerHTML = '&times';
-        close.addEventListener('click', this.close);
+        close.addEventListener('click', () => this.close() );
     }
 
     createBody () {
