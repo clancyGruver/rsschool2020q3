@@ -1,4 +1,4 @@
-import Game from './gem-game.js';
+import Game from './gem-game';
 
 const game = new Game();
 game.init();
