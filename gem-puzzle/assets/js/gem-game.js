@@ -27,7 +27,7 @@ export default class GemGame{
 
         this.modal = new Modal();
         this.modal.init();
-        
+
         if ( check('previousGame') ){
             this.modal.confirm(
                 'Found saved game',
@@ -70,7 +70,6 @@ export default class GemGame{
         this.pageLayout.setMoves(loadData.moves);
 
         this.board.setBoardArray(loadData.board);
-        console.log(loadData);
     }
 
     move (e) {
@@ -87,13 +86,14 @@ export default class GemGame{
 
     startTimer (timer){
         this.timer = timer || 0;
-        this.timerClick();
+        this.timerClick(0);
+        if (this.timerID){
+            clearInterval(this.timerID);
+        }
+        this.timerID = setInterval(() => this.timerClick(), 1000);
     }
 
-    timerClick () {
-        this.pageLayout.setTime(this.timer++);
-        setTimeout(() => {
-            this.timerClick();
-        }, 1000);
+    timerClick (time = null) {
+        this.pageLayout.setTime(time || this.timer++);
     }
 }

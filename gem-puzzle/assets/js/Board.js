@@ -54,24 +54,20 @@ export default class Board{
     }
 
     createBoard () {
-        const numbers = this.getShuffledArray();
-        this.fillBoardArray(numbers);
+        this.createShuffledArray();
+        this.setEmptyCell();
     }
 
-    fillBoardArray (numbers) {
-        this.boardArray = [];
+    setEmptyCell () {
         for(let i = 0; i < this.boardSize; i++){
-            const row = [];
             for(let j = 0; j < this.boardSize; j++){
-                const value = numbers.pop();
+                const value = this.boardArray[i][j];
                 if(value === 'icon'){
                     this.empty.row = i;
                     this.empty.cell = j;
                     this.updateMovableElements();
                 }
-                row.push(value);
             }
-            this.boardArray.push(row);
         }
 
     }
@@ -87,7 +83,7 @@ export default class Board{
         ];
     }
 
-    getShuffledArray () {
+    createShuffledArray () {
         let numberArray = [];
         let currentNumber = 1;
         for(let i = 0; i < this.boardSize; i++){
@@ -99,19 +95,33 @@ export default class Board{
                 }
             }
         }
-        return this.shuffle(numberArray);
+        this.boardArray = numberArray;
+        do{
+            this.shuffle();
+        } while(this.isSolvable());
+
+        const arr = [...this.boardArray];
+        this.boardArray = [];
+        for(let i = 0; i < this.boardSize; i++){
+            const innerArr = [];
+            for(let j = 0; j < this.boardSize; j++){
+                innerArr.push(arr[ i * 4 +  j ]);
+            }
+            this.boardArray.push(innerArr);
+        }
     }
 
-    shuffle (arr) {
+    shuffle () {
         let result = [];
+        const tempArr = [...this.boardArray];
 
-        while (arr.length > 0) {
-            let random = this.getRandomInt(0, arr.length - 1);
-            let elem = arr.splice(random, 1)[0];
+        while (tempArr.length > 0) {
+            let random = this.getRandomInt(0, tempArr.length - 1);
+            let elem = tempArr.splice(random, 1)[0];
             result.push(elem);
         }
 
-        return result;
+        this.boardArray = result;
     }
 
     getRandomInt (min, max) {
@@ -141,5 +151,28 @@ export default class Board{
     setBoardArray (boardArray) {
         this.boardArray = boardArray;
         this.boardRender();
+    }
+
+    /**
+     * return boolean
+     */
+    isSolvable() {
+        let countInversions = 0;
+        const size = this.boardSize * this.boardSize;
+        const oneDimentionalArray = [].concat(...this.boardArray);
+        for (let i = 0; i < size; i++) {
+            if (oneDimentionalArray[i] === 'icon') continue;
+            for (let j = 0; j < i; j++) {
+                if(oneDimentionalArray[j] === 'icon') continue;
+                if (oneDimentionalArray[j] > oneDimentionalArray[i]) countInversions++;
+            }
+        }
+        return countInversions % 2 === 0;
+      }
+
+    /**
+     * return boolean
+     */
+    isSolved() {
     }
 }
