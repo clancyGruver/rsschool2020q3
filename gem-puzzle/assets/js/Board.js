@@ -133,4 +133,13 @@ export default class Board{
         this.updateMovableElements();
         this.boardRender();
     }
+
+    setSize (boardSize) {
+        this.boardSize = boardSize;
+    }
+
+    setBoardArray (boardArray) {
+        this.boardArray = boardArray;
+        this.boardRender();
+    }
 }

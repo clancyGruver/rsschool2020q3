@@ -14,6 +14,11 @@ export default class PageLayout{
         );
     }
 
+    setSize (boardSize = null) {
+        if (boardSize) this.boardSize = boardSize;
+        this.statisticsFieldSize.textContent = `${this.boardSize} X ${this.boardSize}`;
+    }
+
     createHeader () {
         const statistics = this.createStatistics();
 
@@ -76,10 +81,9 @@ export default class PageLayout{
 
         const rightSide = create('div','statistics__right-side', [moves, timer]);
 
-        const fieldSize = create('h2', 'field-size');
-        fieldSize.textContent = `${this.boardSize} X ${this.boardSize}`;
-        this.statisticsFieldSize = fieldSize;
-        const leftSide = create('div','statistics__left-side', fieldSize);
+        this.statisticsFieldSize = create('h2', 'field-size');
+        const leftSide = create('div','statistics__left-side', this.statisticsFieldSize);
+        this.setSize();
 
         const statistics = create('div','statistics', [leftSide, rightSide]);
 
@@ -121,6 +125,10 @@ export default class PageLayout{
         this.minutesContainer.textContent = minutes;
         this.secondsContainer.textContent = seconds;
 
+    }
+
+    setMoves (movesCount) {
+        this.movesElement.textContent = movesCount;
     }
 
     createTimeFromSeconds (seconds) {

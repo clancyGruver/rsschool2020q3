@@ -1,5 +1,7 @@
 import PageLayout from './PageLayout.js';
 import Board from './Board.js';
+import {get, set, check} from './utils/storage.js';
+import Modal from './Modal.js';
 
 export default class GemGame{
     /**
@@ -23,8 +25,21 @@ export default class GemGame{
 
         this.pageLayout.mainContent.appendChild(this.board.board);
 
+        this.modal = new Modal();
+        this.modal.init();
+        
+        if ( check('previousGame') ){
+            this.modal.confirm(
+                'Found saved game',
+                'Do you want to load previous game?',
+                () => this.loadGame()
+            );
+        }
+
         //menu handlers
-        this.pageLayout.optionButtons['new'].addEventListener('click', () => this.newGame() );
+        this.pageLayout.optionButtons.new.addEventListener('click', () => this.newGame() );
+        this.pageLayout.optionButtons.save.addEventListener('click', () => this.saveGame() );
+        this.pageLayout.optionButtons.save.addEventListener('click', () => this.loadGame() );
 
         this.movableElements();
         this.startTimer();
@@ -33,6 +48,29 @@ export default class GemGame{
     newGame () {
         this.board.newGame();
         this.startTimer();
+    }
+
+    saveGame () {
+        const params = {
+            board: this.board.boardArray,
+            boardSize: this.boardSize,
+            time: this.timer,
+            moves: this.pageLayout.movesCount,
+        };
+        set('previousGame', params);
+    }
+
+    loadGame () {
+        const loadData = get('previousGame');
+
+        this.boardSize = loadData.boardSize;
+        this.board.setSize(this.boardSize);
+        this.pageLayout.setSize(this.boardSize);
+        this.startTimer(loadData.time);
+        this.pageLayout.setMoves(loadData.moves);
+
+        this.board.setBoardArray(loadData.board);
+        console.log(loadData);
     }
 
     move (e) {
@@ -47,8 +85,8 @@ export default class GemGame{
         Array.from(this.movable).forEach( el => el.addEventListener('click', (e) => this.move(e) ) );
     }
 
-    startTimer (){
-        this.timer = 0;
+    startTimer (timer){
+        this.timer = timer || 0;
         this.timerClick();
     }
 

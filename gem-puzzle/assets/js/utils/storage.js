@@ -9,3 +9,7 @@ export function get(name, subst = null){
 export function remove(name){
     JSON.parse(window.localStorage.removeItem(name));
 }
+
+export function check(name) {
+    return Boolean(window.localStorage.getItem(name));
+}

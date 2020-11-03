@@ -126,6 +126,97 @@ body{
     }
 }
 
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    margin: 0;
+    padding: 0;
+    &__window{
+        position: relative;
+        width: auto;
+        margin-top: 10rem;
+        &--container{
+            font-size: 1.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: .1rem solid rgba(0,0,0,.2);
+            border-radius: .3rem;
+            outline: 0;
+            max-width: 52rem;
+            margin: 0 auto;
+        }
+        &__header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-bottom: .1rem solid #eceeef;
+            &--caption{
+                margin-top: 0;
+                margin-bottom: 0;
+                line-height: 1.5;
+                font-size: 1.8rem;
+                font-weight: 500;
+            }
+            &--close{
+                float: right;
+                font-size: 3rem;
+                line-height: 1;
+                color: #000;
+                text-shadow: 0 1px 0 #fff;
+                opacity: .5;
+                text-decoration: none;
+                &:focus, &:hover {
+                    color: #000;
+                    text-decoration: none;
+                    cursor: pointer;
+                    opacity: .75;
+                }
+            }
+        }
+        &__body{
+            position: relative;
+            flex: 1 1 auto;
+            padding: 15px;
+            overflow: auto;
+        }
+        &__footer{
+            position: relative;
+            flex: 1 1 auto;
+            padding: 15px;
+            overflow: auto;
+            display: flex;
+            justify-content: space-around;
+            &__btn{
+                width: 3rem;
+                height: 3rem;
+                border-radius: 1.5rem;
+                outline:none;
+                cursor: pointer;
+                opacity: 0.7;
+                border: 2px solid #222;
+                font-weight: 900;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+            .confirm{
+                background-color: #28a745;
+            }
+            .dismiss{
+                background-color: #dc3545;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 480px){
     .field__list{
         &--element{
