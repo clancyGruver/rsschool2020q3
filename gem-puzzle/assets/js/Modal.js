@@ -40,8 +40,16 @@ export default class Modal {
 
     show (header, modalText) {
         this.header.textContent = header;
-        this.body.textContent = modalText;
-        this.modalContainer.removeChild(this.footer);
+        if(typeof modalText === typeof '') {
+            this.body.textContent = modalText;
+        }
+        else {
+            this.body.textContent = '';
+            this.body.appendChild(modalText);
+        }
+        if(this.modalContainer.querySelector('.modal__window__footer')){
+            this.modalContainer.removeChild(this.footer);
+        }
         document.body.appendChild(this.modal);
     }
 

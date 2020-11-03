@@ -3,6 +3,7 @@ import Board from './Board.js';
 import {get, set, check} from './utils/storage.js';
 import Modal from './Modal.js';
 import {declOfNum} from './utils/humanNums.js';
+import LeaderBoard from './LeaderBoard.js';
 
 export default class GemGame{
     /**
@@ -37,10 +38,14 @@ export default class GemGame{
             );
         }
 
+        this.results = new LeaderBoard();
+        this.results.init();
+
         //menu handlers
         this.pageLayout.optionButtons.new.addEventListener('click', () => this.newGame() );
         this.pageLayout.optionButtons.save.addEventListener('click', () => this.saveGame() );
-        this.pageLayout.optionButtons.save.addEventListener('click', () => this.loadGame() );
+        this.pageLayout.optionButtons.load.addEventListener('click', () => this.loadGame() );
+        this.pageLayout.optionButtons.results.addEventListener('click', () => this.showResults() );
 
         this.movableElements();
         this.startTimer();
@@ -114,5 +119,12 @@ export default class GemGame{
         if (results.length >= 10) results.shift();
         results.push([time, movesCount]);
         set('gemPuzzleResults', results);
+    }
+
+    showResults () {
+        let results = [];
+        if(check('gemPuzzleResults')) results = get('gemPuzzleResults');
+        this.results.setResults(results);
+        this.modal.show('leaderboard',this.results.getTable());
     }
 }

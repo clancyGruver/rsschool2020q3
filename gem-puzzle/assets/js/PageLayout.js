@@ -34,7 +34,7 @@ export default class PageLayout{
     }
 
     createMainContent () {
-        const container = create('div', 'container')
+        const container = create('div', 'container');
         const main = create('main', 'main', container);
         this.mainContent = container;
 
@@ -61,7 +61,7 @@ export default class PageLayout{
     }
 
     createOptions () {
-        const optionPositions = ['new', 'pause', 'save', 'load', 'records'];
+        const optionPositions = ['new', 'pause', 'save', 'load', 'results'];
         const optionListElements = optionPositions.map( name => {
             const btnParams = [['type', 'button'],['id', name]];
             const btn = create('button', 'field__list--btn', null, null, ...btnParams);

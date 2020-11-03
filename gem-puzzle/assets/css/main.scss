@@ -218,6 +218,47 @@ body{
     }
 }
 
+.record{
+    &__table{
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        font-size: 32px;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        flex-direction: column;
+        &--header{
+            width: 100%;
+            background-color: #3cae4f;
+            display: flex;
+            justify-content: space-between;
+        }
+        &--cell{
+            width: 50%;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+        &--list{
+            width: 100%;
+            overflow-y: scroll;
+            max-height: 310px;
+        }
+        &--row{
+            display: flex;
+        }
+        &--row:nth-child(odd) {
+            background-color: #d7d8da;
+        }
+        &--row:nth-child(even) {
+            background-color: #cfd3d2;
+        }
+    }
+}
+
 @media screen and (max-width: 480px){
     .field__list{
         &--element{
