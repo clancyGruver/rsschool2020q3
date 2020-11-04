@@ -21,7 +21,7 @@ export default class GemGame {
     this.pageLayout = new PageLayout(this.boardSize);
     this.pageLayout.init();
 
-    this.board = new Board(this.boardSize);
+    this.board = new Board(this.boardSize, (e) => this.move(e));
     this.board.init();
 
     this.pageLayout.mainContent.appendChild(this.board.board);

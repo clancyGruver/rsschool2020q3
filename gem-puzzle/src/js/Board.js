@@ -1,7 +1,7 @@
 import create from './utils/create';
 
 export default class Board {
-  constructor(boardSize) {
+  constructor(boardSize, dragOverHandler) {
     this.boardSize = boardSize;
     this.board = create('div', 'board');
     this.movable = [];
@@ -9,6 +9,8 @@ export default class Board {
       row: -1,
       cell: -1,
     };
+
+    this.makeDraggable(dragOverHandler);
   }
 
   init() {
@@ -40,11 +42,12 @@ export default class Board {
         const cellElement = create('div', 'board__cell', null, rowElement, ...cellOptions);
         if (cell === 'icon') {
           cellElement.classList.add('board__cell--disabled');
-          create('img', 'board__cell--img', null, cellElement, ...imgAttrs);
+          this.emptyCell = create('img', 'board__cell--img', null, cellElement, ...imgAttrs);
         } else {
           const pos = `${rowIndex}_${cellIndex}`;
           if (this.movable.includes(pos)) {
             cellElement.classList.add('board__cell--active');
+            cellElement.draggable = true;
           }
           cellElement.textContent = cell;
         }
@@ -198,5 +201,26 @@ export default class Board {
     }
 
     return victory;
+  }
+
+  makeDraggable(dragOverHandler) {
+    this.board.addEventListener('dragstart', (e) => {
+      this.draggedCell = e.target;
+      setTimeout(() => { e.target.style.fontSize = 0; }, 0);
+    });
+
+    this.board.addEventListener('dragend', (e) => {
+      setTimeout(() => { e.target.style.fontSize = '3rem'; }, 0);
+      if (this.emptyCell === this.dragOverElement) {
+        dragOverHandler({ target: this.draggedCell });
+      }
+      this.draggedCell = null;
+    });
+
+    this.board.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const currentElement = e.target;
+      this.dragOverElement = currentElement;
+    });
   }
 }

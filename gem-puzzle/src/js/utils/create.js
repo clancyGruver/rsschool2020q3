@@ -8,6 +8,17 @@
 
 export default function create(el, classNames, children, parent, ...dataAttributes) {
   let element = null;
+  const notDataAttributes = [
+    'draggable',
+    'value',
+    'id',
+    'placeholder',
+    'cols',
+    'rows',
+    'autocorrect',
+    'spellcheck',
+    'src',
+  ];
   try {
     element = document.createElement(el);
   } catch (error) {
@@ -35,7 +46,7 @@ export default function create(el, classNames, children, parent, ...dataAttribut
     dataAttributes.forEach(([attributeName, attributeValue]) => {
       if (attributeValue === '') {
         element.setAttribute(attributeName, '');
-      } else if (attributeName.match(/value|id|placeholder|cols|rows|autocorrect|spellcheck|src/)) {
+      } else if (notDataAttributes.includes(attributeName)) {
         element.setAttribute(attributeName, attributeValue);
       } else {
         element.dataset[attributeName] = attributeValue;
