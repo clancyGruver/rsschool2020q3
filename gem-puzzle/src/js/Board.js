@@ -3,8 +3,8 @@ import create from './utils/create';
 export default class Board {
   constructor(boardSize, dragOverHandler) {
     this.boardSize = boardSize;
-    this.board = create('div', 'board');
-    this.movable = [];
+    this.board = create('div', 'board animate');
+    this.movable = {};
     this.empty = {
       row: -1,
       cell: -1,
@@ -42,11 +42,12 @@ export default class Board {
         const cellElement = create('div', 'board__cell', null, rowElement, ...cellOptions);
         if (cell === 'icon') {
           cellElement.classList.add('board__cell--disabled');
-          this.emptyCell = create('img', 'board__cell--img', null, cellElement, ...imgAttrs);
+          this.emptyCell = cellElement;
         } else {
           const pos = `${rowIndex}_${cellIndex}`;
-          if (this.movable.includes(pos)) {
+          if (Object.keys(this.movable).includes(pos)) {
             cellElement.classList.add('board__cell--active');
+            cellElement.dataset.position = this.movable[pos];
             cellElement.draggable = true;
           }
           cellElement.textContent = cell;
@@ -77,12 +78,11 @@ export default class Board {
   updateMovableElements() {
     const row = parseInt(this.empty.row, 10);
     const cell = parseInt(this.empty.cell, 10);
-    this.movable = [
-      `${row - 1}_${cell}`,
-      `${row + 1}_${cell}`,
-      `${row}_${cell - 1}`,
-      `${row}_${cell + 1}`,
-    ];
+    this.movable = {};
+    this.movable[`${row - 1}_${cell}`] = 'top';
+    this.movable[`${row + 1}_${cell}`] = 'bottom';
+    this.movable[`${row}_${cell - 1}`] = 'left';
+    this.movable[`${row}_${cell + 1}`] = 'right';
   }
 
   createShuffledArray() {
@@ -136,8 +136,31 @@ export default class Board {
     return val === 'icon';
   }
 
-  move(row, cell) {
+  /**
+   * @param {HTMLElement} elem
+   */
+  move(elem) {
+    const { row, cell, position } = elem.dataset;
     const val = this.boardArray[row][cell];
+
+    let emptyPos = '';
+    switch(position) {
+      case 'left': emptyPos = 'right'; break;
+      case 'right': emptyPos = 'left'; break;
+      case 'top': emptyPos = 'bottom'; break;
+      case 'bottom': emptyPos = 'top'; break;
+      default: break;
+    }
+
+    this.emptyCell.style.position = 'relative';
+    elem.style.position = 'relative';
+    for(let i = 0; i < 56; i++) {
+      const styleVal = `${i}px`;
+      setTimeout(() => {
+        this.emptyCell.style[emptyPos] = styleVal;
+        elem.style[position] = styleVal;
+      }, 10);
+    }
 
     this.boardArray[row][cell] = 'icon';
     this.boardArray[this.empty.row][this.empty.cell] = val;

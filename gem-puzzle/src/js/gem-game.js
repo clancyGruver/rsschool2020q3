@@ -48,7 +48,7 @@ export default class GemGame {
 
     // field size buttons
     const fieldSizeButtons = this.pageLayout.getFieldSizeButtons();
-    Object.keys(fieldSizeButtons).forEach( (sizeBtnIdx) => {
+    Object.keys(fieldSizeButtons).forEach((sizeBtnIdx) => {
       fieldSizeButtons[sizeBtnIdx].addEventListener('click', (e) => { this.changeBoardSize(e); });
     });
 
@@ -85,11 +85,12 @@ export default class GemGame {
   }
 
   move(e) {
-    const { row, cell } = e.target.dataset;
-    this.board.move(row, cell);
+    if (e.target.closest('board__cell--disabled') || e.target.tagName === 'img') return false;
+    this.board.move(e.target);
     this.movableElements();
     this.pageLayout.increaseMoves();
     if (this.board.isSolved()) this.victory();
+    return true;
   }
 
   movableElements() {
