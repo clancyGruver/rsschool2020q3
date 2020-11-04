@@ -98,7 +98,7 @@ export default class Board {
         }
       }
     }
-    this.victoryArray = numberArray;
+    this.victoryArray = [...numberArray];
     this.boardArray = numberArray;
     do {
       this.shuffle();
@@ -109,7 +109,7 @@ export default class Board {
     for (let i = 0; i < this.boardSize; i++) {
       const innerArr = [];
       for (let j = 0; j < this.boardSize; j++) {
-        innerArr.push(arr[i * 4 + j]);
+        innerArr.push(arr[i * this.boardSize + j]);
       }
       this.boardArray.push(innerArr);
     }
@@ -180,7 +180,7 @@ export default class Board {
     for (let i = 0; i < this.boardSize; i++) {
       const innerArr = [];
       for (let j = 0; j < this.boardSize; j++) {
-        innerArr.push(i * 4 + j + 1);
+        innerArr.push(i * this.boardSize + j + 1);
       }
       this.victoryArray.push(innerArr);
     }
@@ -222,5 +222,9 @@ export default class Board {
       const currentElement = e.target;
       this.dragOverElement = currentElement;
     });
+  }
+
+  setBoardSize(newBoardSize) {
+    this.boardSize = newBoardSize;
   }
 }

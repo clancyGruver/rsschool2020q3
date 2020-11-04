@@ -46,6 +46,12 @@ export default class GemGame {
     this.pageLayout.optionButtons.load.addEventListener('click', () => this.loadGame());
     this.pageLayout.optionButtons.results.addEventListener('click', () => this.showResults());
 
+    // field size buttons
+    const fieldSizeButtons = this.pageLayout.getFieldSizeButtons();
+    Object.keys(fieldSizeButtons).forEach( (sizeBtnIdx) => {
+      fieldSizeButtons[sizeBtnIdx].addEventListener('click', (e) => { this.changeBoardSize(e); });
+    });
+
     this.movableElements();
     this.startTimer();
   }
@@ -70,7 +76,7 @@ export default class GemGame {
 
     this.boardSize = loadData.boardSize;
     this.board.setSize(this.boardSize);
-    this.pageLayout.setSize(this.boardSize);
+    this.pageLayout.setBoardSize(this.boardSize);
     this.startTimer(loadData.time);
     this.pageLayout.setMoves(loadData.moves);
 
@@ -126,5 +132,14 @@ export default class GemGame {
     if (check('gemPuzzleResults')) results = get('gemPuzzleResults');
     this.results.setResults(results);
     this.modal.show('board of leaders', this.results.getTable());
+  }
+
+  changeBoardSize(sizeBtn) {
+    const newBoardSize = sizeBtn.target.dataset.size;
+    this.boardSize = newBoardSize;
+    this.pageLayout.setBoardSize(newBoardSize);
+    this.board.setBoardSize(newBoardSize);
+    this.newGame();
+    console.log(newBoardSize);
   }
 }

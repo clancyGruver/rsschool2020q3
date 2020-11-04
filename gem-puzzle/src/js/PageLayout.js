@@ -3,6 +3,7 @@ import create from './utils/create';
 export default class PageLayout {
   constructor(boardSize) {
     this.boardSize = boardSize;
+    this.fieldSizeButtons = [];
     this.optionButtons = {};
     this.movesCount = 0;
   }
@@ -11,11 +12,11 @@ export default class PageLayout {
     document.body.prepend(
       this.createHeader(),
       this.createMainContent(),
-      PageLayout.createFooter(),
+      this.createFooter(),
     );
   }
 
-  setSize(boardSize = null) {
+  setBoardSize(boardSize = null) {
     if (boardSize) this.boardSize = boardSize;
     this.statisticsFieldSize.textContent = `${this.boardSize} X ${this.boardSize}`;
   }
@@ -42,8 +43,7 @@ export default class PageLayout {
     return main;
   }
 
-  static createFooter() {
-    const listItems = [];
+  createFooter() {
     for (let i = 3; i < 9; i++) {
       const btnOptions = [
         ['type', 'button'],
@@ -51,10 +51,9 @@ export default class PageLayout {
       ];
       const btn = create('button', 'field__list--btn', null, null, ...btnOptions);
       btn.textContent = `${i} X ${i}`;
-      const li = create('li', 'field__list--element', btn);
-      listItems.push(li);
+      this.fieldSizeButtons[i] = create('li', 'field__list--element', btn);
     }
-    const fieldList = create('div', 'field__list', listItems);
+    const fieldList = create('div', 'field__list', this.fieldSizeButtons);
     const footerContainer = create('div', 'footer__container', fieldList);
     const footer = create('footer', 'footer', footerContainer);
 
@@ -84,7 +83,7 @@ export default class PageLayout {
 
     this.statisticsFieldSize = create('h2', 'field-size');
     const leftSide = create('div', 'statistics__left-side', this.statisticsFieldSize);
-    this.setSize();
+    this.setBoardSize();
 
     const statistics = create('div', 'statistics', [leftSide, rightSide]);
 
@@ -157,5 +156,9 @@ export default class PageLayout {
   increaseMoves() {
     this.movesCount += 1;
     this.movesElement.textContent = PageLayout.addZero(this.movesCount);
+  }
+
+  getFieldSizeButtons() {
+    return this.fieldSizeButtons;
   }
 }
