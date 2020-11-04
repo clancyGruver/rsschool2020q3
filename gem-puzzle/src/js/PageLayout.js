@@ -11,7 +11,7 @@ export default class PageLayout {
     document.body.prepend(
       this.createHeader(),
       this.createMainContent(),
-      this.createFooter(),
+      PageLayout.createFooter(),
     );
   }
 
@@ -130,7 +130,7 @@ export default class PageLayout {
   }
 
   setTime(time) {
-    const { minutes, seconds } = this.createTimeFromSeconds(time);
+    const { minutes, seconds } = PageLayout.createTimeFromSeconds(time);
     this.minutesContainer.textContent = minutes;
     this.secondsContainer.textContent = seconds;
   }
@@ -140,13 +140,13 @@ export default class PageLayout {
     this.movesElement.textContent = movesCount;
   }
 
-  createTimeFromSeconds(secondsIn) {
+  static createTimeFromSeconds(secondsIn) {
     let seconds = parseInt(secondsIn, 10);
     const minutes = Math.floor(seconds / 60);
     seconds %= 60;
     return {
-      minutes: this.addZero(minutes),
-      seconds: this.addZero(seconds),
+      minutes: PageLayout.addZero(minutes),
+      seconds: PageLayout.addZero(seconds),
     };
   }
 
@@ -156,6 +156,6 @@ export default class PageLayout {
 
   increaseMoves() {
     this.movesCount += 1;
-    this.movesElement.textContent = this.addZero(this.movesCount);
+    this.movesElement.textContent = PageLayout.addZero(this.movesCount);
   }
 }

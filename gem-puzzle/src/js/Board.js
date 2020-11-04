@@ -117,7 +117,7 @@ export default class Board {
     const tempArr = [...this.boardArray];
 
     while (tempArr.length > 0) {
-      const random = this.getRandomInt(0, tempArr.length - 1);
+      const random = Board.getRandomInt(0, tempArr.length - 1);
       const elem = tempArr.splice(random, 1)[0];
       result.push(elem);
     }
