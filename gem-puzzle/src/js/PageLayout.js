@@ -6,6 +6,7 @@ export default class PageLayout {
     this.fieldSizeButtons = [];
     this.optionButtons = {};
     this.movesCount = 0;
+    this.sounds = {};
   }
 
   init() {
@@ -13,6 +14,7 @@ export default class PageLayout {
       this.createHeader(),
       this.createMainContent(),
       this.createFooter(),
+      this.createSound(),
     );
   }
 
@@ -61,11 +63,18 @@ export default class PageLayout {
   }
 
   createOptions() {
-    const optionPositions = ['new', 'pause', 'save', 'load', 'results'];
-    const optionListElements = optionPositions.map((name) => {
+    const optionPositions = {
+      new: 'replay',
+      save: 'save_alt',
+      load: 'publish',
+      results: 'receipt',
+      sound: 'music_note',
+    };
+    const optionListElements = Object.keys(optionPositions).map((name) => {
       const btnParams = [['type', 'button'], ['id', name]];
       const btn = create('button', 'field__list--btn', null, null, ...btnParams);
-      btn.textContent = name;
+      const iconName = optionPositions[name];
+      btn.appendChild(this.createIcon(iconName));
       this.optionButtons[name] = btn;
       const li = create('li', 'field__list--element', btn);
       return li;
@@ -73,6 +82,10 @@ export default class PageLayout {
     const optionsList = create('ul', 'field__list', optionListElements);
     const options = create('div', 'options', optionsList);
     return options;
+  }
+
+  createIcon(iconName) {
+    return create('i', 'material-icons', iconName);
   }
 
   createStatistics() {
@@ -160,5 +173,12 @@ export default class PageLayout {
 
   getFieldSizeButtons() {
     return this.fieldSizeButtons;
+  }
+
+  createSound() {
+    const path = './assets/sounds/';
+    const soundContainer = create('div', 'sound-container');
+    this.sounds.move = create('audio', '', null, soundContainer, ['src', `${path}move.mp3`]);
+    return soundContainer;
   }
 }

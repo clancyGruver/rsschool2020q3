@@ -29,6 +29,8 @@ export default class GemGame {
     this.modal = new Modal();
     this.modal.init();
 
+    this.isSoundOn = true;
+
     if (check('previousGame')) {
       this.modal.confirm(
         'Found saved game',
@@ -45,6 +47,7 @@ export default class GemGame {
     this.pageLayout.optionButtons.save.addEventListener('click', () => this.saveGame());
     this.pageLayout.optionButtons.load.addEventListener('click', () => this.loadGame());
     this.pageLayout.optionButtons.results.addEventListener('click', () => this.showResults());
+    this.pageLayout.optionButtons.sound.addEventListener('click', () => this.toggleSound());
 
     // field size buttons
     const fieldSizeButtons = this.pageLayout.getFieldSizeButtons();
@@ -84,9 +87,19 @@ export default class GemGame {
     this.movableElements();
   }
 
+  toggleSound() {
+    this.isSoundOn = !this.isSoundOn;
+    const iconName = this.isSoundOn ? 'music_note' : 'music_off';
+    this.pageLayout.optionButtons.sound.innerHTML = '';
+    this.pageLayout.optionButtons.sound.append(this.pageLayout.createIcon(iconName));
+  }
+
   move(e) {
     if (e.target.closest('board__cell--disabled') || e.target.tagName === 'img') return false;
     this.board.move(e.target);
+    if (this.isSoundOn) {
+      this.pageLayout.sounds.move.play();
+    }
     this.pageLayout.increaseMoves();
     if (this.board.isSolved()) this.victory();
     setTimeout(() => { this.board.boardRender(); this.movableElements(); }, 250);
