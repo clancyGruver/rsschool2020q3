@@ -91,7 +91,7 @@ export default class GemGame {
     this.isSoundOn = !this.isSoundOn;
     const iconName = this.isSoundOn ? 'music_note' : 'music_off';
     this.pageLayout.optionButtons.sound.innerHTML = '';
-    this.pageLayout.optionButtons.sound.append(this.pageLayout.createIcon(iconName));
+    this.pageLayout.optionButtons.sound.append(PageLayout.createIcon(iconName));
   }
 
   move(e) {
@@ -129,6 +129,9 @@ export default class GemGame {
     const time = this.pageLayout.getTime();
     const movesCount = this.pageLayout.getMoves();
     const movesName = declOfNum(movesCount, ['ход', 'хода', 'ходов']);
+    if (this.isSoundOn) {
+      this.pageLayout.sounds.applause.play();
+    }
     this.modal.show('VICTORY!', `Ура! Вы решили головоломку за ${time} и ${movesCount} ${movesName}`);
     this.saveResults(time, movesCount);
   }

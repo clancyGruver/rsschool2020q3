@@ -74,7 +74,7 @@ export default class PageLayout {
       const btnParams = [['type', 'button'], ['id', name]];
       const btn = create('button', 'field__list--btn', null, null, ...btnParams);
       const iconName = optionPositions[name];
-      btn.appendChild(this.createIcon(iconName));
+      btn.appendChild(PageLayout.createIcon(iconName));
       this.optionButtons[name] = btn;
       const li = create('li', 'field__list--element', btn);
       return li;
@@ -84,7 +84,7 @@ export default class PageLayout {
     return options;
   }
 
-  createIcon(iconName) {
+  static createIcon(iconName) {
     return create('i', 'material-icons', iconName);
   }
 
@@ -179,6 +179,7 @@ export default class PageLayout {
     const path = './assets/sounds/';
     const soundContainer = create('div', 'sound-container');
     this.sounds.move = create('audio', '', null, soundContainer, ['src', `${path}move.mp3`]);
+    this.sounds.applause = create('audio', '', null, soundContainer, ['src', `${path}applause.wav`]);
     return soundContainer;
   }
 }
