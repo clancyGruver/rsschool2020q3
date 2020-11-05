@@ -28,10 +28,6 @@ export default class Board {
 
   boardRender() {
     this.emptyBoard();
-    const imgAttrs = [
-      ['src', './assets/images/rec.svg'],
-      ['alt', 'empty cell'],
-    ];
     this.boardArray.forEach((row, rowIndex) => {
       const rowElement = create('div', 'board__row');
       row.forEach((cell, cellIndex) => {
@@ -143,23 +139,24 @@ export default class Board {
     const { row, cell, position } = elem.dataset;
     const val = this.boardArray[row][cell];
 
-    let emptyPos = '';
-    switch(position) {
-      case 'left': emptyPos = 'right'; break;
-      case 'right': emptyPos = 'left'; break;
-      case 'top': emptyPos = 'bottom'; break;
-      case 'bottom': emptyPos = 'top'; break;
+    switch (position) {
+      case 'left':
+        this.emptyCell.style.left = '-56px';
+        elem.style.left = '56px';
+        break;
+      case 'right':
+        this.emptyCell.style.left = '56px';
+        elem.style.left = '-56px';
+        break;
+      case 'top':
+        this.emptyCell.style.top = '-56px';
+        elem.style.top = '56px';
+        break;
+      case 'bottom':
+        this.emptyCell.style.top = '56px';
+        elem.style.top = '-56px';
+        break;
       default: break;
-    }
-
-    this.emptyCell.style.position = 'relative';
-    elem.style.position = 'relative';
-    for(let i = 0; i < 56; i++) {
-      const styleVal = `${i}px`;
-      setTimeout(() => {
-        this.emptyCell.style[emptyPos] = styleVal;
-        elem.style[position] = styleVal;
-      }, 10);
     }
 
     this.boardArray[row][cell] = 'icon';
@@ -168,7 +165,6 @@ export default class Board {
     this.empty.row = row;
     this.empty.cell = cell;
     this.updateMovableElements();
-    this.boardRender();
   }
 
   setSize(boardSize) {

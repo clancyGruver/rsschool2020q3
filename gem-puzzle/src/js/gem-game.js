@@ -87,9 +87,9 @@ export default class GemGame {
   move(e) {
     if (e.target.closest('board__cell--disabled') || e.target.tagName === 'img') return false;
     this.board.move(e.target);
-    this.movableElements();
     this.pageLayout.increaseMoves();
     if (this.board.isSolved()) this.victory();
+    setTimeout(() => { this.board.boardRender(); this.movableElements(); }, 250);
     return true;
   }
 
