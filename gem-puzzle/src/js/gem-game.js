@@ -98,6 +98,7 @@ export default class GemGame {
     if (e.target.closest('board__cell--disabled') || e.target.tagName === 'img') return false;
     this.board.move(e.target);
     if (this.isSoundOn) {
+      this.pageLayout.sounds.move.currentTime = 0;
       this.pageLayout.sounds.move.play();
     }
     this.pageLayout.increaseMoves();
@@ -130,6 +131,7 @@ export default class GemGame {
     const movesCount = this.pageLayout.getMoves();
     const movesName = declOfNum(movesCount, ['ход', 'хода', 'ходов']);
     if (this.isSoundOn) {
+      this.pageLayout.sounds.applause.currentTime = 0;
       this.pageLayout.sounds.applause.play();
     }
     this.modal.show('VICTORY!', `Ура! Вы решили головоломку за ${time} и ${movesCount} ${movesName}`);
