@@ -9,6 +9,9 @@ export default class Modal {
 
   init() {
     this.modal = create('div', 'modal');
+    this.modal.addEventListener('click', (e) => {
+      if (!e.target.closest('.modal__window')) this.close();
+    });
     const modalWindows = create('div', 'modal__window', null, this.modal);
     this.modalContainer = create('div', 'modal__window--container', null, modalWindows);
 
