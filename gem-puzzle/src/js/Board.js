@@ -1,10 +1,13 @@
 import create from './utils/create';
+import randomIntFromTo from './utils/random';
 
 export default class Board {
   constructor(boardSize, dragOverHandler) {
     this.boardSize = boardSize;
     this.board = create('div', 'board animate');
     this.movable = {};
+    this.cells = {};
+    this.boardHTML = [];
     this.empty = {
       row: -1,
       cell: -1,
@@ -13,7 +16,8 @@ export default class Board {
     this.makeDraggable(dragOverHandler);
   }
 
-  init() {
+  init(img) {
+    this.setImage(img);
     this.newGame();
   }
 
@@ -24,18 +28,25 @@ export default class Board {
   newGame() {
     this.createBoard();
     this.boardRender();
+    this.updateCellBackground();
+  }
+
+  updateBoardHTML() {
+    for (let i = 0; i < this.boardSize; i++) {
+      this.board.append(this.boardHTML[i]);
+    }
   }
 
   boardRender() {
     this.emptyBoard();
     this.boardArray.forEach((row, rowIndex) => {
-      const rowElement = create('div', 'board__row');
+      this.boardHTML[rowIndex] = create('div', 'board__row');
       row.forEach((cell, cellIndex) => {
         const cellOptions = [
           ['row', `${rowIndex}`],
           ['cell', `${cellIndex}`],
         ];
-        const cellElement = create('div', 'board__cell', null, rowElement, ...cellOptions);
+        const cellElement = create('div', 'board__cell', null, this.boardHTML[rowIndex], ...cellOptions);
         if (cell === 'icon') {
           cellElement.classList.add('board__cell--disabled');
           this.emptyCell = cellElement;
@@ -44,13 +55,61 @@ export default class Board {
           if (Object.keys(this.movable).includes(pos)) {
             cellElement.classList.add('board__cell--active');
             cellElement.dataset.position = this.movable[pos];
+            cellElement.dataset.value = cell;
             cellElement.draggable = true;
           }
           cellElement.textContent = cell;
         }
+        this.cells[cell] = cellElement;
       });
-      this.board.append(rowElement);
     });
+    this.updateBoardHTML();
+  }
+
+  updateBoard() {
+    this.boardArray.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        const cellElement = this.cells[cell];
+        cellElement.style.top = 0;
+        cellElement.style.left = 0;
+        if (cell === 'icon') {
+          this.emptyCell = cellElement;
+        } else {
+          const pos = `${rowIndex}_${cellIndex}`;
+          if (Object.keys(this.movable).includes(pos)) {
+            cellElement.classList.add('board__cell--active');
+            cellElement.dataset.position = this.movable[pos];
+            cellElement.draggable = true;
+          } else {
+            cellElement.classList.remove('board__cell--active');
+            cellElement.draggable = false;
+          }
+          cellElement.dataset.row = rowIndex;
+          cellElement.dataset.cell = cellIndex;
+        }
+        this.boardHTML[rowIndex].appendChild(cellElement);
+      });
+    });
+    this.updateBoardHTML();
+  }
+
+  setImage(imageSrc) {
+    this.image = {
+      src: imageSrc,
+      img: create('img', 'actualImage',null, null, ['src', imageSrc]),
+      percent: 100 / this.boardSize,
+    };
+  }
+
+  updateCellBackground() {
+    const maxVal = this.boardSize * this.boardSize;
+    for (let i = 1; i < maxVal; i++) {
+      const xPos = `${(this.image.percent * (i % this.boardSize))}%`;
+      const yPos = `${(this.image.percent * Math.floor(i / this.boardSize))}%`;
+      this.cells[i].style.backgroundImage = `url(${this.image.src})`;
+      this.cells[i].style.backgroundSize = `${(this.boardSize * 100)}%`;
+      this.cells[i].style.backgroundPosition = `${xPos} ${yPos}`;
+    }
   }
 
   createBoard() {
@@ -116,16 +175,12 @@ export default class Board {
     const tempArr = [...this.boardArray];
 
     while (tempArr.length > 0) {
-      const random = Board.getRandomInt(0, tempArr.length - 1);
+      const random = randomIntFromTo(0, tempArr.length - 1);
       const elem = tempArr.splice(random, 1)[0];
       result.push(elem);
     }
 
     this.boardArray = result;
-  }
-
-  static getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   static isIcon(val) {

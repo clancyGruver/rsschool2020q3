@@ -4,6 +4,7 @@ import { get, set, check } from './utils/storage';
 import Modal from './Modal';
 import declOfNum from './utils/humanNums';
 import LeaderBoard from './LeaderBoard';
+import randomIntFromTo from './utils/random';
 
 export default class GemGame {
   /**
@@ -18,16 +19,19 @@ export default class GemGame {
   }
 
   init() {
+    this.image = `./assets/images/box/${randomIntFromTo(1, 150)}.jpg`;
+
     this.pageLayout = new PageLayout(this.boardSize);
     this.pageLayout.init();
 
     this.board = new Board(this.boardSize, (e) => this.move(e));
-    this.board.init();
+    this.board.init(this.image);
 
     this.pageLayout.mainContent.appendChild(this.board.board);
 
     this.modal = new Modal();
     this.modal.init();
+
 
     this.isSoundOn = true;
 
@@ -70,6 +74,7 @@ export default class GemGame {
       boardSize: this.boardSize,
       time: this.timer,
       moves: this.pageLayout.movesCount,
+      image: this.image,
     };
     set('previousGame', params);
   }
@@ -79,12 +84,14 @@ export default class GemGame {
 
     this.boardSize = loadData.boardSize;
     this.board.setSize(this.boardSize);
+    this.board.setImage(loadData.image);
     this.pageLayout.setBoardSize(this.boardSize);
     this.startTimer(loadData.time);
     this.pageLayout.setMoves(loadData.moves);
 
     this.board.setBoardArray(loadData.board);
     this.movableElements();
+    this.board.updateCellBackground();
   }
 
   toggleSound() {
@@ -103,7 +110,7 @@ export default class GemGame {
     }
     this.pageLayout.increaseMoves();
     if (this.board.isSolved()) this.victory();
-    setTimeout(() => { this.board.boardRender(); this.movableElements(); }, 250);
+    setTimeout(() => { this.board.updateBoard(); this.movableElements(); }, 250);
     return true;
   }
 
