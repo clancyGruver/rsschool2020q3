@@ -10,8 +10,10 @@ export default class LeaderBoard {
 
   createHeader() {
     const headerContainer = create('div', 'record__table--header', null, this.tableContainer);
+    const score = create('div', 'record__table--cell', null, headerContainer);
     const time = create('div', 'record__table--cell', null, headerContainer);
     const moves = create('div', 'record__table--cell', null, headerContainer);
+    score.textContent = 'очки';
     time.textContent = 'время';
     moves.textContent = 'ходов';
   }

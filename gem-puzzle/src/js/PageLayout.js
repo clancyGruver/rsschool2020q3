@@ -160,11 +160,6 @@ export default class PageLayout {
     this.secondsContainer.textContent = seconds;
   }
 
-  setMoves(movesCount) {
-    this.movesCount = movesCount;
-    this.movesElement.textContent = movesCount;
-  }
-
   static createTimeFromSeconds(secondsIn) {
     let seconds = parseInt(secondsIn, 10);
     const minutes = Math.floor(seconds / 60);
@@ -179,9 +174,8 @@ export default class PageLayout {
     return parseInt(val, 10) < 10 ? `0${val}` : val;
   }
 
-  increaseMoves() {
-    this.movesCount += 1;
-    this.movesElement.textContent = PageLayout.addZero(this.movesCount);
+  setMoves(movesCount) {
+    this.movesElement.textContent = PageLayout.addZero(movesCount);
   }
 
   getFieldSizeButtons() {

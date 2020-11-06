@@ -96,19 +96,20 @@ export default class Board {
   setImage(imageSrc) {
     this.image = {
       src: imageSrc,
-      img: create('img', 'actualImage',null, null, ['src', imageSrc]),
+      img: create('img', 'actualImage', null, null, ['src', imageSrc]),
       percent: 100 / this.boardSize,
     };
   }
 
   updateCellBackground() {
     const maxVal = this.boardSize * this.boardSize;
-    for (let i = 1; i < maxVal; i++) {
+    for (let i = 0; i < maxVal - 1; i++) {
       const xPos = `${(this.image.percent * (i % this.boardSize))}%`;
       const yPos = `${(this.image.percent * Math.floor(i / this.boardSize))}%`;
-      this.cells[i].style.backgroundImage = `url(${this.image.src})`;
-      this.cells[i].style.backgroundSize = `${(this.boardSize * 100)}%`;
-      this.cells[i].style.backgroundPosition = `${xPos} ${yPos}`;
+      this.cells[i+1].style.backgroundImage = `url(${this.image.src})`;
+      this.cells[i+1].style.backgroundSize = `${(+this.boardSize + 1) * 5}rem`;
+      this.cells[i+1].style.backgroundPositionX = xPos;
+      this.cells[i+1].style.backgroundPositionY = yPos;
     }
   }
 
