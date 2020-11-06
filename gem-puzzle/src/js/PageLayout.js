@@ -62,6 +62,10 @@ export default class PageLayout {
     return footer;
   }
 
+  setScore(score) {
+    this.score.textContent = score;
+  }
+
   createOptions() {
     const optionPositions = {
       new: 'replay',
@@ -91,8 +95,9 @@ export default class PageLayout {
   createStatistics() {
     const moves = this.createMoves();
     const timer = this.createTimer();
+    const score = this.createScore();
 
-    const rightSide = create('div', 'statistics__right-side', [moves, timer]);
+    const rightSide = create('div', 'statistics__right-side', [moves, timer, score]);
 
     this.statisticsFieldSize = create('h2', 'field-size');
     const leftSide = create('div', 'statistics__left-side', this.statisticsFieldSize);
@@ -101,6 +106,14 @@ export default class PageLayout {
     const statistics = create('div', 'statistics', [leftSide, rightSide]);
 
     return statistics;
+  }
+
+  createScore() {
+    const text = create('span', 'score__text');
+    text.textContent = 'score';
+    this.score = create('span', 'score__value');
+    const container = create('div', 'score', [text, this.score]);
+    return container;
   }
 
   createMoves() {

@@ -33,6 +33,9 @@ body{
         justify-content: space-around;
         font-size: 1.6rem;
         margin-top: 1.5rem;
+        &__left-side, &__right-side{
+            width: 10rem;
+        }
         .time{
             display: flex;
             justify-content: space-between;
@@ -45,6 +48,10 @@ body{
             }
         }
         .moves{
+            display: flex;
+            justify-content: space-between;
+        }
+        .score{
             display: flex;
             justify-content: space-between;
         }

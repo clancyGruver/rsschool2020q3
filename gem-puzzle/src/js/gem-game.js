@@ -32,6 +32,7 @@ export default class GemGame {
     this.modal = new Modal();
     this.modal.init();
 
+    this.setScore();
 
     this.isSoundOn = true;
 
@@ -75,6 +76,7 @@ export default class GemGame {
       time: this.timer,
       moves: this.pageLayout.movesCount,
       image: this.image,
+      score: this.score,
     };
     set('previousGame', params);
   }
@@ -88,6 +90,9 @@ export default class GemGame {
     this.pageLayout.setBoardSize(this.boardSize);
     this.startTimer(loadData.time);
     this.pageLayout.setMoves(loadData.moves);
+
+    this.score = loadData.score;
+    this.pageLayout.setScore(loadData.score);
 
     this.board.setBoardArray(loadData.board);
     this.movableElements();
@@ -109,6 +114,10 @@ export default class GemGame {
       this.pageLayout.sounds.move.play();
     }
     this.pageLayout.increaseMoves();
+
+    this.score -= 1;
+    this.pageLayout.setScore(this.score);
+
     if (this.board.isSolved()) this.victory();
     setTimeout(() => { this.board.updateBoard(); this.movableElements(); }, 250);
     return true;
@@ -130,6 +139,8 @@ export default class GemGame {
 
   timerClick(time = null) {
     this.pageLayout.setTime(time || this.timer);
+    this.score -= 1;
+    this.pageLayout.setScore(this.score);
     this.timer += 1;
   }
 
@@ -141,7 +152,7 @@ export default class GemGame {
       this.pageLayout.sounds.applause.currentTime = 0;
       this.pageLayout.sounds.applause.play();
     }
-    this.modal.show('VICTORY!', `Ура! Вы решили головоломку за ${time} и ${movesCount} ${movesName}`);
+    this.modal.show('VICTORY!', `Ура! Вы решили головоломку за ${time} и ${movesCount} ${movesName}. Ваш счет ${this.score}`);
     this.saveResults(time, movesCount);
   }
 
@@ -163,9 +174,22 @@ export default class GemGame {
   changeBoardSize(sizeBtn) {
     const newBoardSize = sizeBtn.target.dataset.size;
     this.boardSize = newBoardSize;
+    this.setScore();
     this.pageLayout.setBoardSize(newBoardSize);
+    this.pageLayout.setScore(this.score);
     this.board.setBoardSize(newBoardSize);
     this.newGame();
-    console.log(newBoardSize);
+  }
+
+  setScore() {
+    switch (this.boardSize) {
+      case 3: this.score = 200; break;
+      case 4: this.score = 400; break;
+      case 5: this.score = 800; break;
+      case 6: this.score = 1600; break;
+      case 7: this.score = 3200; break;
+      case 8: this.score = 6400; break;
+      default: break;
+    }
   }
 }
