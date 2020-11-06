@@ -22,13 +22,17 @@ export default class LeaderBoard {
     this.body = create('div', 'record__table--list', null, this.tableContainer);
   }
 
-  createRow(...cells) {
-    const row = create('div', 'record__table--row', null, this.body);
-
-    cells.forEach((element) => {
-      const cell = create('div', 'record__table--cell', null, row);
-      cell.textContent = element;
-    });
+  createRow(resultRow) {
+    const score = create('div', 'record__table--cell');
+    score.textContent = resultRow.score;
+    
+    const time = create('div', 'record__table--cell');
+    time.textContent = resultRow.time;
+    
+    const moves = create('div', 'record__table--cell');
+    moves.textContent = resultRow.moves;
+    
+    create('div', 'record__table--row', [score, time, moves], this.body);
   }
 
   /**
@@ -36,11 +40,17 @@ export default class LeaderBoard {
      */
   setResults(resultsArray) {
     if (!Array.isArray(resultsArray)) return false;
-    resultsArray.forEach((resultsRow) => this.createRow(...resultsRow));
+    resultsArray.forEach((resultsRow) => {
+      if (resultsRow !== null) this.createRow(resultsRow);
+    });
     return true;
   }
 
   getTable() {
     return this.main;
+  }
+
+  clearBoard() {
+    this.body.innerHTML = '';
   }
 }

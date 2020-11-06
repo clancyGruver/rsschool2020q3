@@ -78,6 +78,8 @@ export default class GemGame {
     this.startTimer();
     this.setMoves(0);
     this.pageLayout.setMoves(this.movesCount);
+    this.board.updateBoard();
+    this.movableElements();
   }
 
   saveGame() {
@@ -109,6 +111,7 @@ export default class GemGame {
     this.board.setBoardArray(loadData.board);
     this.movableElements();
     this.board.updateCellBackground();
+    this.board.createVictoryArray();
   }
 
   toggleSound() {
@@ -176,37 +179,48 @@ export default class GemGame {
     this.saveResults(time, movesCount);
   }
 
-  saveResults(time, movesCount) {
+  saveResults(time) {
     const leadersCount = 10;
-    const comparator = (a, b) => a.score - b.score;
+    const comparator = (a, b) => {
+      if (a !== null && b !== null) {
+        return a.score - b.score;
+      }
+      return 1;
+    };
     const currentResult = {
       time,
-      movesCount,
+      movesCount: this.movesCount,
       score: this.score,
     };
-    let results;
+    let results = [];
 
     if (check('gemPuzzleResults')) results = get('gemPuzzleResults');
 
-    if (results) {
-      const leaderBoard = results.sort(comparator);
-      const position = leaderBoard.findIndex((leader) => leader.score < this.score);
-      const leaderBoardTmp = [...leaderBoard];
-      for (let i = position; i <= leadersCount; i++) {
-        leaderBoard[i + 1] = leaderBoardTmp[i];
+    const leaderBoard = results.sort(comparator);
+    const position = leaderBoard.findIndex((leader) => {
+      if (leader !== null) {
+        return leader.score < this.score;
       }
+      return true;
+    });
+    const leaderBoardTmp = [...leaderBoard];
+    for (let i = position; i <= leadersCount; i++) {
+      leaderBoard[i + 1] = leaderBoardTmp[i];
+    }
+    if (position >= 0) {
       leaderBoard[position] = currentResult;
     } else {
-      results = [];
-      results.push(currentResult);
+      results.unshift(currentResult);
     }
 
+    leaderBoard.length = leadersCount;
     set('gemPuzzleResults', results);
   }
 
   showResults() {
     let results = [];
     if (check('gemPuzzleResults')) results = get('gemPuzzleResults');
+    this.results.clearBoard();
     this.results.setResults(results);
     this.modal.show('board of leaders', this.results.getTable());
   }

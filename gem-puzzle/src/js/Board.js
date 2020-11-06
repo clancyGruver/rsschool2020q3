@@ -269,10 +269,11 @@ export default class Board {
     if (!this.victoryArray) this.createVictoryArray();
     const victory = true;
     const va = [].concat(...this.victoryArray);
-    const cb = [].concat(...this.boardArray);
+    const ba = [].concat(...this.boardArray);
     const size = this.boardSize * this.boardSize;
+
     for (let i = 0; i < size; i++) {
-      if (va[i] !== cb[i]) return false;
+      if (va[i] !== ba[i]) return false;
     }
 
     return victory;
