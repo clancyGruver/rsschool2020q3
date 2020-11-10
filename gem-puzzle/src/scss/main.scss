@@ -90,6 +90,10 @@ body{
                 user-select: none;
                 -webkit-transition: 0.25s left, 0.25s top;
                 transition: 0.25s left, 0.25s top;
+                font-size: 0;
+                &:hover{
+                    font-size: 3rem;
+                }
                 &--disabled{
                     position: relative;
                     top: 0;

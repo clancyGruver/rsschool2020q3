@@ -25,13 +25,13 @@ export default class LeaderBoard {
   createRow(resultRow) {
     const score = create('div', 'record__table--cell');
     score.textContent = resultRow.score;
-    
+
     const time = create('div', 'record__table--cell');
     time.textContent = resultRow.time;
-    
+
     const moves = create('div', 'record__table--cell');
     moves.textContent = resultRow.moves;
-    
+
     create('div', 'record__table--row', [score, time, moves], this.body);
   }
 

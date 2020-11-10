@@ -73,6 +73,7 @@ export default class PageLayout {
       load: 'publish',
       results: 'receipt',
       sound: 'music_note',
+      solve: 'done_outline',
     };
     const optionListElements = Object.keys(optionPositions).map((name) => {
       const btnParams = [['type', 'button'], ['id', name]];

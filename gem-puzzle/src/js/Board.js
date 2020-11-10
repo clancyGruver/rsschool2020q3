@@ -1,5 +1,6 @@
 import create from './utils/create';
 import randomIntFromTo from './utils/random';
+import AStar from './solver/AStar';
 
 export default class Board {
   constructor(boardSize, dragOverHandler) {
@@ -19,6 +20,10 @@ export default class Board {
   init(img) {
     this.setImage(img);
     this.newGame();
+  }
+
+  createSolver() {
+    this.solver = new AStar(this.boardArray, this.get2dVictoryArray(), 'icon');
   }
 
   emptyBoard() {
@@ -106,10 +111,10 @@ export default class Board {
     for (let i = 0; i < maxVal - 1; i++) {
       const xPos = `${(this.image.percent * (i % this.boardSize))}%`;
       const yPos = `${(this.image.percent * Math.floor(i / this.boardSize))}%`;
-      this.cells[i+1].style.backgroundImage = `url(${this.image.src})`;
-      this.cells[i+1].style.backgroundSize = `${(+this.boardSize + 1) * 5}rem`;
-      this.cells[i+1].style.backgroundPositionX = xPos;
-      this.cells[i+1].style.backgroundPositionY = yPos;
+      this.cells[i + 1].style.backgroundImage = `url(${this.image.src})`;
+      this.cells[i + 1].style.backgroundSize = `${(+this.boardSize + 1) * 5}rem`;
+      this.cells[i + 1].style.backgroundPositionX = xPos;
+      this.cells[i + 1].style.backgroundPositionY = yPos;
     }
   }
 
@@ -189,9 +194,10 @@ export default class Board {
   }
 
   /**
-   * @param {HTMLElement} elem
+   * @param {HTMLElement} HTMLElem
    */
-  move(elem) {
+  move(HTMLElem) {
+    const elem = HTMLElem;
     const { row, cell, position } = elem.dataset;
     const val = this.boardArray[row][cell];
 
@@ -234,20 +240,34 @@ export default class Board {
   }
 
   /**
-     * return boolean
-     */
+   * return boolean
+   */
   isSolvable() {
     let countInversions = 0;
     const size = this.boardSize * this.boardSize;
-    const oneDimentionalArray = [].concat(...this.boardArray);
+    const oneDimensionalArray = [].concat(...this.boardArray);
     for (let i = 0; i < size; i++) {
-      if (oneDimentionalArray[i] === 'icon') i += 1;
+      if (oneDimensionalArray[i] === 'icon') {
+        countInversions += i + 1;
+      }
       for (let j = 0; j < i; j++) {
-        if (oneDimentionalArray[j] === 'icon') j += 1;
-        if (oneDimentionalArray[j] > oneDimentionalArray[i]) countInversions += 1;
+        if (oneDimensionalArray[j] > oneDimensionalArray[i]) countInversions += 1;
       }
     }
     return countInversions % 2 === 0;
+  }
+
+  get2dVictoryArray() {
+    this.victoryArray = [];
+    for (let i = 0; i < this.boardSize; i++) {
+      const innerArr = [];
+      for (let j = 0; j < this.boardSize; j++) {
+        innerArr.push(i * this.boardSize + j + 1);
+      }
+      this.victoryArray.push(innerArr);
+    }
+    this.victoryArray[this.boardSize - 1][this.boardSize - 1] = 'icon';
+    return this.victoryArray;
   }
 
   createVictoryArray() {
