@@ -93,6 +93,8 @@ body{
                 font-size: 0;
                 &:hover{
                     font-size: 3rem;
+                    -webkit-text-stroke-color: wheat;
+                    -webkit-text-stroke-width: 1px;
                 }
                 &--disabled{
                     position: relative;
