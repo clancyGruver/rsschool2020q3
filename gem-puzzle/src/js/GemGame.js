@@ -11,7 +11,7 @@ export default class GemGame {
      * @param {int} boardSizes
      */
   constructor(boardSize) {
-    const defaultBoardSize = /*4*/ 3;
+    const defaultBoardSize = 3; // TODO: set to 4
     let size = parseInt(boardSize, 10) || defaultBoardSize;
     if (size < 3) size = 3;
     if (size > 8) size = 8;
@@ -230,7 +230,14 @@ export default class GemGame {
     let results = [];
     if (check('gemPuzzleResults')) results = get('gemPuzzleResults');
     this.results.clearBoard();
-    this.results.setResults(results);
+    const comparator = (a, b) => {
+      let res = 0;
+      if (a.score > b.score) res = -1;
+      if (a.score === b.score) res = 0;
+      if (a.score < b.score) res = 1;
+      return res;
+    };
+    this.results.setResults(results.sort(comparator));
     this.modal.show('board of leaders', this.results.getTable());
   }
 

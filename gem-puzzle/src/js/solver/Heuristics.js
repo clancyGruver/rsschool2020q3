@@ -87,6 +87,8 @@ export default class Heuristics {
     return result;
   }
 
+  /*
+
   static countConflicts2(candidateRow, solvedRow, size, ans = 0) {
     let result = ans;
     const counts = [...Array(size)].map(() => 0);
@@ -123,8 +125,8 @@ export default class Heuristics {
     }
     return result;
   }
-
-  static last_move(state) {
+*/
+  static lastMove(state) {
     return 0;
   }
 }

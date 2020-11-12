@@ -141,7 +141,6 @@ export default class Board {
 
   createBoard() {
     this.initBoardArray();
-    /*this.createShuffledArray();*/
     this.randomize();
     this.setEmptyCell();
   }
@@ -352,9 +351,13 @@ export default class Board {
     const movesCount = this.boardSize ** 3;
     this.empty.row = this.boardSize - 1;
     this.empty.col = this.boardSize - 1;
+    let prevMove = null;
 
     for (let i = 0; i < movesCount; i++) {
       const directions = this.validMoves();
+      if (prevMove !== null && directions.includes(prevMove)) {
+        directions.splice(directions.indexOf(prevMove), 1);
+      }
       const dirNum = randomIntFromTo(0, directions.length - 1);
       let newRow;
       let newCol;
@@ -385,6 +388,7 @@ export default class Board {
           break;
         default: break;
       }
+      prevMove = directions[dirNum];
     }
   }
 

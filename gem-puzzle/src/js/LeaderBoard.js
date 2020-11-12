@@ -30,7 +30,7 @@ export default class LeaderBoard {
     time.textContent = resultRow.time;
 
     const moves = create('div', 'record__table--cell');
-    moves.textContent = resultRow.moves;
+    moves.textContent = resultRow.movesCount;
 
     create('div', 'record__table--row', [score, time, moves], this.body);
   }
