@@ -158,6 +158,10 @@ export default class Board {
     }
   }
 
+  disableMove() {
+    this.movable = {};
+  }
+
   updateMovableElements() {
     const row = parseInt(this.empty.row, 10);
     const cell = parseInt(this.empty.cell, 10);
@@ -248,7 +252,6 @@ export default class Board {
 
     this.empty.row = row;
     this.empty.cell = cell;
-    this.updateMovableElements();
   }
 
   setSize(boardSize) {

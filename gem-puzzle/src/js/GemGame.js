@@ -17,6 +17,7 @@ export default class GemGame {
     if (size > 8) size = 8;
     this.boardSize = size;
     this.movesCount = 0;
+    this.isVictory = false;
 
     this.moveHandler = (el) => this.move(el);
   }
@@ -80,6 +81,7 @@ export default class GemGame {
   }
 
   newGame() {
+    this.isVictory = false;
     this.setRandomImage();
     this.board.setImage(this.image);
     this.board.newGame();
@@ -104,6 +106,7 @@ export default class GemGame {
   }
 
   loadGame() {
+    this.isVictory = false;
     const loadData = get('previousGame');
 
     this.boardSize = loadData.boardSize;
@@ -143,7 +146,12 @@ export default class GemGame {
     this.decreaseScore();
     this.pageLayout.setScore(this.score);
 
-    if (this.board.isSolved()) this.victory();
+    if (this.board.isSolved()) {
+      this.victory();
+      this.board.disableMove();
+    } else {
+      this.board.updateMovableElements();
+    }
     setTimeout(() => { this.board.updateBoard(); this.movableElements(); }, 250);
     return true;
   }
@@ -152,6 +160,10 @@ export default class GemGame {
     this.movable = document.querySelectorAll('.board__cell--active');
     Array.from(document.querySelectorAll('.board__cell')).forEach((el) => el.removeEventListener('click', this.moveHandler));
     Array.from(this.movable).forEach((el) => el.addEventListener('click', this.moveHandler));
+  }
+
+  stopTimer() {
+    clearInterval(this.timerID);
   }
 
   startTimer(timer) {
@@ -176,6 +188,8 @@ export default class GemGame {
   }
 
   victory() {
+    this.isVictory = true;
+    this.stopTimer();
     const time = this.pageLayout.getTime();
     const { movesCount } = this;
     const movesName = declOfNum(movesCount, ['ход', 'хода', 'ходов']);
