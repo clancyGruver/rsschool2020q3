@@ -11,7 +11,7 @@ export default class GemGame {
      * @param {int} boardSizes
      */
   constructor(boardSize) {
-    const defaultBoardSize = 3; // TODO: set to 4
+    const defaultBoardSize = 4;
     let size = parseInt(boardSize, 10) || defaultBoardSize;
     if (size < 3) size = 3;
     if (size > 8) size = 8;
@@ -205,10 +205,11 @@ export default class GemGame {
   saveResults(time) {
     const leadersCount = 10;
     const comparator = (a, b) => {
-      if (a !== null && b !== null) {
-        return a.score - b.score;
-      }
-      return 1;
+      let res = 0;
+      if (a.score > b.score) res = -1;
+      if (a.score === b.score) res = 0;
+      if (a.score < b.score) res = 1;
+      return res;
     };
     const currentResult = {
       time,
