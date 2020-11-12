@@ -163,7 +163,7 @@ export default class Board {
     this.boardArray = numberArray;
     do {
       this.shuffle();
-    } while (this.isSolvable());
+    } while (!this.isSolvable());
 
     const arr = [...this.boardArray];
     this.boardArray = [];
@@ -248,7 +248,7 @@ export default class Board {
     const oneDimensionalArray = [].concat(...this.boardArray);
     for (let i = 0; i < size; i++) {
       if (oneDimensionalArray[i] === 'icon') {
-        countInversions += i + 1;
+        countInversions += Math.floor(i / this.boardSize) + 1;
       }
       for (let j = 0; j < i; j++) {
         if (oneDimensionalArray[j] > oneDimensionalArray[i]) countInversions += 1;

@@ -101,7 +101,7 @@ export default class AStar {
 
   heuristic(node) {
     const manhattan = Heuristics.getManhattanDistance(node.state, this.goal.state);
-    const linearConflict = 0 /*Heuristics.linearConflict(node.state)*/;
+    const linearConflict = 0/*Heuristics.linearConflict(node.state)*/;
     return manhattan + linearConflict;
   }
 }

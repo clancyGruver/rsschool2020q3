@@ -75,8 +75,8 @@ export default class GemGame {
   solve() {
     const start = new Date();
     this.board.createSolver();
-    console.log(`Elapsed time: ${(new Date() - start) / 1000}`);
     console.log(this.board.solver.execute());
+    console.log(`Elapsed time: ${(new Date() - start) / 1000}`);
   }
 
   newGame() {
