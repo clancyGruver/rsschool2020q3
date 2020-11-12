@@ -9,9 +9,11 @@ export default class Board {
     this.movable = {};
     this.cells = {};
     this.boardHTML = [];
+    this.boardArray = [];
     this.empty = {
       row: -1,
       cell: -1,
+      val: 'icon',
     };
 
     this.makeDraggable(dragOverHandler);
@@ -40,6 +42,25 @@ export default class Board {
     for (let i = 0; i < this.boardSize; i++) {
       this.board.append(this.boardHTML[i]);
     }
+  }
+
+  initBoardArray() {
+    this.boardArray = [];
+    const numberArray = [];
+    let currentNumber = 1;
+    for (let i = 0; i < this.boardSize; i++) {
+      const row = [];
+      for (let j = 0; j < this.boardSize; j++) {
+        if (i === this.boardSize - 1 && j === this.boardSize - 1) {
+          row.push('icon');
+        } else {
+          row.push(currentNumber);
+          currentNumber += 1;
+        }
+      }
+      this.boardArray.push(row);
+    }
+    this.victoryArray = [...numberArray];
   }
 
   boardRender() {
@@ -119,7 +140,9 @@ export default class Board {
   }
 
   createBoard() {
-    this.createShuffledArray();
+    this.initBoardArray();
+    /*this.createShuffledArray();*/
+    this.randomize();
     this.setEmptyCell();
   }
 
@@ -127,7 +150,7 @@ export default class Board {
     for (let i = 0; i < this.boardSize; i++) {
       for (let j = 0; j < this.boardSize; j++) {
         const value = this.boardArray[i][j];
-        if (value === 'icon') {
+        if (value === this.empty.val) {
           this.empty.row = i;
           this.empty.cell = j;
           this.updateMovableElements();
@@ -249,9 +272,10 @@ export default class Board {
     for (let i = 0; i < size; i++) {
       if (oneDimensionalArray[i] === 'icon') {
         countInversions += Math.floor(i / this.boardSize) + 1;
-      }
-      for (let j = 0; j < i; j++) {
-        if (oneDimensionalArray[j] > oneDimensionalArray[i]) countInversions += 1;
+      } else {
+        for (let j = 0; j < i; j++) {
+          countInversions += oneDimensionalArray[j] > oneDimensionalArray[i] ? 1 : 0;
+        }
       }
     }
     return countInversions % 2 === 0;
@@ -286,7 +310,7 @@ export default class Board {
      * return boolean
      */
   isSolved() {
-    if (!this.victoryArray) this.createVictoryArray();
+    if (!this.victoryArray || this.victoryArray.length === 0) this.createVictoryArray();
     const victory = true;
     const va = [].concat(...this.victoryArray);
     const ba = [].concat(...this.boardArray);
@@ -322,5 +346,63 @@ export default class Board {
 
   setBoardSize(newBoardSize) {
     this.boardSize = newBoardSize;
+  }
+
+  randomize() {
+    const movesCount = this.boardSize ** 3;
+    this.empty.row = this.boardSize - 1;
+    this.empty.col = this.boardSize - 1;
+
+    for (let i = 0; i < movesCount; i++) {
+      const directions = this.validMoves();
+      const dirNum = randomIntFromTo(0, directions.length - 1);
+      let newRow;
+      let newCol;
+      switch (directions[dirNum]) {
+        case 'Up':
+          newRow = this.empty.row - 1;
+          this.boardArray[this.empty.row][this.empty.col] = this.boardArray[newRow][this.empty.col];
+          this.boardArray[newRow][this.empty.col] = this.empty.val;
+          this.empty.row = newRow;
+          break;
+        case 'Down':
+          newRow = this.empty.row + 1;
+          this.boardArray[this.empty.row][this.empty.col] = this.boardArray[newRow][this.empty.col];
+          this.boardArray[newRow][this.empty.col] = this.empty.val;
+          this.empty.row = newRow;
+          break;
+        case 'Left':
+          newCol = this.empty.col - 1;
+          this.boardArray[this.empty.row][this.empty.col] = this.boardArray[this.empty.row][newCol];
+          this.boardArray[this.empty.row][newCol] = this.empty.val;
+          this.empty.col = newCol;
+          break;
+        case 'Right':
+          newCol = this.empty.col + 1;
+          this.boardArray[this.empty.row][this.empty.col] = this.boardArray[this.empty.row][newCol];
+          this.boardArray[this.empty.row][newCol] = this.empty.val;
+          this.empty.col = newCol;
+          break;
+        default: break;
+      }
+    }
+  }
+
+  validMoves() {
+    const { row, col } = this.empty;
+    const validMoves = [];
+    if (col !== 0) {
+      validMoves.push('Left');
+    }
+    if (col < this.boardSize - 1) {
+      validMoves.push('Right');
+    }
+    if (row !== 0) {
+      validMoves.push('Up');
+    }
+    if (row < this.boardSize - 1) {
+      validMoves.push('Down');
+    }
+    return validMoves;
   }
 }
