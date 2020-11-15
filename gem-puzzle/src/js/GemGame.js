@@ -250,7 +250,7 @@ export default class GemGame {
       return true;
     });
     const leaderBoardTmp = [...leaderBoard];
-    for (let i = position; i <= leadersCount; i++) {
+    for (let i = position; i <= leadersCount; i += 1) {
       leaderBoard[i + 1] = leaderBoardTmp[i];
     }
     if (position >= 0) {

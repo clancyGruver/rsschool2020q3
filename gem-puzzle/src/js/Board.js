@@ -40,7 +40,7 @@ export default class Board {
   }
 
   updateBoardHTML() {
-    for (let i = 0; i < this.boardSize; i++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
       this.board.append(this.boardHTML[i]);
     }
   }
@@ -49,9 +49,9 @@ export default class Board {
     this.boardArray = [];
     const numberArray = [];
     let currentNumber = 1;
-    for (let i = 0; i < this.boardSize; i++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
       const row = [];
-      for (let j = 0; j < this.boardSize; j++) {
+      for (let j = 0; j < this.boardSize; j += 1) {
         if (i === this.boardSize - 1 && j === this.boardSize - 1) {
           row.push('icon');
         } else {
@@ -135,7 +135,7 @@ export default class Board {
 
   updateCellBackground() {
     const maxVal = this.boardSize * this.boardSize;
-    for (let i = 0; i < maxVal - 1; i++) {
+    for (let i = 0; i < maxVal - 1; i += 1) {
       const xPos = `${(this.image.percent * (i % this.boardSize))}%`;
       const yPos = `${(this.image.percent * Math.floor(i / this.boardSize))}%`;
       this.cells[i + 1].style.backgroundImage = `url(${this.image.src})`;
@@ -152,8 +152,8 @@ export default class Board {
   }
 
   setEmptyCell() {
-    for (let i = 0; i < this.boardSize; i++) {
-      for (let j = 0; j < this.boardSize; j++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
+      for (let j = 0; j < this.boardSize; j += 1) {
         const value = this.boardArray[i][j];
         if (value === this.empty.val) {
           this.empty.row = i;
@@ -182,8 +182,8 @@ export default class Board {
   createShuffledArray() {
     const numberArray = [];
     let currentNumber = 1;
-    for (let i = 0; i < this.boardSize; i++) {
-      for (let j = 0; j < this.boardSize; j++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
+      for (let j = 0; j < this.boardSize; j += 1) {
         if (i === this.boardSize - 1 && j === this.boardSize - 1) {
           numberArray.push('icon');
         } else {
@@ -200,9 +200,9 @@ export default class Board {
 
     const arr = [...this.boardArray];
     this.boardArray = [];
-    for (let i = 0; i < this.boardSize; i++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
       const innerArr = [];
-      for (let j = 0; j < this.boardSize; j++) {
+      for (let j = 0; j < this.boardSize; j += 1) {
         innerArr.push(arr[i * this.boardSize + j]);
       }
       this.boardArray.push(innerArr);
@@ -278,11 +278,11 @@ export default class Board {
     let countInversions = 0;
     const size = this.boardSize * this.boardSize;
     const oneDimensionalArray = [].concat(...this.boardArray);
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (oneDimensionalArray[i] === 'icon') {
         countInversions += Math.floor(i / this.boardSize) + 1;
       } else {
-        for (let j = 0; j < i; j++) {
+        for (let j = 0; j < i; j += 1) {
           countInversions += oneDimensionalArray[j] > oneDimensionalArray[i] ? 1 : 0;
         }
       }
@@ -292,9 +292,9 @@ export default class Board {
 
   get2dVictoryArray() {
     this.victoryArray = [];
-    for (let i = 0; i < this.boardSize; i++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
       const innerArr = [];
-      for (let j = 0; j < this.boardSize; j++) {
+      for (let j = 0; j < this.boardSize; j += 1) {
         innerArr.push(i * this.boardSize + j + 1);
       }
       this.victoryArray.push(innerArr);
@@ -305,9 +305,9 @@ export default class Board {
 
   createVictoryArray() {
     this.victoryArray = [];
-    for (let i = 0; i < this.boardSize; i++) {
+    for (let i = 0; i < this.boardSize; i += 1) {
       const innerArr = [];
-      for (let j = 0; j < this.boardSize; j++) {
+      for (let j = 0; j < this.boardSize; j += 1) {
         innerArr.push(i * this.boardSize + j + 1);
       }
       this.victoryArray.push(innerArr);
@@ -325,7 +325,7 @@ export default class Board {
     const ba = [].concat(...this.boardArray);
     const size = this.boardSize * this.boardSize;
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i += 1) {
       if (va[i] !== ba[i]) return false;
     }
 
@@ -363,7 +363,7 @@ export default class Board {
     this.empty.col = this.boardSize - 1;
     let prevMove = null;
 
-    for (let i = 0; i < movesCount; i++) {
+    for (let i = 0; i < movesCount; i += 1) {
       const directions = this.validMoves();
       if (prevMove !== null && directions.includes(prevMove)) {
         directions.splice(directions.indexOf(prevMove), 1);

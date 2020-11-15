@@ -46,7 +46,7 @@ export default class PageLayout {
   }
 
   createFooter() {
-    for (let i = 3; i < 9; i++) {
+    for (let i = 3; i < 9; i += 1) {
       const btnOptions = [
         ['type', 'button'],
         ['size', i],

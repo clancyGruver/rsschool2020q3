@@ -14,8 +14,8 @@ export default class Heuristics {
   static getGoalPosition(val, state) {
     let goalPosition;
     const size = state.length;
-    for (let rowIndex = 0; rowIndex < size; rowIndex++) {
-      for (let colIndex = 0; colIndex < size; colIndex++) {
+    for (let rowIndex = 0; rowIndex < size; rowIndex += 1) {
+      for (let colIndex = 0; colIndex < size; colIndex += 1) {
         if (state[rowIndex][colIndex] === val) {
           goalPosition = { x: rowIndex, y: colIndex };
           return goalPosition;
@@ -35,7 +35,7 @@ export default class Heuristics {
     let result = 0;
     const size = state.length;
     const solved = Heuristics.getSolvedArrays(size);
-    for (let ColRowIterator = 0; ColRowIterator < size; ColRowIterator++) {
+    for (let ColRowIterator = 0; ColRowIterator < size; ColRowIterator += 1) {
       const rowState = [...state[ColRowIterator]];
       const colState = Heuristics.getColCandidate(state, ColRowIterator);
       result += Heuristics.countConflicts(rowState, solved.rows[ColRowIterator], size);
@@ -49,7 +49,7 @@ export default class Heuristics {
       rows: [],
       cols: [],
     };
-    for (let mainIdx = 0; mainIdx < size; mainIdx++) {
+    for (let mainIdx = 0; mainIdx < size; mainIdx += 1) {
       result.rows[mainIdx] = [...Array(size).keys()].map((num) => mainIdx * size + num + 1);
       result.cols[mainIdx] = [...Array(size).keys()].map((num) => mainIdx + 1 + num * size);
       if (mainIdx === size - 1) {
@@ -66,10 +66,10 @@ export default class Heuristics {
 
   static countConflicts(candidateRow, solvedRow, size) {
     let result = 0;
-    for (let outerPos = 0; outerPos < size; outerPos++) {
+    for (let outerPos = 0; outerPos < size; outerPos += 1) {
       const outerVal = candidateRow[outerPos];
       if (solvedRow.includes(outerVal)) {
-        for (let innerPos = outerPos + 1; innerPos < size; innerPos++) {
+        for (let innerPos = outerPos + 1; innerPos < size; innerPos += 1) {
           const innerVal = candidateRow[innerPos];
           if (solvedRow.includes(innerVal)) {
             const outerFinalPos = solvedRow.indexOf(outerVal);
