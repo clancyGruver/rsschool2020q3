@@ -85,17 +85,20 @@ export default class GemGame {
     this.isAutoSolved = true;
     this.board.createSolver();
     const solve = this.board.solver.execute();
+    const time = (new Date() - start) / 1000;
+    const movesCount = solve.moves;
+    const movesName = declOfNum(movesCount, ['ход', 'хода', 'ходов']);
     const moves = solve.path.split('');
     this.solverIntervalId = setInterval(() => {
       const movePos = moves.shift();
-      if (moves.length === 0) {
-        clearInterval(this.solverIntervalId);
-      }
       const positionDirection = movePositions[movePos];
       this.board.movableElements[positionDirection].click();
+      if (moves.length === 0) {
+        clearInterval(this.solverIntervalId);
+        const text = `Поиск решения занял ${time} секунд и составил ${movesCount} ${movesName}.`;
+        this.modal.show('SOLVED!', text);
+      }
     }, 280);
-    console.log(solve);
-    console.log(`Elapsed time: ${(new Date() - start) / 1000}`);
   }
 
   newGame() {

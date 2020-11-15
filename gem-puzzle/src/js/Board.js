@@ -338,7 +338,7 @@ export default class Board {
       setTimeout(() => { e.target.style.fontSize = 0; }, 0);
     });
 
-    this.board.addEventListener('dragend', (e) => {
+    this.board.addEventListener('dragend', () => {
       if (this.emptyCell === this.dragOverElement) {
         dragOverHandler({ target: this.draggedCell });
       }
