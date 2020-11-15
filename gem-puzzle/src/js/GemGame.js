@@ -18,7 +18,7 @@ export default class GemGame {
     this.boardSize = size;
     this.movesCount = 0;
     this.isVictory = false;
-    this.autoSolved = false;
+    this.isAutoSolved = false;
 
     this.moveHandler = (el) => this.move(el);
   }
@@ -75,15 +75,25 @@ export default class GemGame {
   }
 
   solve() {
-    this.autoSolved = true;
     const start = new Date();
+    const movePositions = {
+      T: 'top',
+      B: 'bottom',
+      L: 'left',
+      R: 'right',
+    };
+    this.isAutoSolved = true;
     this.board.createSolver();
     const solve = this.board.solver.execute();
     const moves = solve.path.split('');
-    moves.forEach((movePos) => {
-      console.log(movePos);
-      // data-position
-    });
+    this.solverIntervalId = setInterval(() => {
+      const movePos = moves.shift();
+      if (moves.length === 0) {
+        clearInterval(this.solverIntervalId);
+      }
+      const positionDirection = movePositions[movePos];
+      this.board.movableElements[positionDirection].click();
+    }, 280);
     console.log(solve);
     console.log(`Elapsed time: ${(new Date() - start) / 1000}`);
   }
@@ -198,6 +208,7 @@ export default class GemGame {
   victory() {
     this.isVictory = true;
     this.stopTimer();
+    if (this.isAutoSolved) return;
     const time = this.pageLayout.getTime();
     const { movesCount } = this;
     const movesName = declOfNum(movesCount, ['ход', 'хода', 'ходов']);

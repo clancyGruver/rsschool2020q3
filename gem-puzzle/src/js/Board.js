@@ -7,6 +7,7 @@ export default class Board {
     this.boardSize = boardSize;
     this.board = create('div', 'board animate');
     this.movable = {};
+    this.movableElements = {};
     this.cells = {};
     this.boardHTML = [];
     this.boardArray = [];
@@ -79,10 +80,12 @@ export default class Board {
         } else {
           const pos = `${rowIndex}_${cellIndex}`;
           if (Object.keys(this.movable).includes(pos)) {
+            const moveDirection = this.movable[pos];
             cellElement.classList.add('board__cell--active');
             cellElement.dataset.position = this.movable[pos];
             cellElement.dataset.value = cell;
             cellElement.draggable = true;
+            this.movableElements[moveDirection] = cellElement;
           }
           cellElement.textContent = cell;
         }
@@ -93,6 +96,7 @@ export default class Board {
   }
 
   updateBoard() {
+    this.movableElements = {};
     this.boardArray.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
         const cellElement = this.cells[cell];
@@ -103,9 +107,11 @@ export default class Board {
         } else {
           const pos = `${rowIndex}_${cellIndex}`;
           if (Object.keys(this.movable).includes(pos)) {
+            const moveDirection = this.movable[pos];
             cellElement.classList.add('board__cell--active');
-            cellElement.dataset.position = this.movable[pos];
+            cellElement.dataset.position = moveDirection;
             cellElement.draggable = true;
+            this.movableElements[moveDirection] = cellElement;
           } else {
             cellElement.classList.remove('board__cell--active');
             cellElement.draggable = false;
@@ -160,6 +166,7 @@ export default class Board {
 
   disableMove() {
     this.movable = {};
+    this.movableElements = {};
   }
 
   updateMovableElements() {
