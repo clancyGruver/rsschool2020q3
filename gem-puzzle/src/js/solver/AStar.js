@@ -63,7 +63,7 @@ export default class AStar {
     const allowedMoves = AStar.validMoves(emptyCol, emptyRow, size);
     const lastMoves = node.path.split('');
     const lastMove = lastMoves[lastMoves.length - 1];
-    if(lastMove) {
+    if (lastMove) {
       allowedMoves.filter((el) => !AStar.oppositeMoves(el, lastMove));
     }
 

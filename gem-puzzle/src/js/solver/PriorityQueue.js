@@ -24,37 +24,38 @@ export default class PriorityQueue {
     let parentIdx = 0;
     const size = this.size();
     const elementPriority = this.items[0].value;
+    let isSwap = true;
 
-    while (true) {
+    while (isSwap) {
       const leftChildIdx = (2 * parentIdx) + 1;
       const rightChildIdx = (2 * parentIdx) + 2;
-      let leftChildPriority;
-      let rightChildPriority;
+      let LCP; // left child priority
+      let RCP; // right child priority
       let indexToSwap = null;
 
       if (leftChildIdx < size) {
-        leftChildPriority = this.items[leftChildIdx].value;
-        if (leftChildPriority < elementPriority) {
+        LCP = this.items[leftChildIdx].value;
+        if (LCP < elementPriority) {
           indexToSwap = leftChildIdx;
         }
       }
 
       if (rightChildIdx < size) {
-        rightChildPriority = this.items[rightChildIdx].value;
+        RCP = this.items[rightChildIdx].value;
 
-        const rightChildGreaterWithSwap = rightChildPriority < elementPriority && indexToSwap === null;
-        const rightChildGreaterWithNoSwap = rightChildPriority < leftChildPriority && indexToSwap !== null;
+        const rightChildGreaterWithSwap = RCP < elementPriority && indexToSwap === null;
+        const rightChildGreaterWithNoSwap = RCP < LCP && indexToSwap !== null;
         if (rightChildGreaterWithSwap || rightChildGreaterWithNoSwap) {
           indexToSwap = rightChildIdx;
         }
       }
 
       if (indexToSwap === null) {
-        break;
+        isSwap = false;
+      } else {
+        this.swap(parentIdx, indexToSwap);
+        parentIdx = indexToSwap;
       }
-
-      this.swap(parentIdx, indexToSwap);
-      parentIdx = indexToSwap;
     }
   }
 
