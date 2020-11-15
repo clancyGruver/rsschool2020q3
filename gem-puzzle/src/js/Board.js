@@ -358,7 +358,8 @@ export default class Board {
   }
 
   randomize() {
-    const movesCount = this.boardSize ** 3;
+    const chaosOrder = 3; //
+    const movesCount = this.boardSize ** chaosOrder;
     this.empty.row = this.boardSize - 1;
     this.empty.col = this.boardSize - 1;
     let prevMove = null;
