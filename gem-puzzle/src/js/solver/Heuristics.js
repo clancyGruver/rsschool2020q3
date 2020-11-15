@@ -86,47 +86,4 @@ export default class Heuristics {
     }
     return result;
   }
-
-  /*
-
-  static countConflicts2(candidateRow, solvedRow, size, ans = 0) {
-    let result = ans;
-    const counts = [...Array(size)].map(() => 0);
-    candidateRow.forEach((valueOuter, idxOuter) => {
-      if (solvedRow.includes(valueOuter) && valueOuter !== 'icon') {
-        candidateRow.forEach((valueInner, idxInner) => {
-          if (solvedRow.includes(valueInner) && valueInner !== 'icon') {
-            if (valueInner !== valueOuter) {
-              const isLeftVal = solvedRow.indexOf(valueInner) > solvedRow.indexOf(valueOuter);
-              const isLeftIdx = idxInner < idxOuter;
-
-              const isRightVal = solvedRow.indexOf(valueInner) < solvedRow.indexOf(valueOuter);
-              const isRightIdx = idxInner > idxOuter;
-
-              const isLeftPosition = isLeftVal && isLeftIdx;
-              const isRightPosition = isRightVal && isRightIdx;
-
-              if (isLeftPosition || isRightPosition) {
-                counts[idxInner] += 1;
-              }
-            }
-          }
-        });
-      }
-    });
-    const maxCount = Math.max(...counts);
-    if (maxCount === 0) {
-      result *= 2;
-    } else {
-      const i = counts.indexOf(maxCount);
-      candidateRow[i] = -1;
-      result += 1;
-      return Heuristics.countConflicts(candidateRow, solvedRow, size, result);
-    }
-    return result;
-  }
-*/
-  static lastMove(state) {
-    return 0;
-  }
 }
