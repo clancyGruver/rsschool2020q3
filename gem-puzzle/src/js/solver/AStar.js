@@ -70,8 +70,8 @@ export default class AStar {
     allowedMoves.forEach((directionSign) => {
       const newState = node.getClonedState();
       let newStateRow = emptyRow;
-      if (directionSign === 'U' || directionSign === 'D') {
-        newStateRow = directionSign === 'U' ? emptyRow - 1 : emptyRow + 1;
+      if (directionSign === 'T' || directionSign === 'B') {
+        newStateRow = directionSign === 'T' ? emptyRow - 1 : emptyRow + 1;
       }
       let newStateCol = emptyCol;
       if (directionSign === 'L' || directionSign === 'R') {
@@ -109,10 +109,10 @@ export default class AStar {
       validMoves.push('R');
     }
     if (row !== 0) {
-      validMoves.push('U');
+      validMoves.push('T');
     }
     if (row < size - 1) {
-      validMoves.push('D');
+      validMoves.push('B');
     }
     return validMoves;
   }
@@ -122,8 +122,8 @@ export default class AStar {
 
     if (cur === 'L' && last === 'R') res = true;
     if (cur === 'R' && last === 'L') res = true;
-    if (cur === 'U' && last === 'D') res = true;
-    if (cur === 'D' && last === 'U') res = true;
+    if (cur === 'T' && last === 'B') res = true;
+    if (cur === 'B' && last === 'T') res = true;
 
     return res;
   }

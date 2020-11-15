@@ -18,6 +18,7 @@ export default class GemGame {
     this.boardSize = size;
     this.movesCount = 0;
     this.isVictory = false;
+    this.autoSolved = false;
 
     this.moveHandler = (el) => this.move(el);
   }
@@ -74,9 +75,16 @@ export default class GemGame {
   }
 
   solve() {
+    this.autoSolved = true;
     const start = new Date();
     this.board.createSolver();
-    console.log(this.board.solver.execute());
+    const solve = this.board.solver.execute();
+    const moves = solve.path.split('');
+    moves.forEach((movePos) => {
+      console.log(movePos);
+      // data-position
+    });
+    console.log(solve);
     console.log(`Elapsed time: ${(new Date() - start) / 1000}`);
   }
 
