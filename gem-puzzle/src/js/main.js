@@ -1,4 +1,5 @@
 import Game from './GemGame';
 
 const game = new Game();
-game.init();
+
+document.addEventListener('DOMContentLoaded', () => game.init());
