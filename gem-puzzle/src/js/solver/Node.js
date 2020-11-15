@@ -18,13 +18,6 @@ export default class Node {
     this.path = ''; // represents a moves string[D,L,R,U]
   }
 
-  getCost(fromNeighbor) {
-    if (fromNeighbor && fromNeighbor.x !== this.x && fromNeighbor.y !== this.y) {
-      return this.weight * 1.41421;
-    }
-    return this.weight;
-  }
-
   toString() {
     let str = '';
     this.state.forEach((innerArr) => { innerArr.forEach((el) => { str = `${str},${el}`; }); });

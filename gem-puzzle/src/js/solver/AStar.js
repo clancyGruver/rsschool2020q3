@@ -22,7 +22,7 @@ export default class AStar {
       this.goal = new Node(0, goalState, goalIdxs.row, goalIdxs.col, 0);
     }
     this.empty = empty;
-    this.queue = new PriorityQueue(AStar.queueComparator);
+    this.queue = new PriorityQueue();
     this.queue.enqueue(this.initial);
     this.visited = new Set(); // closed list
   }
@@ -43,10 +43,6 @@ export default class AStar {
     return idxs;
   }
 
-  static queueComparator(nodeA, nodeB) {
-    return nodeA.score - nodeB.score;
-  }
-
   execute() {
     this.visited.add(this.initial.hash);
     while (this.queue.size() > 0) {
@@ -63,16 +59,15 @@ export default class AStar {
 
   expand(node) {
     const { emptyCol, emptyRow, size } = node;
-    const directionArr = ['U', 'D', 'L', 'R'];
-    const allowedDirections = {
-      U: () => emptyRow > 0,
-      D: () => emptyRow < size - 1,
-      L: () => emptyCol > 0,
-      R: () => emptyCol < size - 1,
-    };
 
-    directionArr.forEach((directionSign) => {
-      if (!allowedDirections[directionSign]()) return false;
+    const allowedMoves = AStar.validMoves(emptyCol, emptyRow, size);
+    const lastMoves = node.path.split('');
+    const lastMove = lastMoves[lastMoves.length - 1];
+    if(lastMove) {
+      allowedMoves.filter((el) => !AStar.oppositeMoves(el, lastMove));
+    }
+
+    allowedMoves.forEach((directionSign) => {
       const newState = node.getClonedState();
       let newStateRow = emptyRow;
       if (directionSign === 'U' || directionSign === 'D') {
@@ -103,5 +98,33 @@ export default class AStar {
     const manhattan = Heuristics.getManhattanDistance(node.state, this.goal.state);
     const linearConflict = Heuristics.linearConflict(node.state);
     return manhattan + linearConflict;
+  }
+
+  static validMoves(col, row, size) {
+    const validMoves = [];
+    if (col !== 0) {
+      validMoves.push('L');
+    }
+    if (col < size - 1) {
+      validMoves.push('R');
+    }
+    if (row !== 0) {
+      validMoves.push('U');
+    }
+    if (row < size - 1) {
+      validMoves.push('D');
+    }
+    return validMoves;
+  }
+
+  static oppositeMoves(cur, last) {
+    let res = false;
+
+    if (cur === 'L' && last === 'R') res = true;
+    if (cur === 'R' && last === 'L') res = true;
+    if (cur === 'U' && last === 'D') res = true;
+    if (cur === 'D' && last === 'U') res = true;
+
+    return res;
   }
 }
