@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Chicle&display=swap');
+
 :root{
   font-size: 10px;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 *{
@@ -14,6 +17,8 @@
 }
 
 .header{
+  font-family: 'Chicle', cursive;
+
   .container{
     align-items: center;
     justify-content: space-around;
@@ -40,6 +45,8 @@
     }
     h1{
       text-transform: uppercase;
+      letter-spacing: 0.6rem;
+      font-size: 4rem;
     }
     
     input[type="checkbox"] {
@@ -73,6 +80,7 @@
       font-weight: bold;
       margin-left: 1.5rem;
       z-index: 1;
+      letter-spacing: 0.2rem;
     }
 
     #train {
@@ -81,6 +89,43 @@
 
     #lol-checkbox:checked + #button #knob {
       left: 8.5rem;
+    }
+  }
+}
+
+.main{
+  .container{
+    flex-wrap: wrap;
+    justify-content: center;
+    .card-container{
+      margin: 2rem;
+      width: 25rem;
+      display: flex;
+      flex-direction: column;
+      transition: 0.5s ease-in-out;
+      box-shadow: 0 1.5rem 3rem -1rem black;
+      border-radius: 1.5rem;
+      &:hover{
+        transform: scale(1.05);
+        box-shadow: 0.5rem 0.6rem 1.7rem darkgray;
+        cursor: pointer;
+      }
+      .card-image{
+        text-align: center;
+        background-color: cornflowerblue;
+        img{
+          height: 18rem;
+          width: 18rem;
+          border-radius: 100%;
+          margin: 2rem 0;
+        }
+      }
+      .card-description{
+        text-align: center;
+        padding: 2.5rem 0;
+        font-size: 2rem;
+        text-transform: uppercase;
+      }
     }
   }
 }
