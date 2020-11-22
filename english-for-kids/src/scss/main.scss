@@ -18,6 +18,7 @@
 
 .header{
   font-family: 'Chicle', cursive;
+  background-color: mediumseagreen;
 
   .container{
     align-items: center;
@@ -94,6 +95,7 @@
 }
 
 .main{
+  padding: 3rem 0;
   .container{
     flex-wrap: wrap;
     justify-content: center;
@@ -126,6 +128,27 @@
         padding: 2.5rem 0;
         font-size: 2rem;
         text-transform: uppercase;
+      }
+    }
+  }
+}
+
+.footer{
+  background-color: mediumseagreen;
+  .links{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 100%;
+    padding: 2rem 0;
+    font-size: 2rem;
+    .link{
+      list-style-type: none;
+      .github-img{
+        width: 5rem;
+      }
+      .rss-img{
+        width: 10rem;
       }
     }
   }
