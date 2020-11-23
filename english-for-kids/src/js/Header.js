@@ -3,7 +3,7 @@ import create from './utils/create';
 export default class Header{
     constructor() {
         this.header = create('header', 'header');
-        this.headerContainer = create('div', 'container');
+        this.headerContainer = create('div', 'container', null, this.header);
         this.createBurgerMenu();
         this.createName();
         this.createSwitch();
