@@ -23,7 +23,7 @@ export default class App {
     this.categories = [];
     const keys = Object.keys(cards);
     for (let i = 0; i < keys.length; i += 1) {
-      const categoryName = cards[keys[i]];
+      const categoryName = keys[i];
       const cat = {
         image: cards[categoryName][0].image,
         word: categoryName,
