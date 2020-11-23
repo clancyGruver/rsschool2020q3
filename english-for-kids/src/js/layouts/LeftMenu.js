@@ -9,6 +9,17 @@ export default class LeftMenu {
     this.createMenu();
   }
 
+  toggleMenu() {
+    const menuClasses = this.menu.classList;
+    if (menuClasses.contains('closed')) {
+      this.menu.classList.remove('closed');
+      this.menu.classList.add('opened');
+    } else {
+      this.menu.classList.remove('opened');
+      this.menu.classList.add('closed');
+    }
+  }
+
   createHtmlContainer() {
     this.menu = create('nav', 'left-menu closed');
     this.menuContainer = create('ul', 'left-menu', null, this.menu);

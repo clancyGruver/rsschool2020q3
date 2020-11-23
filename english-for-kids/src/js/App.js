@@ -11,7 +11,7 @@ export default class App {
     this.cards = cards;
     this.leftMenu = new LeftMenu(Object.keys(cards));
     this.getCategories();
-    this.header = new Header();
+    this.header = new Header(() => this.leftMenu.toggleMenu());
     this.footer = new Footer();
     this.main = new MainContent();
     this.Page = PAGES.MAIN;

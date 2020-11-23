@@ -1,19 +1,23 @@
 import create from '../utils/create';
 
 export default class Header {
-  constructor() {
+  constructor(menuHandler) {
     this.header = create('header', 'header');
     this.headerContainer = create('div', 'container', null, this.header);
     this.createBurgerMenu();
     this.createName();
     this.createSwitch();
+    if (menuHandler) {
+      this.burgerContainer.addEventListener('click', menuHandler);
+      this.burgerContainer.addEventListener('click', () => this.burgerContainer.classList.toggle('burger__active'));
+    }
   }
 
   createBurgerMenu() {
-    const burgerContainer = create('div', 'burger', null, this.headerContainer);
-    create('div', 'bar1', null, burgerContainer);
-    create('div', 'bar2', null, burgerContainer);
-    create('div', 'bar3', null, burgerContainer);
+    this.burgerContainer = create('div', 'burger', null, this.headerContainer);
+    create('div', 'bar1', null, this.burgerContainer);
+    create('div', 'bar2', null, this.burgerContainer);
+    create('div', 'bar3', null, this.burgerContainer);
   }
 
   createName() {

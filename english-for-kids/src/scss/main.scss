@@ -50,7 +50,7 @@
       letter-spacing: 0.6rem;
       font-size: 4rem;
     }
-    
+
     input[type="checkbox"] {
       display: none;
     }
@@ -99,8 +99,9 @@
   width: 32rem;
   position: absolute;
   background-color: mediumseagreen;
-  top: 10rem;
+  top: 5rem;
   transition: all 0.5s ease;
+  z-index: 1;
   &.opened{
     left: 0;
   }
@@ -144,7 +145,7 @@
       box-shadow: 0 1.5rem 3rem -1rem black;
       border-radius: 1.5rem;
       &:hover{
-        transform: scale(1.05);
+        transform: scale(1.2);
         box-shadow: 0.5rem 0.6rem 1.7rem darkgray;
         cursor: pointer;
       }
