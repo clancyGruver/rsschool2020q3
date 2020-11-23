@@ -1,4 +1,4 @@
-{
+export default {
   "Action (set A)": [
     {
       "word": "cry",

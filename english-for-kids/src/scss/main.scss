@@ -100,7 +100,13 @@
   position: absolute;
   background-color: mediumseagreen;
   top: 10rem;
-  left: 0;
+  transition: all 0.5s ease;
+  &.opened{
+    left: 0;
+  }
+  &.closed{
+    left: -32rem;
+  }
   .menu{
     padding: 2rem 5rem;
     &-link{
