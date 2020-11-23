@@ -18,6 +18,8 @@ export default function create(el, classNames, children, parent, ...dataAttribut
     'autocorrect',
     'spellcheck',
     'src',
+    'type',
+    'for',
   ];
   try {
     element = document.createElement(el);
