@@ -6,10 +6,10 @@ export default class App {
 
   constructor() {
     this.mode = this.MODES.TRAIN;
-    this.load();
+    this.loadData();
   }
 
-  load() {
-    
+  loadData() {
+    const jsonUrl = '';
   }
 }
