@@ -45,7 +45,7 @@
         }
       }
     }
-    h1{
+    .header-caption{
       text-transform: uppercase;
       letter-spacing: 0.6rem;
       font-size: 4rem;
@@ -99,7 +99,7 @@
   width: 32rem;
   position: absolute;
   background-color: mediumseagreen;
-  top: 5rem;
+  top: 10rem;
   transition: all 0.5s ease;
   z-index: 1;
   &.opened{
@@ -109,7 +109,7 @@
     left: -32rem;
   }
   .menu{
-    padding: 2rem 5rem;
+    padding: 5rem 5rem;
     &-link{
       list-style-type: none;
       text-decoration: none;
@@ -185,6 +185,29 @@
       }
       .rss-img{
         width: 10rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header{
+    .container{
+      .header-caption {
+        font-size: 3rem;
+        letter-spacing: 0.3rem;
+      }
+      #button{
+        height: 7rem;
+      }
+      #knob{
+        width: 7.5rem;
+        height: 6.5rem;
+        top: 0.2rem;
+        left: 1rem;
+      }
+      #lol-checkbox:checked + #button #knob {
+        left: 9.5rem;
       }
     }
   }

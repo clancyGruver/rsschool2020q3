@@ -22,7 +22,7 @@ export default class LeftMenu {
 
   createHtmlContainer() {
     this.menu = create('nav', 'left-menu closed');
-    this.menuContainer = create('ul', 'left-menu', null, this.menu);
+    this.menuContainer = create('ul', 'menu', null, this.menu);
   }
 
   createMenu() {

@@ -7,16 +7,25 @@ import MainContent from './layouts/MainContent';
 
 export default class App {
   constructor() {
-    this.mode = MODES.TRAIN;
     this.cards = cards;
     this.leftMenu = new LeftMenu(Object.keys(cards));
     this.getCategories();
-    this.header = new Header(() => this.leftMenu.toggleMenu());
+    this.header = new Header(() => this.leftMenu.toggleMenu(), (val) => { this.mode = val; });
     this.footer = new Footer();
     this.main = new MainContent();
     this.Page = PAGES.MAIN;
+    this.mode = MODES.TRAIN;
     this.createPage();
     this.renderPage();
+  }
+
+  set mode(val) {
+    this.appMode = val;
+    this.header.switcher = val === MODES.PLAY;
+  }
+
+  get mode() {
+    return this.appMode;
   }
 
   getCategories() {
