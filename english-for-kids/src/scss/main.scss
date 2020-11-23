@@ -3,6 +3,7 @@
 :root{
   font-size: 10px;
   font-family: Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 *{
@@ -90,6 +91,35 @@
 
     #lol-checkbox:checked + #button #knob {
       left: 8.5rem;
+    }
+  }
+}
+
+.left-menu{
+  width: 32rem;
+  position: absolute;
+  background-color: mediumseagreen;
+  top: 10rem;
+  left: 0;
+  .menu{
+    padding: 2rem 5rem;
+    &-link{
+      list-style-type: none;
+      text-decoration: none;
+      font-size: 2rem;
+      color: wheat;
+      padding: 0.5rem 2rem;
+      &.active{
+        border: 2px solid darkviolet;
+        border-radius: 2rem;
+        background-color: violet;
+      }
+      &:hover{
+        border: 2px solid darkviolet;
+        border-radius: 2rem;
+        background-color: palevioletred;
+        cursor: pointer;
+      }
     }
   }
 }
