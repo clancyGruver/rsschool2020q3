@@ -2,7 +2,7 @@ import {MODES} from './constatnts';
 import cards from './cards';
 import LeftMenu from './LeftMenu';
 import Header from './Header';
-import Footer from './Footer';
+import Footer from './layouts/Footer';
 
 export default class App {
 
