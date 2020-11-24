@@ -7,7 +7,8 @@ export default class MainContent {
   }
 
   set content(val) {
-    this.mainContainer.innerHtml = '';
+    this.mainContainer.innerHTML = '';
+    console.log(val);
     if (Array.isArray(val)) {
       val.forEach((el) => this.mainContainer.append(el));
     } else {

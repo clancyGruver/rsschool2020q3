@@ -1,4 +1,5 @@
 import MainPage from './layouts/Main';
+import CategoryPage from './layouts/Category';
 
 const MODES = {
   TRAIN: 1,
@@ -7,7 +8,7 @@ const MODES = {
 
 const PAGES = {
   MAIN: MainPage,
-  CATEGORY: 'category',
+  CATEGORY: CategoryPage,
   STATS: 'stats',
 };
 

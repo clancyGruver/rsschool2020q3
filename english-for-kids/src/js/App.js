@@ -19,6 +19,12 @@ export default class App {
     this.renderPage();
   }
 
+  routerGo(page, val) {
+    this.Page = page;
+    this.selectedCategory = val;
+    this.renderPage(this.cards[val]);
+  }
+
   set mode(val) {
     this.appMode = val;
     this.header.switcher = val === MODES.PLAY;
@@ -48,10 +54,18 @@ export default class App {
     document.body.append(this.footer.footer);
   }
 
-  renderPage() {
+  renderPage(val) {
     const page = new this.Page();
     if (page.name === 'main page') {
-      page.init(this.categories);
+      page.init(
+        this.categories,
+        (pageClass, categoryName) => {
+          this.routerGo(pageClass, categoryName);
+        },
+        PAGES.CATEGORY,
+      );
+    } else if (page.name === 'category page') {
+      page.init(val, null, this.selectedCategory);
     }
     this.main.content = page.content;
   }

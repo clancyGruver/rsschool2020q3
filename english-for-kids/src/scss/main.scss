@@ -136,6 +136,40 @@
   .container{
     flex-wrap: wrap;
     justify-content: center;
+
+    .description{
+      width: 100%;
+      position: relative;
+      text-align: center;
+      &-text{
+        text-transform: uppercase;
+        font-size: 3rem;
+        font-weight: 800;
+      }
+    }
+
+    .card-holder{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      .back{
+        position: absolute;
+        visibility: hidden;
+      }
+      .card-flip{
+        width: 2rem;
+        height: 2rem;
+        background-color: deepskyblue;
+        position: relative;
+        border-radius: 50%;
+        bottom: 1rem;
+        right: -1rem;
+        border: 2px solid palevioletred;
+        outline:none;
+        cursor: pointer;
+      }
+    }
+
     .card-container{
       margin: 2rem;
       width: 25rem;
@@ -145,7 +179,7 @@
       box-shadow: 0 1.5rem 3rem -1rem black;
       border-radius: 1.5rem;
       &:hover{
-        transform: scale(1.2);
+        transform: translateY(1rem) translateX(0.3rem);
         box-shadow: 0.5rem 0.6rem 1.7rem darkgray;
         cursor: pointer;
       }
