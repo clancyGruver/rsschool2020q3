@@ -1,4 +1,5 @@
 import MainPage from '../layouts/Main';
+import CategoryPage from '../layouts/Category';
 
 const StaisticsPage = () => {};
 
@@ -14,8 +15,8 @@ export default [
     handler: StaisticsPage,
   },
   {
-    name: 'cards',
-    path: '/statistics',
-    handler: StaisticsPage,
+    name: 'category',
+    path: '/category',
+    handler: CategoryPage,
   },
 ];
