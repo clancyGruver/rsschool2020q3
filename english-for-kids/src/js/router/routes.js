@@ -11,12 +11,12 @@ export default [
   },
   {
     name: 'statistics',
-    path: '/statistics',
+    path: 'statistics',
     handler: StaisticsPage,
   },
   {
     name: 'category',
-    path: '/category',
+    path: 'category',
     handler: CategoryPage,
   },
 ];

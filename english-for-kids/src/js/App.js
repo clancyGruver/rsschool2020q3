@@ -1,9 +1,11 @@
-import { MODES, PAGES } from './constatnts';
+import MODES from './constatnts';
 import cards from './cards';
 import LeftMenu from './layouts/LeftMenu';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import MainContent from './layouts/MainContent';
+import Router from './router/Router';
+import routes from './router/routes';
 
 export default class App {
   constructor() {
@@ -13,10 +15,18 @@ export default class App {
     this.header = new Header(() => this.leftMenu.toggleMenu(), (val) => { this.mode = val; });
     this.footer = new Footer();
     this.main = new MainContent();
-    this.Page = PAGES.MAIN;
+    this.routerInit();
     this.mode = MODES.TRAIN;
     this.createPage();
     this.renderPage();
+  }
+
+  routerInit() {
+    const initUrl = `${window.location.origin}/english-for-kids/`;
+    this.router = new Router(initUrl, (params) => this.renderPage(params));
+    routes.forEach((el) => this.router.add(el.path, el.handler));
+    this.router.navigate('/');
+    this.router.listen();
   }
 
   routerGo(page, val) {
@@ -54,18 +64,20 @@ export default class App {
     document.body.append(this.footer.footer);
   }
 
-  renderPage(val) {
-    const page = new this.Page();
+  renderPage(params) {
+    const page = new this.router.Page();
+    console.log(page, params);
     if (page.name === 'main page') {
       page.init(
         this.categories,
-        (pageClass, categoryName) => {
+        null
+        /*(pageClass, categoryName) => {
           this.routerGo(pageClass, categoryName);
         },
-        PAGES.CATEGORY,
+        PAGES.CATEGORY,*/
       );
     } else if (page.name === 'category page') {
-      page.init(val, null, this.selectedCategory);
+      page.init(cards[params.name], null, params.name);
     }
     this.main.content = page.content;
   }

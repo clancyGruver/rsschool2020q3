@@ -27,7 +27,20 @@ export default class LeftMenu {
 
   createMenu() {
     this.categories.forEach((category) => {
-      const liElement = create('li', 'menu-link', null, this.menuContainer);
+      const routeParams = {
+        name: category,
+        path: 'category',
+        params: {
+          categoryName: category,
+        },
+      };
+      const liElement = create(
+        'li',
+        'menu-link',
+        null,
+        this.menuContainer,
+        ['route', JSON.stringify(routeParams)],
+      );
       liElement.textContent = category;
     });
   }

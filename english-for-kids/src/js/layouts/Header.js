@@ -26,7 +26,17 @@ export default class Header {
   }
 
   createName() {
-    const h1 = create('h1', 'header-caption', null, this.headerContainer);
+    const routeParams = {
+      name: 'main',
+      path: '/',
+    };
+    const h1 = create(
+      'h1',
+      'header-caption',
+      null,
+      this.headerContainer,
+      ['route', JSON.stringify(routeParams)],
+    );
     h1.textContent = 'english for kids';
   }
 
