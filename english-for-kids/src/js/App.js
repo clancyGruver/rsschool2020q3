@@ -66,7 +66,6 @@ export default class App {
 
   renderPage(params) {
     const page = new this.router.Page();
-    console.log(page, params);
     if (page.name === 'main page') {
       page.init(this.categories);
     } else if (page.name === 'category page') {

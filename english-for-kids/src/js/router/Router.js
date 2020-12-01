@@ -14,7 +14,6 @@ export default class Router {
     document.body.addEventListener('click', (event) => {
       const el = event.target.closest('[data-route]');
       if (!el) return;
-      console.log(el);
       const routeParams = JSON.parse(el.dataset.route);
       this.navigate(routeParams.path, routeParams);
     });
@@ -53,13 +52,17 @@ export default class Router {
     return result;
   }
 
+  static stripDoubleEndSlashes(path) {
+    return path.replace(/\/\/$/, '/');
+  }
+
   navigate(path = '/', params = {}) {
     const route = this.routes.find((el) => el.path === path);
     const queryParams = Router.queryParams();
     this.Page = route.handler;
     this.pageParams = params;
-    console.log(route, params, path);
-    window.history.pushState(null, null, this.root + path);
+    const finalPath = Router.stripDoubleEndSlashes(this.root + path);
+    window.history.pushState({ name: params.name }, '', finalPath);
     this.mainHandler(params);
   }
 }
