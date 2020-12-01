@@ -12,11 +12,11 @@ export default class Router {
 
   listen() {
     document.body.addEventListener('click', (event) => {
-      const el = event.target;
-      if (el.dataset.route) {
-        const routeParams = JSON.parse(el.dataset.route);
-        this.navigate(routeParams.path, routeParams);
-      }
+      const el = event.target.closest('[data-route]');
+      if (!el) return;
+      console.log(el);
+      const routeParams = JSON.parse(el.dataset.route);
+      this.navigate(routeParams.path, routeParams);
     });
   }
 

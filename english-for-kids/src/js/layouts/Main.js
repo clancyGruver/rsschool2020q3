@@ -6,10 +6,12 @@ export default class MainPage {
     this.contentVal = [];
   }
 
-  init(categories, calbackFn, pageClass) {
-    this.pageClass = pageClass;
-    this.callback = calbackFn;
-    this.content = categories.map((category) => new Card(category));
+  init(categories) {
+    this.content = categories.map((category) => {
+      const card = new Card(category);
+      card.createCategoryLink();
+      return card;
+    });
   }
 
   get content() {
@@ -19,9 +21,6 @@ export default class MainPage {
   set content(val) {
     val.forEach((element) => {
       this.contentVal.push(element.card);
-      element.card.addEventListener('click', () => {
-        this.callback(this.pageClass, element.params.word);
-      });
     });
   }
 }

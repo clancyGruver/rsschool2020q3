@@ -48,4 +48,15 @@ export default class Card {
   get card() {
     return this.cardElement;
   }
+
+  createCategoryLink() {
+    const routeParams = {
+      name: this.params.word,
+      path: 'category',
+      params: {
+        categoryName: this.params.word,
+      },
+    };
+    this.cardElement.dataset.route = JSON.stringify(routeParams);
+  }
 }

@@ -68,14 +68,7 @@ export default class App {
     const page = new this.router.Page();
     console.log(page, params);
     if (page.name === 'main page') {
-      page.init(
-        this.categories,
-        null
-        /*(pageClass, categoryName) => {
-          this.routerGo(pageClass, categoryName);
-        },
-        PAGES.CATEGORY,*/
-      );
+      page.init(this.categories);
     } else if (page.name === 'category page') {
       page.init(cards[params.name], null, params.name);
     }
