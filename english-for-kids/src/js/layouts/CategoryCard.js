@@ -6,6 +6,7 @@ export default class CategoryCard extends Card {
     super(params);
     this.createAudio();
     this.addFlipButton();
+    this.addPlayAudioHandler();
   }
 
   createAudio() {
@@ -14,5 +15,12 @@ export default class CategoryCard extends Card {
 
   addFlipButton() {
     this.flipButton = create('button', 'card-flip', null, this.card, ['type', 'button']);
+  }
+
+  addPlayAudioHandler() {
+    this.cardElement.addEventListener('click', () => {
+      this.audio.currentTime = 0;
+      this.audio.play();
+    });
   }
 }
