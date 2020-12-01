@@ -25,7 +25,20 @@ export default class LeftMenu {
     this.menuContainer = create('ul', 'menu', null, this.menu);
   }
 
+  handleRoute(params) {
+    const name = params && params.name ? params.name : 'main';
+    Array.from(this.menuContainer.children).forEach((el) => {
+      if (el.dataset.name === name) {
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
+      }
+    });
+  }
+
   createMenu() {
+    this.addLinkToMainPage();
+
     this.categories.forEach((category) => {
       const routeParams = {
         name: category,
@@ -39,9 +52,29 @@ export default class LeftMenu {
         'menu-link',
         null,
         this.menuContainer,
+        ['name', category],
         ['route', JSON.stringify(routeParams)],
       );
       liElement.textContent = category;
     });
+  }
+
+  addLinkToMainPage() {
+    const routeParams = {
+      name: 'main',
+      path: '/',
+      params: {
+        categoryName: 'main',
+      },
+    };
+    const liElement = create(
+      'li',
+      'menu-link',
+      null,
+      this.menuContainer,
+      ['name', 'main'],
+      ['route', JSON.stringify(routeParams)],
+    );
+    liElement.textContent = 'Main';
   }
 }

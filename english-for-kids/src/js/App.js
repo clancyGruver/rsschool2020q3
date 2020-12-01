@@ -23,7 +23,10 @@ export default class App {
 
   routerInit() {
     const initUrl = `${window.location.origin}/english-for-kids/`;
-    this.router = new Router(initUrl, (params) => this.renderPage(params));
+    this.router = new Router(initUrl, (params) => {
+      this.leftMenu.handleRoute(params);
+      this.renderPage(params);
+    });
     routes.forEach((el) => this.router.add(el.path, el.handler));
     this.router.navigate('/');
     this.router.listen();

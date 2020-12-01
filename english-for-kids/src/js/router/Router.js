@@ -63,6 +63,8 @@ export default class Router {
     this.pageParams = params;
     const finalPath = Router.stripDoubleEndSlashes(this.root + path);
     window.history.pushState({ name: params.name }, '', finalPath);
-    this.mainHandler(params);
+    if (this.mainHandler) {
+      this.mainHandler(params);
+    }
   }
 }
