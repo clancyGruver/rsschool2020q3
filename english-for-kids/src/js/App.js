@@ -19,6 +19,7 @@ export default class App {
     this.mode = MODES.TRAIN;
     this.createPage();
     this.renderPage();
+    this.leftMenu.addCloseHandler(() => this.header.toggleMenu());
   }
 
   routerInit() {

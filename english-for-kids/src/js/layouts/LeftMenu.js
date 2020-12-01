@@ -7,17 +7,42 @@ export default class LeftMenu {
     this.menuContainer = null;
     this.createHtmlContainer();
     this.createMenu();
+    this.createOverlay();
+  }
+
+  createOverlay() {
+    this.overlay = create('div', 'overlay', null, document.body);
+  }
+
+  showOverlay() {
+    this.overlay.classList.add('show');
+  }
+
+  hideOverlay() {
+    this.overlay.classList.remove('show');
   }
 
   toggleMenu() {
     const menuClasses = this.menu.classList;
     if (menuClasses.contains('closed')) {
+      LeftMenu.stopScrolling();
+      this.showOverlay();
       this.menu.classList.remove('closed');
       this.menu.classList.add('opened');
     } else {
+      LeftMenu.startScrolling();
+      this.hideOverlay();
       this.menu.classList.remove('opened');
       this.menu.classList.add('closed');
     }
+  }
+
+  static startScrolling() {
+    document.body.classList.remove('stop-scrolling');
+  }
+
+  static stopScrolling() {
+    document.body.classList.add('stop-scrolling');
   }
 
   createHtmlContainer() {
@@ -56,6 +81,23 @@ export default class LeftMenu {
         ['route', JSON.stringify(routeParams)],
       );
       liElement.textContent = category;
+    });
+  }
+
+  addCloseHandler(headerMenuHandler) {
+    Array.from(this.menuContainer.children).forEach((el) => {
+      el.addEventListener('click', () => {
+        headerMenuHandler();
+        this.toggleMenu();
+      });
+    });
+    this.addOverlayCloseHandler(headerMenuHandler);
+  }
+
+  addOverlayCloseHandler(headerMenuHandler) {
+    this.overlay.addEventListener('click', () => {
+      headerMenuHandler();
+      this.toggleMenu();
     });
   }
 

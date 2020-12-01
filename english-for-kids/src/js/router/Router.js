@@ -58,7 +58,6 @@ export default class Router {
 
   navigate(path = '/', params = {}) {
     const route = this.routes.find((el) => el.path === path);
-    const queryParams = Router.queryParams();
     this.Page = route.handler;
     this.pageParams = params;
     const finalPath = Router.stripDoubleEndSlashes(this.root + path);

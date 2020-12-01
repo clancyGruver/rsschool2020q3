@@ -21,8 +21,12 @@ export default class Header {
 
     if (menuHandler) {
       this.burgerContainer.addEventListener('click', menuHandler);
-      this.burgerContainer.addEventListener('click', () => this.burgerContainer.classList.toggle('burger__active'));
+      this.burgerContainer.addEventListener('click', () => this.toggleMenu());
     }
+  }
+
+  toggleMenu() {
+    this.burgerContainer.classList.toggle('burger__active');
   }
 
   createName() {
