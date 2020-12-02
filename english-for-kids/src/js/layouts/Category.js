@@ -8,19 +8,17 @@ export default class MainPage {
     this.cards = [];
   }
 
-  init(words, calbackFn, categoryName) {
-    this.categoryName = categoryName;
-    // this.pageClass = pageClass;
-    this.callback = calbackFn;
+  init(words) {
     this.words = words;
     this.cards = [];
     this.createCards();
   }
 
   get content() {
+    const cards = this.cards.map((el) => el.deck);
     return [
       this.description,
-      ...this.cards,
+      ...cards,
     ];
   }
 
@@ -34,14 +32,7 @@ export default class MainPage {
 
   createCards() {
     this.words.forEach((word) => {
-      const holder = create('div', 'card-holder');
-      const front = new CategoryCard(word);
-      const back = new Card(word);
-
-      back.card.classList.add('back');
-      holder.append(front.card, back.card);
-
-      this.cards.push(holder);
+      this.cards.push(new CategoryCard(word));
     });
   }
 }
