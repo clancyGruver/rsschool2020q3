@@ -19,6 +19,7 @@ export default class Category {
     this.playMode = null;
     this.name = 'category page';
     this.cards = [];
+    this.eventListeners = {};
   }
 
   init(words, mode) {
@@ -40,7 +41,7 @@ export default class Category {
     this.cards.forEach((card) => {
       if (this.mode === MODES.PLAY) {
         card.setInvisible();
-        card.deck.addEventListener('click', (e) => this.playCardClickHandler(e)); // TODO: change handler for disabling on end game
+        card.deck.addEventListener('click', this.eventListeners[card.params.word] = this.playCardClickHandler.bind(this));
       } else {
         card.setVisible();
       }
@@ -98,6 +99,9 @@ export default class Category {
   playCardClickHandler(e) {
     const el = e.target.closest('.flip-card');
     if (el === this.currentPlayCard.deck) {
+      const handler = this.eventListeners[this.currentPlayCard.params.word];
+      this.currentPlayCard.deckContainer.classList.add('disabled');
+      this.currentPlayCard.deck.removeEventListener('click', handler);
       Category.playSound(this.successSound);
       this.nextPlayCard();
     } else {

@@ -244,6 +244,11 @@
         text-align: center;
         transition: transform 0.8s;
         transform-style: preserve-3d;
+        &.disabled {
+          box-shadow: 0 0 black;
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
       }
       &__front, &__back{
         position: absolute;
