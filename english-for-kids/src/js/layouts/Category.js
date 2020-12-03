@@ -2,7 +2,7 @@ import CategoryCard from './CategoryCard';
 import create from '../utils/create';
 import MODES from '../constatnts';
 
-export default class MainPage {
+export default class Category {
   constructor() {
     this.playModes = {
       waiting: 'waiting',
@@ -28,6 +28,9 @@ export default class MainPage {
     this.createCards();
     this.createRating();
     this.createButton();
+    this.createSuccessSound();
+    this.createErrorSound();
+    this.addSoundsToPanel();
     this.setVisibility();
   }
 
@@ -121,5 +124,24 @@ export default class MainPage {
       if (this.rating) this.rating.classList.remove('non-displayed');
       if (this.panel) this.panel.classList.remove('off');
     }
+  }
+
+  createSuccessSound() {
+    const soundUrl = './assets/sound/success.wav';
+    this.successSound = Category.createSound(soundUrl);
+  }
+
+  createErrorSound() {
+    const soundUrl = './assets/sound/error.wav';
+    this.errorSound = Category.createSound(soundUrl);
+  }
+
+  addSoundsToPanel() {
+    this.panel.appendChild(this.errorSound);
+    this.panel.appendChild(this.successSound);
+  }
+
+  static createSound(soundUrl) {
+    return create('sound', '', null, null, ['src', soundUrl]);
   }
 }
