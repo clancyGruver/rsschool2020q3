@@ -90,7 +90,6 @@ export default class Category {
       this.setRepeatBtn();
       this.shuffle();
       this.nextPlayCard();
-      this.currentPlayCard.playSound();
     } else {
       this.currentPlayCard.playSound();
     }
@@ -100,6 +99,7 @@ export default class Category {
     const el = e.target.closest('.flip-card');
     if (el === this.currentPlayCard.deck) {
       Category.playSound(this.successSound);
+      this.nextPlayCard();
     } else {
       Category.playSound(this.errorSound);
     }
@@ -107,6 +107,7 @@ export default class Category {
 
   nextPlayCard() {
     this.currentPlayCard = this.playCards.pop();
+    this.currentPlayCard.playSound();
   }
 
   createButtonsPanel() {
