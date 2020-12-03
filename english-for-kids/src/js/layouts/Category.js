@@ -98,17 +98,60 @@ export default class Category {
   playCardClickHandler(e) {
     const el = e.target.closest('.flip-card');
     if (el === this.currentPlayCard.deck) {
-      const handler = this.eventListeners[this.currentPlayCard.params.word];
-      this.currentPlayCard.deckContainer.classList.add('disabled');
-      this.currentPlayCard.deck.removeEventListener('click', handler);
-      Category.playSound(this.successSound);
-      this.rating.innerHTML += this.stars.full;
-      this.nextPlayCard();
+      this.correctChoice();
     } else {
-      Category.playSound(this.errorSound);
-      this.rating.innerHTML += this.stars.empty;
+      this.invalidChoice();
     }
     this.score -= 1;
+  }
+
+  correctChoice() {
+    const handler = this.eventListeners[this.currentPlayCard.params.word];
+
+    this.currentPlayCard.deckContainer.classList.add('disabled');
+    this.currentPlayCard.deck.removeEventListener('click', handler);
+
+    Category.playSound(this.successSound);
+    this.addFullStar();
+
+    if (this.hasPlayCards()) {
+      this.nextPlayCard();
+    } else {
+      this.endGame();
+    }
+  }
+
+  endGame() {
+    if (this.score < 0) {
+      this.badEnd();
+    } else {
+      this.goodEnd();
+    }
+  }
+
+  badEnd() {
+    Category.playSound(this.errorEndSound);
+  }
+
+  goodEnd() {
+    Category.playSound(this.successEndSound);
+  }
+
+  addFullStar() {
+    this.rating.innerHTML += this.stars.full;
+  }
+
+  addEmptyStar() {
+    this.rating.innerHTML += this.stars.empty;
+  }
+
+  invalidChoice() {
+    Category.playSound(this.errorSound);
+    this.addEmptyStar();
+  }
+
+  hasPlayCards() {
+    return this.playCards.length > 0;
   }
 
   nextPlayCard() {
