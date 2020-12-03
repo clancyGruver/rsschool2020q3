@@ -26,6 +26,7 @@ export default class Category {
     this.words = words;
     this.cards = [];
     this.mode = mode;
+    this.score = this.words.length;
     this.createCards();
     this.createRating();
     this.createButton();
@@ -74,7 +75,6 @@ export default class Category {
 
   createRating() {
     this.rating = create('div', 'rating');
-    this.rating.innerHTML = `${this.stars.empty}${this.stars.full}`;
   }
 
   shuffle() {
@@ -103,15 +103,20 @@ export default class Category {
       this.currentPlayCard.deckContainer.classList.add('disabled');
       this.currentPlayCard.deck.removeEventListener('click', handler);
       Category.playSound(this.successSound);
+      this.rating.innerHTML += this.stars.full;
       this.nextPlayCard();
     } else {
       Category.playSound(this.errorSound);
+      this.rating.innerHTML += this.stars.empty;
     }
+    this.score -= 1;
   }
 
   nextPlayCard() {
     this.currentPlayCard = this.playCards.pop();
-    this.currentPlayCard.playSound();
+    if (this.currentPlayCard) {
+      this.currentPlayCard.playSound();
+    }
   }
 
   createButtonsPanel() {
