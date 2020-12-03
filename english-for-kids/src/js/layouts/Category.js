@@ -15,6 +15,7 @@ export default class MainPage {
     this.createCards();
     this.createRating();
     this.createButton();
+    this.setVisibility();
   }
 
   changeMode(mode) {
@@ -28,6 +29,7 @@ export default class MainPage {
       this.rating,
       this.description,
       ...cards,
+      this.panel,
     ];
   }
 
@@ -47,12 +49,13 @@ export default class MainPage {
 
   createRating() {
     this.rating = create('div', 'rating');
-    this.setRatingVisibility();
   }
 
   createButton() {
     this.createButtonsPanel();
-    this.button = create('button', 'btn-start', null, this.panel);
+    const playButton = '<i class="fas fa-play"></i>Start game';
+    this.button = create('button', 'btn btn-start', playButton, this.panel);
+    //'<i class="fas fa-redo"></i>Repeat'
   }
 
   createButtonsPanel() {
@@ -62,7 +65,7 @@ export default class MainPage {
   setVisibility() {
     if (this.mode === MODES.TRAIN) {
       if (this.rating) this.rating.classList.add('hidden');
-      if (this.panel) this.panel.classList.add('hidden');
+      //if (this.panel) this.panel.classList.add('hidden');
     } else {
       if (this.rating) this.rating.classList.remove('hidden');
       if (this.panel) this.panel.classList.remove('hidden');

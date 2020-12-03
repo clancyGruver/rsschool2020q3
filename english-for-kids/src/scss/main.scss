@@ -271,6 +271,42 @@
         cursor: pointer;
       }
     }
+    .panel {
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      align-items: center;
+      bottom: 0;
+      background: linear-gradient(0deg, mediumseagreen, #9198e5);
+      height: 6rem;
+      min-width: 10rem;
+      border: 2px solid rgb(34, 7, 7);
+      border-bottom: none;
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 1.5rem;
+      transition: all 0.3s ease-in-out;
+      &.off {
+        bottom: -7rem;
+      }
+      .btn {
+        min-width: 4rem;
+        height: 4rem;
+        border-radius: 1rem;
+        outline: none;
+        padding: 0 2rem;
+        margin: 1rem 1.5rem;
+        text-transform: uppercase;
+        font-weight: 800;
+        &.btn-start {
+          background-color: blueviolet;
+          color: wheat;
+        }
+        .fas {
+          padding-right: 1rem;
+        }
+      }
+    }
   }
   .card-description{
     text-align: center;
