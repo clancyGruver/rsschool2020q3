@@ -40,6 +40,7 @@ export default class Category {
     this.cards.forEach((card) => {
       if (this.mode === MODES.PLAY) {
         card.setInvisible();
+        card.deck.addEventListener('click', (e) => this.playCardClickHandler(e)); // TODO: change handler for disabling on end game
       } else {
         card.setVisible();
       }
@@ -95,6 +96,15 @@ export default class Category {
     }
   }
 
+  playCardClickHandler(e) {
+    const el = e.target.closest('.flip-card');
+    if (el === this.currentPlayCard.deck) {
+      Category.playSound(this.successSound);
+    } else {
+      Category.playSound(this.errorSound);
+    }
+  }
+
   nextPlayCard() {
     this.currentPlayCard = this.playCards.pop();
   }
@@ -142,6 +152,11 @@ export default class Category {
   }
 
   static createSound(soundUrl) {
-    return create('sound', '', null, null, ['src', soundUrl]);
+    return create('audio', '', null, null, ['src', soundUrl]);
+  }
+
+  static playSound(sound) {
+    sound.currentTime = 0;
+    sound.play();
   }
 }
