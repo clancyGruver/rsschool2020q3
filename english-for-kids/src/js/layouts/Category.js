@@ -6,11 +6,15 @@ export default class MainPage {
   constructor() {
     this.playModes = {
       waiting: 'waiting',
-      playing: 'playing'
+      playing: 'playing',
     };
     this.stars = {
       full: '<i class="fas fa-star fa-4x"></i>',
       empty: '<i class="far fa-star fa-4x"></i>',
+    };
+    this.icons = {
+      repeat: '<i class="fas fa-redo"></i>Repeat',
+      play: '<i class="fas fa-play"></i>Start game',
     };
     this.playMode = null;
     this.name = 'category page';
@@ -30,7 +34,6 @@ export default class MainPage {
   changeMode(mode) {
     this.mode = mode;
     this.setVisibility();
-    console.log(this.cards);
     this.cards.forEach((card) => {
       if (this.mode === MODES.PLAY) {
         card.setInvisible();
@@ -69,23 +72,43 @@ export default class MainPage {
     this.rating.innerHTML = `${this.stars.empty}${this.stars.full}`;
   }
 
-  createButton() {
-    this.createButtonsPanel();
-    const playButton = '<i class="fas fa-play"></i>Start game';
-    this.button = create('button', 'btn btn-start', playButton, this.panel);
-    this.button.addEventListener('click', this.btnClickHandler);
+  shuffle() {
+    this.playCards = [...this.cards];
+    for (let i = this.playCards.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.playCards[i], this.playCards[j]] = [this.playCards[j], this.playCards[i]];
+    }
   }
 
   btnClickHandler() {
-    if(!this.playMode || this.playMode === this.playModes.playing) {
-
+    if (this.playMode === null || this.playMode === this.playModes.waiting) {
+      this.setRepeatBtn();
+      this.shuffle();
+      this.nextPlayCard();
+      console.log(this.currentPlayCard);
+      this.currentPlayCard.playSound();
     }
-    //'<i class="fas fa-redo"></i>Repeat'
+  }
 
+  nextPlayCard() {
+    this.currentPlayCard = this.playCards.pop();
   }
 
   createButtonsPanel() {
     this.panel = create('div', 'panel');
+  }
+
+  createButton() {
+    this.createButtonsPanel();
+    this.button = create('button', 'btn btn-start', null, this.panel);
+    this.button.innerHTML = this.icons.play;
+    this.button.addEventListener('click', () => this.btnClickHandler());
+  }
+
+  setRepeatBtn() {
+    this.button.innerHTML = this.icons.repeat;
+    this.button.classList.add('btn-repeat');
+    this.button.classList.remove('btn-start');
   }
 
   setVisibility() {

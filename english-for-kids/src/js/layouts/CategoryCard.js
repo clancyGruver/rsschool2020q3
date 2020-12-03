@@ -63,16 +63,20 @@ export default class CategoryCard {
 
   addPlayAudioHandler() {
     this.front.addEventListener('click', (e) => {
-      if (this.mode() === MODES.PLAY ) {
+      if (this.mode() === MODES.PLAY) {
         return;
       }
       const flipBtn = Boolean(e.target.closest('.card-flip'));
       const front = Boolean(e.target.closest('.flip-card__front'));
       if (!flipBtn && front) {
-        this.audio.currentTime = 0;
-        this.audio.play();
+        this.playSound();
       }
     });
+  }
+
+  playSound() {
+    this.audio.currentTime = 0;
+    this.audio.play();
   }
 
   flipToBack() {
