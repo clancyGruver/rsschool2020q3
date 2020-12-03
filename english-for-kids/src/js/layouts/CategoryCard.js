@@ -8,8 +8,8 @@ export default class CategoryCard {
     this.mode = mode;
 
     this.createDeck();
-    this.creteFrontCard();
-    this.creteBackCard();
+    this.createFrontCard();
+    this.createBackCard();
 
     this.addFlipButton();
     this.addPlayAudioHandler();
@@ -21,14 +21,14 @@ export default class CategoryCard {
     this.deckContainer = create('div', 'flip-card__container', null, this.deck);
   }
 
-  creteFrontCard() {
+  createFrontCard() {
     this.front = create('div', 'flip-card__front', null, this.deckContainer);
     this.createImage(this.front);
     CategoryCard.createDescription(this.front, this.params.word);
     this.createAudio();
   }
 
-  creteBackCard() {
+  createBackCard() {
     this.back = create('div', 'flip-card__back', null, this.deckContainer);
     this.createImage(this.back);
     CategoryCard.createDescription(this.back, this.params.translation);
