@@ -88,7 +88,7 @@ export default class MainPage {
       this.nextPlayCard();
       this.currentPlayCard.playSound();
     } else {
-      
+      this.currentPlayCard.playSound();
     }
   }
 
