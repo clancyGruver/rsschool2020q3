@@ -30,8 +30,7 @@ export default class Category {
     this.createCards();
     this.createRating();
     this.createButton();
-    this.createSuccessSound();
-    this.createErrorSound();
+    this.createSounds();
     this.addSoundsToPanel();
     this.setVisibility();
   }
@@ -146,6 +145,23 @@ export default class Category {
     }
   }
 
+  createSounds() {
+    this.createSuccessSound();
+    this.createErrorSound();
+    this.createSuccessEndSound();
+    this.createErrorEndSound();
+  }
+
+  createSuccessEndSound() {
+    const soundUrl = './assets/sound/endGameSuccess.wav';
+    this.successEndSound = Category.createSound(soundUrl);
+  }
+
+  createErrorEndSound() {
+    const soundUrl = './assets/sound/endGameFailure.wav';
+    this.errorEndSound = Category.createSound(soundUrl);
+  }
+
   createSuccessSound() {
     const soundUrl = './assets/sound/success.wav';
     this.successSound = Category.createSound(soundUrl);
@@ -159,6 +175,8 @@ export default class Category {
   addSoundsToPanel() {
     this.panel.appendChild(this.errorSound);
     this.panel.appendChild(this.successSound);
+    this.panel.appendChild(this.errorEndSound);
+    this.panel.appendChild(this.successEndSound);
   }
 
   static createSound(soundUrl) {
