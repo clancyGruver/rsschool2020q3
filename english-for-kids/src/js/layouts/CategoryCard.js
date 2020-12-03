@@ -1,9 +1,11 @@
 import create from '../utils/create';
+import MODES from '../constatnts';
 
 export default class CategoryCard {
-  constructor(params) {
+  constructor(params, mode) {
     this.urlPrefix = './assets/';
     this.params = params;
+    this.mode = mode;
 
     this.createDeck();
     this.creteFrontCard();
@@ -71,6 +73,9 @@ export default class CategoryCard {
 
   addPlayAudioHandler() {
     this.front.addEventListener('click', (e) => {
+      if (this.mode() === MODES.PLAY ) {
+        return;
+      }
       const flipBtn = Boolean(e.target.closest('.card-flip'));
       const front = Boolean(e.target.closest('.flip-card__front'));
       if (!flipBtn && front) {
@@ -92,31 +97,3 @@ export default class CategoryCard {
     this.back.classList.add('hidden');
   }
 }
-/*
-<div class="flip-card">
-  <div class="flip-card__container">
-
-    <div class="flip-card__front">
-      <div class="card-image">
-        <img src="./assets/img/open.jpg" data-alt="open">
-      </div>
-
-      <div class="card-description">
-        <strong>open</strong>
-        <button class="card-flip" type="button"></button>
-      </div>
-      <audio src="./assets/audio/open.mp3"></audio>
-    </div>
-
-  </div>
-  <div class="flip-card__back">
-    <div class="card-image">
-      <img src="./assets/img/open.jpg" data-alt="open">
-    </div><div class="card-description">
-      <strong>open</strong>
-    </div>
-  </div>
-
-  </div>
-</div>
-*/

@@ -1,5 +1,4 @@
 import CategoryCard from './CategoryCard';
-import Card from './Card';
 import create from '../utils/create';
 
 export default class MainPage {
@@ -37,7 +36,7 @@ export default class MainPage {
 
   createCards() {
     this.words.forEach((word) => {
-      this.cards.push(new CategoryCard(word));
+      this.cards.push(new CategoryCard(word, () => this.mode));
     });
   }
 }
