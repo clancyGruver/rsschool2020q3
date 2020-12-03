@@ -14,11 +14,12 @@ export default class MainPage {
     this.mode = mode;
     this.createCards();
     this.createRating();
+    this.createButton();
   }
 
   changeMode(mode) {
     this.mode = mode;
-    this.setRatingVisibility();
+    this.setVisibility();
   }
 
   get content() {
@@ -49,11 +50,22 @@ export default class MainPage {
     this.setRatingVisibility();
   }
 
-  setRatingVisibility() {
+  createButton() {
+    this.createButtonsPanel();
+    this.button = create('button', 'btn-start', null, this.panel);
+  }
+
+  createButtonsPanel() {
+    this.panel = create('div', 'panel');
+  }
+
+  setVisibility() {
     if (this.mode === MODES.TRAIN) {
-      this.rating.classList.add('hidden');
+      if (this.rating) this.rating.classList.add('hidden');
+      if (this.panel) this.panel.classList.add('hidden');
     } else {
-      this.rating.classList.remove('hidden');
+      if (this.rating) this.rating.classList.remove('hidden');
+      if (this.panel) this.panel.classList.remove('hidden');
     }
   }
 }
