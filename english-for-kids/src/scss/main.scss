@@ -168,10 +168,6 @@
       opacity: 0;
     }
 
-    .non-displayed {
-      display: none;
-    }
-
     .rating {
       min-height: 3rem;
       width: 100%;
@@ -342,6 +338,9 @@
     padding: 2.5rem 0;
     font-size: 2rem;
     text-transform: uppercase;
+  }
+  .non-displayed {
+    display: none !important;
   }
 }
 

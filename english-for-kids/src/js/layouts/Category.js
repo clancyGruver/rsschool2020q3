@@ -30,6 +30,14 @@ export default class MainPage {
   changeMode(mode) {
     this.mode = mode;
     this.setVisibility();
+    console.log(this.cards);
+    this.cards.forEach((card) => {
+      if (this.mode === MODES.PLAY) {
+        card.setInvisible();
+      } else {
+        card.setVisible();
+      }
+    });
   }
 
   get content() {
@@ -82,10 +90,10 @@ export default class MainPage {
 
   setVisibility() {
     if (this.mode === MODES.TRAIN) {
-      if (this.rating) this.rating.classList.add('hidden');
+      if (this.rating) this.rating.classList.add('non-displayed');
       if (this.panel) this.panel.classList.add('off');
     } else {
-      if (this.rating) this.rating.classList.remove('hidden');
+      if (this.rating) this.rating.classList.remove('non-displayed');
       if (this.panel) this.panel.classList.remove('off');
     }
   }
