@@ -82,11 +82,13 @@ export default class MainPage {
 
   btnClickHandler() {
     if (this.playMode === null || this.playMode === this.playModes.waiting) {
+      this.playMode = this.playModes.playing;
       this.setRepeatBtn();
       this.shuffle();
       this.nextPlayCard();
-      console.log(this.currentPlayCard);
       this.currentPlayCard.playSound();
+    } else {
+      
     }
   }
 
