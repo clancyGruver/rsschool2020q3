@@ -36,20 +36,7 @@ export default class CategoryCard {
 
   createImage(parentEl) {
     const imageContainer = create('div', 'card-image', null, parentEl);
-    create(
-      'img',
-      '',
-      null,
-      imageContainer,
-      [
-        'src',
-        `${this.urlPrefix}${this.params.image || 'img/boot.jpg'}`,
-      ],
-      [
-        'alt',
-        this.params.word || '',
-      ],
-    );
+    imageContainer.style.backgroundImage = `url(${this.urlPrefix}${this.params.image})`;
   }
 
   static createDescription(parentEl, word = '') {
@@ -69,6 +56,7 @@ export default class CategoryCard {
 
   addFlipButton() {
     this.flipButton = create('button', 'card-flip', null, this.front, ['type', 'button']);
+    this.flipButton.innerHTML = '<i class="fas fa-redo-alt"></i>';
   }
 
   addPlayAudioHandler() {
