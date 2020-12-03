@@ -4,6 +4,15 @@ import MODES from '../constatnts';
 
 export default class MainPage {
   constructor() {
+    this.playModes = {
+      waiting: 'waiting',
+      playing: 'playing'
+    };
+    this.stars = {
+      full: '<i class="fas fa-star fa-4x"></i>',
+      empty: '<i class="far fa-star fa-4x"></i>',
+    };
+    this.playMode = null;
     this.name = 'category page';
     this.cards = [];
   }
@@ -49,13 +58,22 @@ export default class MainPage {
 
   createRating() {
     this.rating = create('div', 'rating');
+    this.rating.innerHTML = `${this.stars.empty}${this.stars.full}`;
   }
 
   createButton() {
     this.createButtonsPanel();
     const playButton = '<i class="fas fa-play"></i>Start game';
     this.button = create('button', 'btn btn-start', playButton, this.panel);
+    this.button.addEventListener('click', this.btnClickHandler);
+  }
+
+  btnClickHandler() {
+    if(!this.playMode || this.playMode === this.playModes.playing) {
+
+    }
     //'<i class="fas fa-redo"></i>Repeat'
+
   }
 
   createButtonsPanel() {
@@ -65,10 +83,10 @@ export default class MainPage {
   setVisibility() {
     if (this.mode === MODES.TRAIN) {
       if (this.rating) this.rating.classList.add('hidden');
-      //if (this.panel) this.panel.classList.add('hidden');
+      if (this.panel) this.panel.classList.add('off');
     } else {
       if (this.rating) this.rating.classList.remove('hidden');
-      if (this.panel) this.panel.classList.remove('hidden');
+      if (this.panel) this.panel.classList.remove('off');
     }
   }
 }
