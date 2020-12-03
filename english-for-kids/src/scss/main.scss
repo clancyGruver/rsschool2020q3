@@ -163,6 +163,19 @@
   .container{
     flex-wrap: wrap;
     justify-content: center;
+    
+    .hidden{
+      opacity: 0;
+    }
+
+    .rating {
+      height: 3rem;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      padding-top: 1rem;
+    }
 
     .description{
       width: 100%;
@@ -241,9 +254,6 @@
           width: 23rem;
           border-radius: 30%;
         }
-      }
-      .hidden{
-        opacity: 0;
       }
       .card-flip{
         width: 3rem;
