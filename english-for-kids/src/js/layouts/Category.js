@@ -8,10 +8,15 @@ export default class MainPage {
     this.cards = [];
   }
 
-  init(words) {
+  init(words, mode) {
     this.words = words;
     this.cards = [];
+    this.mode = mode;
     this.createCards();
+  }
+
+  changeMode(mode) {
+    this.mode = mode;
   }
 
   get content() {

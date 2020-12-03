@@ -12,7 +12,10 @@ export default class App {
     this.cards = cards;
     this.leftMenu = new LeftMenu(Object.keys(cards));
     this.getCategories();
-    this.header = new Header(() => this.leftMenu.toggleMenu(), (val) => { this.mode = val; });
+    this.header = new Header(
+      () => this.leftMenu.toggleMenu(),
+      (val) => this.changeMode(val),
+    );
     this.footer = new Footer();
     this.main = new MainContent();
     this.routerInit();
@@ -20,6 +23,13 @@ export default class App {
     this.createPage();
     this.renderPage();
     this.leftMenu.addCloseHandler(() => this.header.toggleMenu());
+  }
+
+  changeMode(val) {
+    this.mode = val;
+    if (this.page.name === 'category page') {
+      this.page.changeMode(this.mode);
+    }
   }
 
   routerInit() {
@@ -69,12 +79,13 @@ export default class App {
   }
 
   renderPage(params) {
-    const page = new this.router.Page();
-    if (page.name === 'main page') {
-      page.init(this.categories);
-    } else if (page.name === 'category page') {
-      page.init(cards[params.name], null, params.name);
+    this.pageParams = params;
+    this.page = new this.router.Page();
+    if (this.page.name === 'main page') {
+      this.page.init(this.categories);
+    } else if (this.page.name === 'category page') {
+      this.page.init(cards[params.name], this.mode);
     }
-    this.main.content = page.content;
+    this.main.content = this.page.content;
   }
 }
