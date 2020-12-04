@@ -22,11 +22,13 @@ export default class Category {
     this.eventListeners = {};
   }
 
-  init(words, mode) {
+  init(words, mode, navigate) {
+    this.navigate = navigate;
     this.words = words;
     this.cards = [];
     this.mode = mode;
     this.score = this.words.length;
+    this.audio = null;
     this.createCards();
     this.createRating();
     this.createButton();
@@ -42,6 +44,7 @@ export default class Category {
       if (this.mode === MODES.PLAY) {
         card.setInvisible();
         card.deck.addEventListener('click', this.eventListeners[card.params.word] = this.playCardClickHandler.bind(this));
+        this.createEndGameContainer();
       } else {
         card.setVisible();
       }
@@ -52,18 +55,10 @@ export default class Category {
     const cards = this.cards.map((el) => el.deck);
     return [
       this.rating,
-      this.description,
       ...cards,
       this.panel,
+      this.audio,
     ];
-  }
-
-  get description() {
-    const description = create('div', 'description');
-    const h1 = create('h1', 'description-text', null, description);
-    h1.textContent = this.categoryName;
-
-    return description;
   }
 
   createCards() {
@@ -97,12 +92,12 @@ export default class Category {
 
   playCardClickHandler(e) {
     const el = e.target.closest('.flip-card');
+    this.score -= 1;
     if (el === this.currentPlayCard.deck) {
       this.correctChoice();
     } else {
       this.invalidChoice();
     }
-    this.score -= 1;
   }
 
   correctChoice() {
@@ -111,17 +106,25 @@ export default class Category {
     this.currentPlayCard.deckContainer.classList.add('disabled');
     this.currentPlayCard.deck.removeEventListener('click', handler);
 
-    Category.playSound(this.successSound);
-    this.addFullStar();
-
     if (this.hasPlayCards()) {
+      Category.playSound(this.successSound);
+      this.addFullStar();
       this.nextPlayCard();
     } else {
       this.endGame();
     }
   }
 
+  invalidChoice() {
+    Category.playSound(this.errorSound);
+    this.addEmptyStar();
+  }
+
   endGame() {
+    this.rating.remove();
+    this.panel.remove();
+    this.cards.forEach((el) => el.deck.remove());
+    setTimeout(() => this.navigate(), 5000);
     if (this.score < 0) {
       this.badEnd();
     } else {
@@ -130,10 +133,15 @@ export default class Category {
   }
 
   badEnd() {
+    const imgSrc = './assets/img/failure.png';
+    this.createErrorCountMessage();
+    this.createEndGameImage(imgSrc);
     Category.playSound(this.errorEndSound);
   }
 
   goodEnd() {
+    const imgSrc = './assets/img/success2.png';
+    this.createEndGameImage(imgSrc);
     Category.playSound(this.successEndSound);
   }
 
@@ -143,11 +151,6 @@ export default class Category {
 
   addEmptyStar() {
     this.rating.innerHTML += this.stars.empty;
-  }
-
-  invalidChoice() {
-    Category.playSound(this.errorSound);
-    this.addEmptyStar();
   }
 
   hasPlayCards() {
@@ -189,6 +192,7 @@ export default class Category {
   }
 
   createSounds() {
+    this.audio = create('div');
     this.createSuccessSound();
     this.createErrorSound();
     this.createSuccessEndSound();
@@ -215,11 +219,26 @@ export default class Category {
     this.errorSound = Category.createSound(soundUrl);
   }
 
+  createErrorCountMessage() {
+    const header = create('h3', 'error-count', null, this.endGameContainer);
+    const errorsCount = Math.abs(this.score);
+    header.textContent = `${errorsCount} errors`;
+  }
+
   addSoundsToPanel() {
-    this.panel.appendChild(this.errorSound);
-    this.panel.appendChild(this.successSound);
-    this.panel.appendChild(this.errorEndSound);
-    this.panel.appendChild(this.successEndSound);
+    this.audio.appendChild(this.errorSound);
+    this.audio.appendChild(this.successSound);
+    this.audio.appendChild(this.errorEndSound);
+    this.audio.appendChild(this.successEndSound);
+  }
+
+  createEndGameContainer() {
+    const parentEl = document.querySelector('.main .container');
+    this.endGameContainer = create('div', 'end-game-container', null, parentEl);
+  }
+
+  createEndGameImage(imgUrl) {
+    create('img', 'end-game-image', null, this.endGameContainer, ['src', imgUrl]);
   }
 
   static createSound(soundUrl) {

@@ -13,6 +13,12 @@
   padding: 0;
 }
 
+body {
+  height:100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
@@ -160,12 +166,32 @@
 
 .main{
   padding: 3rem 0;
+  height: 100%;
   .container{
     flex-wrap: wrap;
     justify-content: center;
-    
+    height: 100%;
+
     .hidden{
       opacity: 0;
+    }
+
+    .end-game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      .error-count {
+        align-self: center;
+        font-size: 4rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #9f0606;
+      }
+      .end-game-image {
+        max-width: 25rem;
+      }
     }
 
     .rating {
@@ -354,6 +380,7 @@
 
 .footer{
   background-color: mediumseagreen;
+  margin-top: auto;
   .links{
     display: flex;
     justify-content: space-around;
