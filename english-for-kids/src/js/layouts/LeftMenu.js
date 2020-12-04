@@ -1,7 +1,8 @@
 import create from '../utils/create';
 
 export default class LeftMenu {
-  constructor(categories) {
+  constructor(categories, icons) {
+    this.icons = icons;
     this.categories = categories;
     this.menu = null;
     this.menuContainer = null;
@@ -80,7 +81,7 @@ export default class LeftMenu {
         ['name', category],
         ['route', JSON.stringify(routeParams)],
       );
-      liElement.textContent = category;
+      liElement.innerHTML = `${LeftMenu.createIcon(this.icons[category])} ${category}`;
     });
   }
 
@@ -117,6 +118,10 @@ export default class LeftMenu {
       ['name', 'main'],
       ['route', JSON.stringify(routeParams)],
     );
-    liElement.textContent = 'Main';
+    liElement.innerHTML = `${LeftMenu.createIcon('fa-home')} Main`;
+  }
+
+  static createIcon(iconName) {
+    return `<i class="fas ${iconName}"></i>`;
   }
 }

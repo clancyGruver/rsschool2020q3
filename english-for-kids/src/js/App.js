@@ -1,5 +1,5 @@
 import MODES from './constatnts';
-import cards from './cards';
+import { cards, icons } from './cards';
 import LeftMenu from './layouts/LeftMenu';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
@@ -10,7 +10,7 @@ import routes from './router/routes';
 export default class App {
   constructor() {
     this.cards = cards;
-    this.leftMenu = new LeftMenu(Object.keys(cards));
+    this.leftMenu = new LeftMenu(Object.keys(cards), icons);
     this.getCategories();
     this.header = new Header(
       () => this.leftMenu.toggleMenu(),

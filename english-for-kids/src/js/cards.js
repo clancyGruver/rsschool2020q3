@@ -1,4 +1,14 @@
-export default {
+const icons = {
+  Places: 'fa-place-of-worship',
+  Food: 'fa-utensils',
+  'Action (set A)': 'fa-hiking',
+  'Action (set B)': 'fa-skiing-nordic',
+  'Animal (set A)': 'fa-paw',
+  'Animal (set B)': 'fa-feather-alt',
+  Clothes: 'fa-tshirt',
+  Emotions: 'fa-grin-stars',
+};
+const cards = {
   Places: [
     {
       word: 'apartment',
@@ -406,3 +416,5 @@ export default {
     },
   ],
 };
+
+export { cards, icons };
