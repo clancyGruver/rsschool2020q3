@@ -22,13 +22,14 @@ export default class Category {
     this.eventListeners = {};
   }
 
-  init(words, mode, navigate) {
+  init(categoryName, words, mode, navigate) {
     this.navigate = navigate;
     this.words = words;
     this.cards = [];
     this.mode = mode;
     this.score = this.words.length;
     this.audio = null;
+    this.createDesscription(categoryName);
     this.createCards();
     this.createRating();
     this.createButton();
@@ -57,10 +58,17 @@ export default class Category {
     const cards = this.cards.map((el) => el.deck);
     return [
       this.rating,
+      this.descriptionContainer,
       ...cards,
       this.panel,
       this.audio,
     ];
+  }
+
+  createDesscription(categoryName) {
+    this.descriptionContainer = create('div', 'description');
+    const descriptionText = create('h1', 'description-text', null, this.descriptionContainer);
+    descriptionText.textContent = categoryName;
   }
 
   createCards() {

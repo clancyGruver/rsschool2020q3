@@ -84,7 +84,7 @@ export default class App {
     if (this.page.name === 'main page') {
       this.page.init(this.categories);
     } else if (this.page.name === 'category page') {
-      this.page.init(cards[params.name], this.mode, () => this.router.navigate('/'));
+      this.page.init(params.name, cards[params.name], this.mode, () => this.router.navigate('/'));
     }
     this.main.content = this.page.content;
   }
