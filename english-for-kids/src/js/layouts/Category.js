@@ -36,6 +36,7 @@ export default class Category {
     this.createSounds();
     this.addSoundsToPanel();
     this.setVisibility();
+    this.changeMode(this.mode);
   }
 
   changeMode(mode) {
@@ -133,6 +134,7 @@ export default class Category {
   endGame() {
     this.rating.remove();
     this.panel.remove();
+    this.descriptionContainer.remove();
     this.cards.forEach((el) => el.deck.remove());
     setTimeout(() => this.navigate(), 5000);
     if (this.score < 0) {
