@@ -1,7 +1,7 @@
 export default class Router {
-  constructor(root = null, mainHandler) {
+  constructor(root = null, mainHandler, mode = 'hash') {
     this.routes = [];
-    this.mode = 'history';
+    this.mode = mode;
     this.mainHandler = mainHandler;
     if (root) {
       this.root = root;
@@ -60,8 +60,12 @@ export default class Router {
     const route = this.routes.find((el) => el.path === path);
     this.Page = route.handler;
     this.pageParams = params;
-    const finalPath = Router.stripDoubleEndSlashes(this.root + path);
-    window.history.pushState({ name: params.name }, '', finalPath);
+    if (this.mode === 'history') {
+      const finalPath = Router.stripDoubleEndSlashes(this.root + path);
+      window.history.pushState({ name: params.name }, '', finalPath);
+    } else {
+      window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${path}`;
+    }
     if (this.mainHandler) {
       this.mainHandler(params);
     }
