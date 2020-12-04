@@ -44,7 +44,9 @@ export default class Category {
       if (this.mode === MODES.PLAY) {
         card.setInvisible();
         card.deck.addEventListener('click', this.eventListeners[card.params.word] = this.playCardClickHandler.bind(this));
-        this.createEndGameContainer();
+        if (!this.endGameContainer) {
+          this.createEndGameContainer();
+        }
       } else {
         card.setVisible();
       }
