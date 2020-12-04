@@ -20,6 +20,7 @@ export default function create(el, classNames, children, parent, ...dataAttribut
     'src',
     'type',
     'for',
+    'href',
   ];
   try {
     element = document.createElement(el);
