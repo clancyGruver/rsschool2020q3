@@ -1,4 +1,60 @@
 export default {
+  Places: [
+    {
+      word: 'apartment',
+      translation: 'квартира',
+      image: 'img/apartment.jpeg',
+      audioSrc: 'audio/apartment.mp3',
+    },
+    {
+      word: 'camper van',
+      translation: 'автофургон',
+      image: 'img/campervan.jpg',
+      audioSrc: 'audio/campervan.mp3',
+    },
+    {
+      word: 'caravan',
+      translation: 'вагончик',
+      image: 'img/caravan.jpg',
+      audioSrc: 'audio/caravan.mp3',
+    },
+    {
+      word: 'castle',
+      translation: 'замок',
+      image: 'img/castle.jpg',
+      audioSrc: 'audio/castle.mp3',
+    },
+    {
+      word: 'farm',
+      translation: 'ферма',
+      image: 'img/farm.jpg',
+      audioSrc: 'audio/farm.mp3',
+    },
+    {
+      word: 'hotel',
+      translation: 'отель',
+      image: 'img/hotel.jpg',
+      audioSrc: 'audio/hotel.mp3',
+    },
+    {
+      word: 'house',
+      translation: 'дом',
+      image: 'img/house.jpg',
+      audioSrc: 'audio/house.mp3',
+    },
+    {
+      word: 'igloo',
+      translation: 'иглу',
+      image: 'img/igloo.webp',
+      audioSrc: 'audio/igloo.mp3',
+    },
+    {
+      word: 'tent',
+      translation: 'палатка',
+      image: 'img/tent.webp',
+      audioSrc: 'audio/tent.mp3',
+    },
+  ],
   Food: [
     {
       word: 'sausage',
