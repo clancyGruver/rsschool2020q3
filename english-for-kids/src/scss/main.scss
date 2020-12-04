@@ -56,7 +56,7 @@ body {
       display: inline-block;
       cursor: pointer;
       position: relative;
-      z-index: 2;
+      z-index: 3;
       .bar1, .bar2, .bar3 {
         width: 3.5rem;
         height: 0.5rem;
@@ -64,12 +64,18 @@ body {
         margin: 0.6rem 0;
         transition: 0.4s;
       }
-      &__active{.bar1 {
+      &__active{
+        position: absolute;
+        left: 13rem;
+        top: 3rem;
+        .bar1 {
           -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
           transform: rotate(-45deg) translate(-9px, 6px) ;
-        }.bar2 {
+        }
+        .bar2 {
           opacity: 0;
-        }.bar3 {
+        }
+        .bar3 {
           -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
           transform: rotate(45deg) translate(-8px, -8px) ;
         }
@@ -86,19 +92,19 @@ body {
       display: none;
     }
     #button{
-      width: 18rem;
-      height: 10rem;
+      width: 8rem;
+      height: 3rem;
       background-color: #000;
       border-radius: 5.5rem;
       cursor: pointer;
-      transform: scale(0.4);
+      position: relative;
     }
     #knob {
-      width: 8.5rem;
-      height: 8.5rem;
+      width: 4.2rem;
+      height: 2.8rem;
       position: relative;
-      top: 0.8rem;
-      left: 0.5rem;
+      top: 0.1rem;
+      left: 0.1rem;
       border-radius: 5rem;
       transition: 0.4s ease left, 0.4s ease background-position;
       z-index: 2;
@@ -106,22 +112,25 @@ body {
     }
     #play, #train {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 20%;
       color: #fff;
-      font-size: 3.5rem;
+      font-size: 1.5rem;
       font-weight: bold;
-      margin-left: 1.5rem;
+      margin-left: 0.5rem;
       z-index: 1;
       letter-spacing: 0.2rem;
     }
 
+    #play {
+      left: 0;
+    }
+
     #train {
-      right: 1rem;
+      right: 0.2rem;
     }
 
     #lol-checkbox:checked + #button #knob {
-      left: 8.5rem;
+      left: 3.7rem;
     }
   }
 }
@@ -132,7 +141,7 @@ body {
   background: linear-gradient(to left, mediumseagreen, #9198e5);
   top: 0;
   transition: all 0.5s ease;
-  z-index: 1;
+  z-index: 2;
   height: 100%;
   &.opened{
     left: 0;
@@ -149,13 +158,14 @@ body {
       font-size: 2rem;
       color: wheat;
       padding: 0.5rem 2rem;
+      margin-bottom: 0.5rem;
       &.active{
-        border: 2px solid darkviolet;
+        box-shadow: 0 0 0 2px darkviolet;
         border-radius: 2rem;
         background-color: violet;
       }
       &:hover{
-        border: 2px solid darkviolet;
+        box-shadow: 0 0 0 2px darkviolet;
         border-radius: 2rem;
         background-color: palevioletred;
         cursor: pointer;
@@ -407,17 +417,39 @@ body {
         font-size: 3rem;
         letter-spacing: 0.3rem;
       }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header{
+    .container{
+      .header-caption {
+        font-size: 3rem;
+        letter-spacing: 0.3rem;
+      }
       #button{
-        height: 7rem;
+        width: 6rem;
+        height: 2.8rem;
       }
       #knob{
-        width: 7.5rem;
-        height: 6.5rem;
+        width: 2.8rem;
+        height: 2.5rem;
         top: 0.2rem;
-        left: 1rem;
+        left: 0.1rem;
+      }
+      #play, #train {
+        top: 30%;
+        position: absolute;
+        font-size: 1rem;
+        margin-left: 1.5rem;
+        font-weight: 400;
+      }
+      #play {
+        left: -1rem;
       }
       #lol-checkbox:checked + #button #knob {
-        left: 9.5rem;
+        left: 3rem;
       }
     }
   }
