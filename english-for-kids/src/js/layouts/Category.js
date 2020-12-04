@@ -248,7 +248,8 @@ export default class Category {
   }
 
   static playSound(sound) {
-    sound.currentTime = 0;
-    sound.play();
+    const audio = sound;
+    audio.currentTime = 0;
+    audio.play();
   }
 }

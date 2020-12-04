@@ -1,4 +1,54 @@
 export default {
+  Food: [
+    {
+      word: 'sausage',
+      translation: 'колбаса',
+      image: 'img/sausage.jpg',
+      audioSrc: 'audio/sausage.mp3',
+    },
+    {
+      word: 'cake',
+      translation: 'торт',
+      image: 'img/cake.jpg',
+      audioSrc: 'audio/cake.mp3',
+    },
+    {
+      word: 'chips',
+      translation: 'чипсы',
+      image: 'img/chips.jpg',
+      audioSrc: 'audio/chips.mp3',
+    },
+    {
+      word: 'hamburger',
+      translation: 'гамбургер',
+      image: 'img/hamburger.png',
+      audioSrc: 'audio/hamburger.mp3',
+    },
+    {
+      word: 'pasta',
+      translation: 'паста',
+      image: 'img/pasta.jpeg',
+      audioSrc: 'audio/pasta.mp3',
+    },
+    {
+      word: 'pie',
+      translation: 'пирог',
+      image: 'img/pie.jpg',
+      audioSrc: 'audio/pie.mp3',
+    },
+    {
+      word: 'pizza',
+      translation: 'пицца',
+      image: 'img/pizza.jpg',
+      audioSrc: 'audio/pizza.mp3',
+    },
+    {
+      word: 'sandwich',
+      translation: 'сэндвич',
+      image: 'img/sandwich.jpg',
+      audioSrc: 'audio/sandwich.mp3',
+    },
+  ],
   'Action (set A)': [
     {
       word: 'cry',
