@@ -83,6 +83,7 @@ export default class LeftMenu {
       );
       liElement.innerHTML = `${LeftMenu.createIcon(this.icons[category])} ${category}`;
     });
+    this.addLinkToStaisticsPage();
   }
 
   addCloseHandler(headerMenuHandler) {
@@ -119,6 +120,25 @@ export default class LeftMenu {
       ['route', JSON.stringify(routeParams)],
     );
     liElement.innerHTML = `${LeftMenu.createIcon('fa-home')} Main`;
+  }
+
+  addLinkToStaisticsPage() {
+    const routeParams = {
+      name: 'statistics',
+      path: 'statistics',
+      params: {
+        categoryName: 'statistics',
+      },
+    };
+    const liElement = create(
+      'li',
+      'menu-link',
+      null,
+      this.menuContainer,
+      ['name', 'statistics'],
+      ['route', JSON.stringify(routeParams)],
+    );
+    liElement.innerHTML = `${LeftMenu.createIcon('fa-chart-line')} Statistics`;
   }
 
   static createIcon(iconName) {
