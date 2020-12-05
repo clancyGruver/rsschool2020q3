@@ -3,7 +3,13 @@ import * as Storage from '../utils/storage';
 
 export default class Statistic {
   constructor() {
+    this.orders = ['asc', 'desc'];
     this.name = 'statistic page';
+    this.sortIcons = {
+      none: '<i class="fas fa-sort sort"></i>',
+      asc: '<i class="fas fa-sort-down sort"></i>',
+      desc: '<i class="fas fa-sort-up sort"></i>',
+    };
   }
 
   init(vocabulary) {
@@ -25,6 +31,7 @@ export default class Statistic {
   }
 
   createTableHeaders() {
+    this.thead = [];
     const headers = [
       'Category',
       'Word',
@@ -37,9 +44,41 @@ export default class Statistic {
     const header = create('thead', 'statistic-table-header', null, this.table);
     const row = create('tr', '', null, header);
     headers.forEach((headerCaption, headerIndex) => {
-      const th = create('th', '', null, row);
-      th.innerHTML = headerCaption;
-      th.addEventListener('click', () => this.sortTable(headerIndex));
+      const th = create('th', '', null, row, ['order', 'none']);
+      this.thead.push(th);
+      th.innerHTML = headerCaption + this.sortIcons.none;
+      th.addEventListener('click', (e) => {
+        const el = e.target.closest('th');
+        if (!el) return;
+        let { order } = el.dataset;
+        this.clearAllTh();
+        if (this.orders.includes(order)) {
+          if (order === 'asc') {
+            order = 'asc';
+            el.dataset.order = 'desc';
+          } else {
+            order = 'desc';
+            el.dataset.order = 'asc';
+          }
+        } else {
+          order = 'desc';
+          el.dataset.order = 'asc';
+        }
+        const childrenCount = el.children.length;
+        el.children[childrenCount - 1].remove();
+        el.innerHTML += this.sortIcons[order];
+        this.sortTable(headerIndex, order);
+      });
+    });
+  }
+
+  clearAllTh() {
+    this.thead.forEach((th) => {
+      const childrenCount = th.children.length;
+      const curTh = th;
+      curTh.children[childrenCount - 1].remove();
+      curTh.innerHTML += this.sortIcons.none;
+      curTh.dataset.order = 'none';
     });
   }
 
@@ -66,30 +105,34 @@ export default class Statistic {
     this.renderTableBody();
   }
 
-  sortTable(index) {
+  sortTable(index, order) {
     const ascSort = (a, b) => {
       const aVal = a.children[index].textContent;
       const bVal = b.children[index].textContent;
-      let res = false;
+      let res = 0;
       if (Number.isFinite(parseFloat(aVal))) {
         res = aVal - bVal;
       } else {
-        res = aVal.toLowerCase() > bVal.toLowerCase()
+        res = aVal.toLowerCase() > bVal.toLowerCase() ? 1 : -1;
       }
       return res;
     };
     const descSort = (a, b) => {
       const aVal = a.children[index].textContent;
       const bVal = b.children[index].textContent;
-      let res = false;
+      let res = 0;
       if (Number.isFinite(parseFloat(aVal))) {
         res = bVal - aVal;
       } else {
-        res = aVal.toLowerCase() < bVal.toLowerCase()
+        res = aVal.toLowerCase() < bVal.toLowerCase() ? 1 : -1;
       }
       return res;
     };
-    this.trs.sort(ascSort);
+    const orders = {
+      asc: ascSort,
+      desc: descSort,
+    };
+    this.trs.sort(orders[order]);
     this.renderTableBody();
   }
 
