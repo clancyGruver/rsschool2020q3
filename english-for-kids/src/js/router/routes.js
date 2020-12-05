@@ -1,7 +1,6 @@
 import MainPage from '../layouts/Main';
 import CategoryPage from '../layouts/Category';
-
-const StaisticsPage = () => {};
+import StaisticPage from '../layouts/Statistics';
 
 export default [
   {
@@ -12,7 +11,7 @@ export default [
   {
     name: 'statistics',
     path: 'statistics',
-    handler: StaisticsPage,
+    handler: StaisticPage,
   },
   {
     name: 'category',
