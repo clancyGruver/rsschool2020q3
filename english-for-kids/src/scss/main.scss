@@ -383,6 +383,37 @@ body {
         }
       }
     }
+    .controls {
+      display: flex;
+      width: 100%;
+      margin-bottom: 2rem;
+      justify-content: flex-end;
+      margin-right: 2rem;
+      .btn{
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        border: 1px solid black;
+        outline: none;
+        margin-right: 2rem;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px 1px black;
+        &:active {
+          box-shadow: 1px 1px 1px 0px black;
+        }
+      }
+      .btn-yellow {
+        background-color: transparentize($color-yellow, 0.3);
+        &:hover {
+          background-color: $color-yellow;
+        }
+      }
+      .btn-red {
+        background-color: transparentize($color-red, 0.3);
+        &:hover {
+          background-color: $color-red;
+        }
+      }
+    }
   }
   .card-description{
     text-align: center;

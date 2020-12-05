@@ -14,6 +14,7 @@ export default class Statistic {
 
   init(vocabulary) {
     this.vocabulary = vocabulary;
+    this.createButtons();
     this.createTable();
     this.createTableHeaders();
     this.fillTableWithData();
@@ -21,6 +22,7 @@ export default class Statistic {
 
   get content() {
     return [
+      this.buttonsContainer,
       this.table,
     ];
   }
@@ -28,6 +30,25 @@ export default class Statistic {
   createTable() {
     this.table = create('table', 'statistic-table');
     this.trs = [];
+  }
+
+  createButtons() {
+    const buttonNames = [
+      {
+        name: 'Repeat difficult words',
+        class: 'btn-yellow',
+        handler: () => {},
+      },
+      {
+        name: 'Reset',
+        class: 'btn-red',
+        handler: () => Statistic.resetStatistic(),
+      },
+    ];
+    this.buttonsContainer = create('div', 'controls');
+    buttonNames.forEach((btn) => {
+      this.buttonsContainer.appendChild(Statistic.createButton(btn));
+    });
   }
 
   createTableHeaders() {
@@ -150,7 +171,8 @@ export default class Statistic {
   static getWordStatistic(word) {
     if (Storage.check(word)) {
       const statistic = Storage.get(word);
-      const percent = (statistic.correctAnswers / statistic.wrongAnswers).toFixed(2) * 100;
+      const totalAnswers = statistic.correctAnswers + statistic.wrongAnswers;
+      const percent = (statistic.correctAnswers / totalAnswers).toFixed(2) * 100;
       statistic.rightPercent = Number.isFinite(percent) ? percent : 0;
       return statistic;
     }
@@ -199,5 +221,15 @@ export default class Statistic {
       wordObject.wrongAnswers = parseInt(wordObject.wrongAnswers, 10) + 1;
     }
     Storage.set(word, wordObject);
+  }
+
+  static createButton(props) {
+    const btn = create('button', `btn ${props.class}`, null, null, ['type', 'button']);
+    btn.textContent = props.name;
+    return btn;
+  }
+
+  static resetStatistic() {
+    localStorage.clear();
   }
 }
