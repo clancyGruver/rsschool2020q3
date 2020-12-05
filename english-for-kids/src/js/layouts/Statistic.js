@@ -28,6 +28,10 @@ export default class Statistic {
       'Category',
       'Word',
       'Translation',
+      'Trained',
+      'Correct',
+      'Wrong',
+      'Percent',
     ];
     const header = create('thead', 'statistic-table-header', null, this.table);
     const row = create('tr', '', null, header);
@@ -42,17 +46,45 @@ export default class Statistic {
     const categories = Object.keys(this.vocabulary);
     categories.forEach((category) => {
       this.vocabulary[category].forEach((word) => {
+        const wordStatistic = Statistic.getWordStatistic(word.word);
+        const wordFlow = ['word', 'translation'];
+        const wordStatisticFlow = ['trainClick', 'correctAnswers', 'wrongAnswers', 'rightPercent'];
         const tr = create('tr', '', null, this.tbody);
-        const categoryTd = create('td', '', null, tr);
-        categoryTd.textContent = category;
-        const wordTd = categoryTd.cloneNode(true);
-        wordTd.textContent = word.word;
-        tr.appendChild(wordTd);
-        const translationTd = categoryTd.cloneNode(true);
-        translationTd.textContent = word.translation;
-        tr.appendChild(translationTd);
+
+        if (category === 'Food') {
+          console.log(word, wordStatistic);
+        }
+
+        tr.appendChild(Statistic.createTd(category));
+        wordFlow.forEach((wordEl) => {
+          tr.appendChild(Statistic.createTd(word[wordEl]));
+        });
+        wordStatisticFlow.forEach((el) => {
+          tr.appendChild(Statistic.createTd(wordStatistic[el]));
+        });
       });
     });
+  }
+
+  static createTd(content) {
+    const td = create('td', '');
+    td.textContent = content;
+    return td;
+  }
+
+  static getWordStatistic(word) {
+    if (Storage.check(word)) {
+      const statistic = Storage.get(word);
+      const percent = (statistic.correctAnswers / statistic.wrongAnswers).toFixed(2) * 100;
+      statistic.rightPercent = Number.isFinite(percent) ? percent : 0;
+      return statistic;
+    }
+    return {
+      trainClick: 0,
+      wrongAnswers: 0,
+      correctAnswers: 0,
+      rightPercent: 0,
+    };
   }
 
   static trainClick(word) {
