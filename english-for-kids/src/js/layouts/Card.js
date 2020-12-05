@@ -6,7 +6,6 @@ export default class Card {
     this.params = params;
     this.createCardElement();
     this.createImageContainer();
-    this.createImage();
     this.createDescriptionContainer();
     this.createDescription();
   }
@@ -17,23 +16,7 @@ export default class Card {
 
   createImageContainer() {
     this.imageContainer = create('div', 'card-image', null, this.card);
-  }
-
-  createImage() {
-    this.image = create(
-      'img',
-      '',
-      null,
-      this.imageContainer,
-      [
-        'src',
-        `${this.urlPrefix}${this.params.image || 'img/boot.jpg'}`,
-      ],
-      [
-        'alt',
-        this.params.word || 'boot',
-      ],
-    );
+    this.imageContainer.style.backgroundImage = `url("${this.urlPrefix}${this.params.image}")`;
   }
 
   createDescriptionContainer() {
