@@ -21,6 +21,7 @@ export default class Statistic {
 
   createTable() {
     this.table = create('table', 'statistic-table');
+    this.trs = [];
   }
 
   createTableHeaders() {
@@ -35,9 +36,10 @@ export default class Statistic {
     ];
     const header = create('thead', 'statistic-table-header', null, this.table);
     const row = create('tr', '', null, header);
-    headers.forEach((headerCaption) => {
+    headers.forEach((headerCaption, headerIndex) => {
       const th = create('th', '', null, row);
       th.innerHTML = headerCaption;
+      th.addEventListener('click', () => this.sortTable(headerIndex));
     });
   }
 
@@ -49,11 +51,8 @@ export default class Statistic {
         const wordStatistic = Statistic.getWordStatistic(word.word);
         const wordFlow = ['word', 'translation'];
         const wordStatisticFlow = ['trainClick', 'correctAnswers', 'wrongAnswers', 'rightPercent'];
-        const tr = create('tr', '', null, this.tbody);
-
-        if (category === 'Food') {
-          console.log(word, wordStatistic);
-        }
+        const tr = create('tr', '');
+        this.trs.push(tr);
 
         tr.appendChild(Statistic.createTd(category));
         wordFlow.forEach((wordEl) => {
@@ -64,6 +63,39 @@ export default class Statistic {
         });
       });
     });
+    this.renderTableBody();
+  }
+
+  sortTable(index) {
+    const ascSort = (a, b) => {
+      const aVal = a.children[index].textContent;
+      const bVal = b.children[index].textContent;
+      let res = false;
+      if (Number.isFinite(parseFloat(aVal))) {
+        res = aVal - bVal;
+      } else {
+        res = aVal.toLowerCase() > bVal.toLowerCase()
+      }
+      return res;
+    };
+    const descSort = (a, b) => {
+      const aVal = a.children[index].textContent;
+      const bVal = b.children[index].textContent;
+      let res = false;
+      if (Number.isFinite(parseFloat(aVal))) {
+        res = bVal - aVal;
+      } else {
+        res = aVal.toLowerCase() < bVal.toLowerCase()
+      }
+      return res;
+    };
+    this.trs.sort(ascSort);
+    this.renderTableBody();
+  }
+
+  renderTableBody() {
+    this.tbody.innerHTML = '';
+    this.trs.forEach((tr) => this.tbody.appendChild(tr));
   }
 
   static createTd(content) {

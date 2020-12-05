@@ -50,6 +50,7 @@ body {
   font-family: 'Bubblegum Sans', cursive;
   background-color: $color-green;
   height: 8rem;
+  box-shadow: 0 0 5px 2px opacify($color-dark-green, 0.3);
 
   .container{
     align-items: center;
@@ -399,11 +400,15 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     thead {
       tr {
-        background-color: #009879;
+        background-color: $color-dark-green;
         color: #ffffff;
         text-align: left;
         th {
           padding: 1rem 1.5rem;
+          cursor: pointer;
+          &:hover {
+            background-color: $color-orange;
+          }
         }
       }
     }
@@ -414,10 +419,10 @@ body {
           background-color: #f3f3f3;
         }
         &:last-of-type {
-          border-bottom: 2px solid #009879;
+          border-bottom: 2px solid $color-dark-green;
         }
         &:hover {
-          background-color: #00987a57;
+          background-color: transparentize($color-dark-green, 0.3);
         }
       }
       th, td {
@@ -430,6 +435,7 @@ body {
 .footer{
   background-color: $color-green;
   margin-top: auto;
+  box-shadow: 0 0 5px 2px opacify($color-dark-green, 0.3);
   .links{
     display: flex;
     justify-content: space-around;
