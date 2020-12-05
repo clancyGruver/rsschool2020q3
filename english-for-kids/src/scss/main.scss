@@ -97,7 +97,7 @@ body {
       display: none;
     }
     #button{
-      width: 8rem;
+      width: 7rem;
       height: 3rem;
       background-color: $color-yellow;
       border-radius: 5.5rem;
@@ -107,10 +107,10 @@ body {
     }
     #knob {
       width: 3.5rem;
-      height: 2.8rem;
+      height: 2.6rem;
       position: relative;
-      top: -0.1rem;
-      left: 0.1rem;
+      top: 0;
+      left: 0;
       border-radius: 5rem;
       transition: 0.4s ease left, 0.4s ease background-position;
       z-index: 2;
@@ -125,7 +125,7 @@ body {
       font-weight: bold;
       margin-left: 0.5rem;
       z-index: 1;
-      letter-spacing: 0.2rem;
+      letter-spacing: 0;
     }
 
     #play {
@@ -137,7 +137,7 @@ body {
     }
 
     #lol-checkbox:checked + #button #knob {
-      left: 3.8rem;
+      left: 3.1rem;
     }
   }
 }
@@ -429,6 +429,10 @@ body {
     border-collapse: collapse;
     min-width: 320px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    &-container {
+      overflow-x: auto;
+      width: 100%;
+    }
     thead {
       tr {
         background-color: $color-dark-green;
@@ -504,18 +508,18 @@ body {
   .header{
     .container{
       .header-caption {
-        font-size: 3rem;
-        letter-spacing: 0.3rem;
+        font-size: 2rem;
+        letter-spacing: 0.2rem;
       }
       #button{
-        width: 6rem;
+        width: 5.5rem;
         height: 2.8rem;
       }
       #knob{
         width: 2.8rem;
         height: 2.5rem;
-        top: 0.2rem;
-        left: 0.1rem;
+        top: 0;
+        left: 0;
       }
       #play, #train {
         top: 30%;
@@ -528,7 +532,7 @@ body {
         left: -1rem;
       }
       #lol-checkbox:checked + #button #knob {
-        left: 3rem;
+        left: 2.4rem;
       }
     }
   }

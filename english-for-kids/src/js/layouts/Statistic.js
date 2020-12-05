@@ -24,12 +24,13 @@ export default class Statistic {
   get content() {
     return [
       this.buttonsContainer,
-      this.table,
+      this.tableContainer,
     ];
   }
 
   createTable() {
-    this.table = create('table', 'statistic-table');
+    this.tableContainer = create('div', 'statistic-table-container');
+    this.table = create('table', 'statistic-table', null, this.tableContainer);
     this.trs = [];
   }
 
@@ -225,7 +226,7 @@ export default class Statistic {
     if (Storage.check(word)) {
       const statistic = Storage.get(word);
       const totalAnswers = statistic.correctAnswers + statistic.wrongAnswers;
-      const percent = (statistic.correctAnswers / totalAnswers).toFixed(2) * 100;
+      const percent = Math.round((statistic.correctAnswers / totalAnswers) * 100);
       statistic.rightPercent = Number.isFinite(percent) ? percent : 0;
       return statistic;
     }
