@@ -1,4 +1,5 @@
 import create from '../utils/createHTMLElement';
+import * as Storage from '../utils/storage';
 
 export default class Statistic {
   constructor() {
@@ -52,5 +53,44 @@ export default class Statistic {
         tr.appendChild(translationTd);
       });
     });
+  }
+
+  static trainClick(word) {
+    let wordObject = {
+      trainClick: 1,
+      wrongAnswers: 0,
+      correctAnswers: 0,
+    };
+    if (Storage.check(word)) {
+      wordObject = Storage.get(word);
+      wordObject.trainClick = parseInt(wordObject.trainClick, 10) + 1;
+    }
+    Storage.set(word, wordObject);
+  }
+
+  static correctAnswerClick(word) {
+    let wordObject = {
+      trainClick: 0,
+      wrongAnswers: 0,
+      correctAnswers: 1,
+    };
+    if (Storage.check(word)) {
+      wordObject = Storage.get(word);
+      wordObject.correctAnswers = parseInt(wordObject.correctAnswers, 10) + 1;
+    }
+    Storage.set(word, wordObject);
+  }
+
+  static wrongAnswerClick(word) {
+    let wordObject = {
+      trainClick: 0,
+      wrongAnswers: 1,
+      correctAnswers: 0,
+    };
+    if (Storage.check(word)) {
+      wordObject = Storage.get(word);
+      wordObject.wrongAnswers = parseInt(wordObject.wrongAnswers, 10) + 1;
+    }
+    Storage.set(word, wordObject);
   }
 }

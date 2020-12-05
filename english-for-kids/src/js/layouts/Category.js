@@ -1,6 +1,7 @@
 import CategoryCard from './CategoryCard';
 import create from '../utils/create';
 import MODES from '../constatnts';
+import Statistic from './Statistic';
 
 export default class Category {
   constructor() {
@@ -29,7 +30,7 @@ export default class Category {
     this.mode = mode;
     this.score = this.words.length;
     this.audio = null;
-    this.createDesscription(categoryName);
+    this.createDescription(categoryName);
     this.createCards();
     this.createRating();
     this.createButton();
@@ -66,7 +67,7 @@ export default class Category {
     ];
   }
 
-  createDesscription(categoryName) {
+  createDescription(categoryName) {
     this.descriptionContainer = create('div', 'description');
     const descriptionText = create('h1', 'description-text', null, this.descriptionContainer);
     descriptionText.textContent = categoryName;
@@ -105,8 +106,10 @@ export default class Category {
     const el = e.target.closest('.flip-card');
     this.score -= 1;
     if (el === this.currentPlayCard.deck) {
+      Statistic.correctAnswerClick(this.currentPlayCard.params.word);
       this.correctChoice();
     } else {
+      Statistic.wrongAnswerClick(this.currentPlayCard.params.word);
       this.invalidChoice();
     }
   }

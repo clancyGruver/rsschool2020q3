@@ -1,5 +1,6 @@
 import create from '../utils/create';
 import MODES from '../constatnts';
+import Statistic from './Statistic';
 
 export default class CategoryCard {
   constructor(params, mode) {
@@ -66,6 +67,7 @@ export default class CategoryCard {
       if (this.mode() === MODES.PLAY) {
         return;
       }
+      Statistic.trainClick(this.params.word);
       const flipBtn = Boolean(e.target.closest('.card-flip'));
       const front = Boolean(e.target.closest('.flip-card__front'));
       if (!flipBtn && front) {

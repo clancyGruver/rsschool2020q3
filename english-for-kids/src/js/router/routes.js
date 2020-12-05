@@ -1,6 +1,6 @@
 import MainPage from '../layouts/Main';
 import CategoryPage from '../layouts/Category';
-import StaisticPage from '../layouts/Statistics';
+import StatisticPage from '../layouts/Statistic';
 
 export default [
   {
@@ -11,7 +11,7 @@ export default [
   {
     name: 'statistics',
     path: 'statistics',
-    handler: StaisticPage,
+    handler: StatisticPage,
   },
   {
     name: 'category',
