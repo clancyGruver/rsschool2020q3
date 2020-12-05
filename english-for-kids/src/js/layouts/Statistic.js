@@ -28,16 +28,16 @@ export default class Statistic {
       'Category',
       'Word',
       'Translation',
-      'Trained',
-      'Correct',
-      'Wrong',
-      'Percent',
+      '<i class="fas fa-brain"></i>',
+      '<i class="fas fa-check-circle"></i>',
+      '<i class="fas fa-times-circle"></i>',
+      '<i class="fas fa-percent"></i>',
     ];
     const header = create('thead', 'statistic-table-header', null, this.table);
     const row = create('tr', '', null, header);
     headers.forEach((headerCaption) => {
       const th = create('th', '', null, row);
-      th.textContent = headerCaption;
+      th.innerHTML = headerCaption;
     });
   }
 

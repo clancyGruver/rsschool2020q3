@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Chicle&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+@import "colors.scss";
 
 ::-webkit-scrollbar { width: 0 !important }
 
@@ -46,12 +47,14 @@ body {
 }
 
 .header{
-  font-family: 'Chicle', cursive;
-  background-color: mediumseagreen;
+  font-family: 'Bubblegum Sans', cursive;
+  background-color: $color-green;
+  height: 8rem;
 
   .container{
     align-items: center;
     justify-content: space-around;
+    height: 100%;
     .burger{
       display: inline-block;
       cursor: pointer;
@@ -85,6 +88,7 @@ body {
       text-transform: uppercase;
       letter-spacing: 0.6rem;
       font-size: 4rem;
+      text-shadow: 0px 3px 3px rgba(0,0,0,0.3);
       cursor: pointer;
     }
 
@@ -94,26 +98,28 @@ body {
     #button{
       width: 8rem;
       height: 3rem;
-      background-color: #000;
+      background-color: $color-yellow;
       border-radius: 5.5rem;
       cursor: pointer;
       position: relative;
+      border: 2px solid black;
     }
     #knob {
-      width: 4.2rem;
+      width: 3.5rem;
       height: 2.8rem;
       position: relative;
-      top: 0.1rem;
+      top: -0.1rem;
       left: 0.1rem;
       border-radius: 5rem;
       transition: 0.4s ease left, 0.4s ease background-position;
       z-index: 2;
-      background-color: blueviolet;
+      background-color: $color-blue;
+      border: 2px solid #882FF6;
     }
     #play, #train {
       position: absolute;
       top: 20%;
-      color: #fff;
+      color: black;
       font-size: 1.5rem;
       font-weight: bold;
       margin-left: 0.5rem;
@@ -130,7 +136,7 @@ body {
     }
 
     #lol-checkbox:checked + #button #knob {
-      left: 3.7rem;
+      left: 3.8rem;
     }
   }
 }
@@ -138,7 +144,7 @@ body {
 .left-menu{
   width: 32rem;
   position: absolute;
-  background: linear-gradient(to left, mediumseagreen, #9198e5);
+  background: linear-gradient(to left, $color-green, $color-blue);
   top: 0;
   transition: all 0.5s ease;
   z-index: 2;
@@ -156,18 +162,18 @@ body {
       list-style-type: none;
       text-decoration: none;
       font-size: 2rem;
-      color: wheat;
+      color: white;
       padding: 0.5rem 2rem;
       margin-bottom: 0.5rem;
       &.active{
         box-shadow: 0 0 0 2px darkviolet;
         border-radius: 2rem;
-        background-color: violet;
+        background-color: $color-violet;
       }
       &:hover{
         box-shadow: 0 0 0 2px darkviolet;
         border-radius: 2rem;
-        background-color: palevioletred;
+        background-color: $color-light-orange;
         cursor: pointer;
       }
     }
@@ -197,7 +203,7 @@ body {
         font-size: 4rem;
         font-weight: 800;
         text-transform: uppercase;
-        color: #9f0606;
+        color: $color-dark-red;
       }
       .end-game-image {
         max-width: 25rem;
@@ -242,7 +248,7 @@ body {
       }
       .card-image{
         text-align: center;
-        background-color: cornflowerblue;
+        background-color: $color-blue;
         border-radius: 1.7rem 1.7rem 0 0;
         img{
           margin: 2rem 0;
@@ -301,7 +307,7 @@ body {
       }
       .card-image{
         text-align: center;
-        background-color: cornflowerblue;
+        background-color: $color-blue;
         border-radius: 1.5rem 1.5rem 0 0;
         height: 20rem;
         background-repeat: no-repeat;
@@ -315,13 +321,13 @@ body {
       .card-flip{
         width: 3rem;
         height: 3rem;
-        background-color: deepskyblue;
+        background-color: $color-blue;
         position: absolute;
         border-radius: 50% 0;
         bottom: 0;
         right: 0;
-        border-top: 2px solid palevioletred;
-        border-left: 2px solid palevioletred;
+        border-top: 2px solid $color-red;
+        border-left: 2px solid $color-red;
         border-right: none;
         border-bottom: none;
         outline:none;
@@ -343,7 +349,7 @@ body {
       justify-items: center;
       align-items: center;
       bottom: 0;
-      background: linear-gradient(0deg, mediumseagreen, #9198e5);
+      background: linear-gradient(0deg, $color-yellow, $color-orange);
       height: 6rem;
       min-width: 10rem;
       border: 2px solid rgb(34, 7, 7);
@@ -365,11 +371,11 @@ body {
         text-transform: uppercase;
         font-weight: 800;
         &.btn-start {
-          background-color: blueviolet;
-          color: wheat;
+          background-color: $color-violet;
+          color: white;
         }
         &.btn-repeat {
-          background-color: deepskyblue;
+          background-color: $color-blue;
         }
         .fas {
           padding-right: 1rem;
@@ -422,7 +428,7 @@ body {
 }
 
 .footer{
-  background-color: mediumseagreen;
+  background-color: $color-green;
   margin-top: auto;
   .links{
     display: flex;
