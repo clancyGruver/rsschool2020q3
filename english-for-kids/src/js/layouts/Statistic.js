@@ -12,7 +12,8 @@ export default class Statistic {
     };
   }
 
-  init(vocabulary) {
+  init(vocabulary, navigate) {
+    this.navigate = navigate;
     this.vocabulary = vocabulary;
     this.createButtons();
     this.createTable();
@@ -37,12 +38,12 @@ export default class Statistic {
       {
         name: 'Repeat difficult words',
         class: 'btn-yellow',
-        handler: () => {},
+        handler: () => this.repeatHardWords(),
       },
       {
         name: 'Reset',
         class: 'btn-red',
-        handler: () => Statistic.resetStatistic(),
+        handler: () => this.resetStatistic(),
       },
     ];
     this.buttonsContainer = create('div', 'controls');
@@ -104,7 +105,14 @@ export default class Statistic {
   }
 
   fillTableWithData() {
-    this.tbody = create('tbody', '', null, this.table);
+    if (this.tbody) {
+      this.tbody.innerHTML = '';
+    } else {
+      this.tbody = create('tbody', '', null, this.table);
+    }
+
+    this.trs.length = 0;
+
     const categories = Object.keys(this.vocabulary);
     categories.forEach((category) => {
       this.vocabulary[category].forEach((word) => {
@@ -124,6 +132,51 @@ export default class Statistic {
       });
     });
     this.renderTableBody();
+  }
+
+  resetStatistic() {
+    localStorage.clear();
+    this.fillTableWithData();
+    this.clearAllTh();
+  }
+
+  repeatHardWords() {
+    if (!this.vocabulary.repeat) {
+      this.vocabulary.repeat = [];
+    } else {
+      this.vocabulary.repeat.length = 0;
+    }
+
+    const storageLength = localStorage.length;
+    let wordsForRepeatCount = 0;
+    for (let i = 0; i < storageLength; i += 1) {
+      const storageKey = localStorage.key(i);
+      const wordStat = Statistic.getWordStatistic(storageKey);
+      const isHardWord = wordStat.correctAnswers < wordStat.wrongAnswers;
+      if (isHardWord) {
+        this.vocabulary.repeat.push(this.findWordInVocabulary(storageKey));
+        wordsForRepeatCount += 1;
+        if (wordsForRepeatCount === 7) break;
+      }
+    }
+    const routeParams = {
+      name: 'repeat',
+      path: 'category',
+      params: {
+        categoryName: 'repeat',
+      },
+    };
+    this.navigate(routeParams);
+  }
+
+  findWordInVocabulary(word) {
+    const categories = Object.keys(this.vocabulary).filter((cat) => cat !== 'repeat');
+    for (let i = 0; i < categories.length; i += 1) {
+      const category = categories[i];
+      const res = this.vocabulary[category].find((wordObj) => wordObj.word === word);
+      if (res) return res;
+    }
+    return false;
   }
 
   sortTable(index, order) {
@@ -228,9 +281,5 @@ export default class Statistic {
     btn.textContent = props.name;
     btn.addEventListener('click', props.handler);
     return btn;
-  }
-
-  static resetStatistic() {
-    localStorage.clear();
   }
 }

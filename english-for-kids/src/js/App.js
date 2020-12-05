@@ -43,12 +43,6 @@ export default class App {
     this.router.listen();
   }
 
-  routerGo(page, val) {
-    this.Page = page;
-    this.selectedCategory = val;
-    this.renderPage(this.cards[val]);
-  }
-
   set mode(val) {
     this.appMode = val;
     this.header.switcher = val === MODES.PLAY;
@@ -86,7 +80,7 @@ export default class App {
     } else if (this.page.name === 'category page') {
       this.page.init(params.name, cards[params.name], this.mode, () => this.router.navigate('/'));
     } else if (this.page.name === 'statistic page') {
-      this.page.init(cards);
+      this.page.init(cards, (data) => this.router.navigate(data.path, data));
     }
     this.main.content = this.page.content;
   }
