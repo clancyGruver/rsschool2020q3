@@ -226,6 +226,7 @@ export default class Statistic {
   static createButton(props) {
     const btn = create('button', `btn ${props.class}`, null, null, ['type', 'button']);
     btn.textContent = props.name;
+    btn.addEventListener('click', props.handler);
     return btn;
   }
 
