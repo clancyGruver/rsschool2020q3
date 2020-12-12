@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+:root{
+  font-size: 10px;
+}
+
+html{
+  background-color: black;
+  color: #cccccc;
+}
+
+.header{
+  &-description{
+    text-transform: uppercase;
+    font-size: 3rem;
+    text-align: center;
+  }
+}
+
+
+.main{
+  .grid-container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "country-names map map table"
+      "country-names map map chart"
+      ". . . .";
+    .country-names { grid-area: country-names; }
+    .map { grid-area: map; }
+    .table { grid-area: table; }
+    .chart { grid-area: chart; }
+  }
+}
