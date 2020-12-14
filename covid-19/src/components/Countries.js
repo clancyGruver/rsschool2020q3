@@ -6,7 +6,6 @@ export default class Countries extends React.Component {
     super(props);
     this.state = {
       data: null,
-      selectedParam: 'TotalConfirmed',
       readyData: null,
       searchString: '',
       params: {
@@ -23,8 +22,9 @@ export default class Countries extends React.Component {
     this.searchHandler = this.searchHandler.bind(this);
   }
 
-  sortData() {
-    const sortFn = (a, b) => b[this.state.selectedParam] - a[this.state.selectedParam];
+  sortData(key = null) {
+    const sortParam = key ? key : this.props.selectedParam.key;
+    const sortFn = (a, b) => b[sortParam] - a[sortParam];
     if (this.state.data) {
       this.state.data.sort(sortFn);
     } else if (this.props.data) {
@@ -42,11 +42,9 @@ export default class Countries extends React.Component {
   }
 
   handleSelect(e) {
-    this.setState({
-      selectedParam: e.target.value,
-      searchString: '',
-    });
-    this.sortData();
+    const key = e.target.value;
+    this.props.setShowingParam(key); 
+    this.sortData(key);
   }
 
   searchHandler(e) {
@@ -64,13 +62,18 @@ export default class Countries extends React.Component {
       const countries = this.state.readyData ? this.state.readyData : this.state.data;
       return countries.map((el) => {
         const flag = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
-        return <li className="list-group-element" key={el.Slug}>
+        const alt = `${el.Country} flag`;
+        return <li
+          className="list-group-element"
+          key={el.Slug}
+          onClick={() => this.props.updateCountry(el)}
+        >
           <h6 classNamae={style.smallHeader}>
-            <img src={flag}></img>
+            <img src={flag} alt={alt}></img>
             {el.Country}
             &nbsp;
             <span className="text-danger">
-              {el[this.state.selectedParam]}
+              {el[this.props.selectedParam.key]}
             </span>
           </h6>
         </li>;
@@ -98,7 +101,7 @@ export default class Countries extends React.Component {
             value={this.state.searchString}
           />
         </div>
-        <select value={this.state.selectedParam} className="form-select form-select-sm" onChange={this.handleSelect}>
+        <select value={this.props.selectedParam.key} className="form-select form-select-sm" onChange={this.handleSelect}>
           {this.createSelectOptions()}
         </select>
         <ul className="list-group">

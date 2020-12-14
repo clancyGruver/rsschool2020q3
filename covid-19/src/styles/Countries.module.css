@@ -1,3 +1,12 @@
 .smallHeader{
   font-size: 0.8rem;
 }
+
+li{
+  cursor: pointer;
+  border-bottom: 1px solid black;
+}
+
+li:hover{
+  background-color: rgba(175, 115, 130, 0.2);;
+}
