@@ -30,6 +30,7 @@ export default class App extends React.Component {
       },
       peopleVal: 'abs',
       period: 'all',
+      date: new Date(),
     }
     this.updateCountry = this.updateCountry.bind(this);
     this.setShowingParam = this.setShowingParam.bind(this);
@@ -51,7 +52,6 @@ export default class App extends React.Component {
   }
 
   setShowingParam(key) {
-    console.log(key);
     this.setState({
       selectedParam: {
         key: key,
@@ -72,17 +72,19 @@ export default class App extends React.Component {
   updateStatisticData() {
     if (typeof this.state.country === 'object') {
       const countryData = this.state.countries.find((el) => el.CountryCode === this.state.country.CountryCode);
-      this.setState({ statisticValues: countryData});
-    }
-    if (this.state.peopleVal === '100' && typeof this.state.country === 'object') {
-      console.log(this.state.population.find((el) => el.name === this.state.country.Country));
-      const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
-      if (peopleCount) {
-        const population = peopleCount.population;
-        const keys = Object.keys(this.state.params);
-        console.log(keys.map((key) => (this.state.statisticValues[key] / population * 100_000).toFixed(2)));
+      if (this.state.peopleVal === '100') {
+        const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
+        if (peopleCount) {
+          const population = peopleCount.population;
+          const keys = Object.keys(this.state.params);
+          const res = {};
+          keys.map((key) => res[key] = (countryData[key] / population * 100_000).toFixed(2));
+          this.setState({ statisticValues: res});
+        }
+      } else if (this.state.peopleVal === 'abs') {
+        this.setState({ statisticValues: countryData});
       }
-    }
+    }    
   }
 
   async initAllCountries() {
@@ -100,6 +102,7 @@ export default class App extends React.Component {
       summaryData,
       statisticValues: summaryData.Global,
       countries: summaryData.Countries,
+      date: new Date(summaryData.Date),
     });
     console.log(summaryData);
   }
@@ -120,7 +123,9 @@ export default class App extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <Header />
+          <Header
+            date={this.state.date}
+          />
         </div>
         <div className="row">
           <div className="col-2">

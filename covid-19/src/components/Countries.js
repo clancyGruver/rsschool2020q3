@@ -45,16 +45,22 @@ export default class Countries extends React.Component {
     const key = e.target.value;
     this.props.setShowingParam(key); 
     this.sortData(key);
+    this.filter();
   }
 
   searchHandler(e) {
     const searchString = e.target.value.toLowerCase();
+    this.setState({ searchString });
+    this.filter();
+  }
+
+  filter() {
     const { data } = this.state;
-    const filtered = data.filter((el) => el.Country.toLowerCase().includes(searchString));
+    const filtered = data.filter((el) => el.Country.toLowerCase().includes(this.state.searchString));
     this.setState({
-      searchString,
       readyData: filtered,
     });
+
   }
 
   createLi() {
@@ -68,7 +74,7 @@ export default class Countries extends React.Component {
           key={el.Slug}
           onClick={() => this.props.updateCountry(el)}
         >
-          <h6 classNamae={style.smallHeader}>
+          <h6 className={style.smallHeader}>
             <img src={flag} alt={alt}></img>
             {el.Country}
             &nbsp;

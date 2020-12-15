@@ -18,14 +18,14 @@ export default class Statistics extends React.Component {
   choosepeopleSelect() {
     return <select value={this.props.people} onChange={this.props.setPeople} className="form-control form-control-sm">
       <option value="abs">Абсолютные величины</option>
-      <option value="100">На 100 тыс. населения</option>
+      <option value="100" disabled={typeof this.props.country === 'string'}>На 100 тыс. населения</option>
     </select>
   }
 
   statisticTable() {
     if(this.props.statisticValues){
       const keys = Object.keys(this.props.statisticValues).filter((el) => el.startsWith(this.props.period === 'all' ? 'Total' : 'New'));
-      const rows = keys.map((key) => <tr>
+      const rows = keys.map((key) => <tr key={key}>
         <th scope="col">{this.props.params[key]}</th>
         <th scope="col">{this.props.statisticValues[key]}</th>
       </tr>);
