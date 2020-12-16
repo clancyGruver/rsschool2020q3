@@ -8,14 +8,6 @@ export default class Countries extends React.Component {
       data: null,
       readyData: null,
       searchString: '',
-      params: {
-        NewConfirmed: 'новые подтвержденные',
-        NewDeaths: 'новые смерти',
-        NewRecovered: 'новые выздоровевшии',
-        TotalConfirmed: 'всего подтверждено',
-        TotalDeaths: 'всего умерло',
-        TotalRecovered: 'всего выздоровело',
-      },
     };
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -35,9 +27,9 @@ export default class Countries extends React.Component {
   }
 
   createSelectOptions() {
-    const paramKeys = Object.keys(this.state.params);
+    const paramKeys = Object.keys(this.props.params);
     return paramKeys.map((el) => <option value={el} key={el}>
-      {this.state.params[el]}
+      {this.props.params[el]}
       </option>);
   }
 

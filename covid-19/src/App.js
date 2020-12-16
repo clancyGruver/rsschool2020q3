@@ -10,6 +10,28 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       url: 'https://api.covid19api.com/',
+      periods: {
+        0: {
+          name: 'all',
+          description: 'весь период',
+        },
+        1: {
+          name: 'lastDay',
+          description: 'Последний день',
+        },
+      },
+      currentPeriod: 0,
+      peopleValues:{
+        0: {
+          name: 'abs',
+          description: 'абсолютные показатели',
+        },
+        1: {
+          name: '100',
+          description: 'на 100 тыс.',
+        },
+      },
+      currentPeopleValue:0,
       countries: null,
       loading: true,
       covidData: null,
@@ -21,9 +43,9 @@ export default class App extends React.Component {
         name: 'всего подтверждено',
       },
       params: {
-        NewConfirmed: 'новые подтвержденные',
-        NewDeaths: 'новые смерти',
-        NewRecovered: 'новые выздоровевшии',
+        NewConfirmed: 'подтвержденные за день',
+        NewDeaths: 'смерти за день',
+        NewRecovered: 'выздоровевшии за день',
         TotalConfirmed: 'всего подтверждено',
         TotalDeaths: 'всего умерло',
         TotalRecovered: 'всего выздоровело',
@@ -72,6 +94,7 @@ export default class App extends React.Component {
   updateStatisticData() {
     if (typeof this.state.country === 'object') {
       const countryData = this.state.countries.find((el) => el.CountryCode === this.state.country.CountryCode);
+      this.setState({ date: new Date(countryData.Date) });
       if (this.state.peopleVal === '100') {
         const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
         if (peopleCount) {
@@ -82,7 +105,7 @@ export default class App extends React.Component {
           this.setState({ statisticValues: res});
         }
       } else if (this.state.peopleVal === 'abs') {
-        this.setState({ statisticValues: countryData});
+        this.setState({ statisticValues: countryData });
       }
     }    
   }

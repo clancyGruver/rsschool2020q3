@@ -10,6 +10,11 @@ export default class Header extends React.Component {
     };
   }
 
+  formatDate() {
+    const {date} = this.props;
+    const month = date.getUTCMonth() + 1;
+    return `${date.getUTCFullYear()}-${month}-${date.getUTCDate()}`
+  }
 
   render() {
     return (
@@ -18,7 +23,7 @@ export default class Header extends React.Component {
             <img src={icon} alt="covid-19 dashboard icon" className={styles.icon} />
             {this.state.name}
         </h1>
-        <h6>По состоянию на {this.props.date.toLocaleDateString()}</h6>
+        <h6>По состоянию на {this.formatDate()}</h6>
       </header>
     )
   }
