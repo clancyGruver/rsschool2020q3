@@ -158,6 +158,7 @@ export default class App extends React.Component {
             <Countries
               data={this.state.summaryData && this.state.summaryData.Countries ? this.state.summaryData.Countries : null}
               params={this.state.params}
+              selectedCountry={this.state.country}
               selectedParam={this.state.selectedParam}
               updateCountry={this.updateCountry}
               setShowingParam={this.setShowingParam}

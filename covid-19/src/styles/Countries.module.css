@@ -8,5 +8,9 @@ li{
 }
 
 li:hover{
-  background-color: rgba(175, 115, 130, 0.2);;
+  background-color: rgba(175, 115, 130, 0.1);
+}
+
+.active {
+  background-color: rgba(175, 115, 130, 0.2);
 }

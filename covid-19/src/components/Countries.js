@@ -61,8 +61,9 @@ export default class Countries extends React.Component {
       return countries.map((el) => {
         const flag = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
         const alt = `${el.Country} flag`;
+        console.log(el.Slug === this.props.selectedCountry.Slug);
         return <li
-          className="list-group-element"
+          className={`list-group-element ${el.Slug === this.props.selectedCountry.Slug ? style.active : ''}`}
           key={el.Slug}
           onClick={() => this.props.updateCountry(el)}
         >
