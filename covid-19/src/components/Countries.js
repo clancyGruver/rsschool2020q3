@@ -52,7 +52,15 @@ export default class Countries extends React.Component {
     this.setState({
       readyData: filtered,
     });
+  }
 
+  liClickHandler(el) {
+    if(el.Slug !== this.props.selectedCountry.Slug){
+      this.props.updateCountry(el);
+    }
+    else {
+      this.props.updateCountry('Весь мир');
+    }
   }
 
   createLi() {
@@ -61,11 +69,10 @@ export default class Countries extends React.Component {
       return countries.map((el) => {
         const flag = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
         const alt = `${el.Country} flag`;
-        console.log(el.Slug === this.props.selectedCountry.Slug);
         return <li
           className={`list-group-element ${el.Slug === this.props.selectedCountry.Slug ? style.active : ''}`}
           key={el.Slug}
-          onClick={() => this.props.updateCountry(el)}
+          onClick={() => this.liClickHandler(el)}
         >
           <h6 className={style.smallHeader}>
             <img src={flag} alt={alt}></img>

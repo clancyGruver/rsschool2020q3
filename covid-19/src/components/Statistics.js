@@ -26,7 +26,7 @@ export default class Statistics extends React.Component {
 
   render() {
     return <div>
-      <h4>Статистика {this.props.country.Country}</h4>
+      <h4>Статистика {this.props.country.Country || this.props.country}</h4>
       {this.statisticTable()}
     </div>;
   }
