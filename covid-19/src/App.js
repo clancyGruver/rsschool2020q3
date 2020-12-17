@@ -51,14 +51,24 @@ export default class App extends React.Component {
         TotalRecovered: 'всего выздоровело',
       },
       peopleVal: 'abs',
-      period: 'all',
       date: new Date(),
     }
     this.updateCountry = this.updateCountry.bind(this);
     this.setShowingParam = this.setShowingParam.bind(this);
-    this.setPeopleValue = this.setPeopleValue.bind(this);
-    this.setPeriod = this.setPeriod.bind(this);
+    this.peopleChange = this.peopleChange.bind(this);
+    this.periodChange = this.periodChange.bind(this);
     this.getPopulation();
+  }
+
+  peopleChange() {
+    const currentPeopleValue = Number(!Boolean(this.state.currentPeopleValue));
+    this.setState({ currentPeopleValue }, () => this.updateStatisticData());
+  }
+
+  periodChange() {
+    const currentPeriod = Number(!Boolean(this.state.currentPeriod));
+    this.setState({ currentPeriod });
+    this.updateStatisticData();
   }
 
   async getPopulation() {
@@ -82,39 +92,28 @@ export default class App extends React.Component {
     });
   }
 
-  setPeopleValue(val) {
-    this.setState({ peopleVal: val.target.value });
-    this.updateStatisticData();
-  }
-
-  setPeriod(period) {
-    this.setState({ period: period.target.value });
-  }
-
   updateStatisticData() {
-    if (typeof this.state.country === 'object') {
-      const countryData = this.state.countries.find((el) => el.CountryCode === this.state.country.CountryCode);
-      this.setState({ date: new Date(countryData.Date) });
-      if (this.state.peopleVal === '100') {
-        const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
-        if (peopleCount) {
-          const population = peopleCount.population;
-          const keys = Object.keys(this.state.params);
-          const res = {};
-          keys.map((key) => res[key] = (countryData[key] / population * 100_000).toFixed(2));
-          this.setState({ statisticValues: res});
-        }
-      } else if (this.state.peopleVal === 'abs') {
-        this.setState({ statisticValues: countryData });
+    let countryData = null;
+    if (typeof this.state.country === 'object') { 
+      countryData = this.state.countries.find((el) => el.CountryCode === this.state.country.CountryCode);
+    } else if (typeof this.state.country === 'string') {
+      countryData = this.state.summaryData.Global;
+      countryData.Date = this.state.summaryData.Date;
+    }
+    this.setState({ date: new Date(countryData.Date) });
+    console.log(this.state.currentPeopleValue);
+    if (this.state.currentPeopleValue === 1) {
+      const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
+      const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
+      if (population) {
+        const keys = Object.keys(this.state.params);
+        const res = {};
+        keys.map((key) => res[key] = (countryData[key] / population * 100_000).toFixed(2));
+        this.setState({ statisticValues: res});
       }
-    }    
-  }
-
-  async initAllCountries() {
-    const url = `${this.state.url}countries`;
-    const response = await fetch(url);
-    const countries = await response.json();
-    this.setState({ countries });
+    } else if (this.state.currentPeopleValue === 0) {
+      this.setState({ statisticValues: countryData });
+    }
   }
 
   async loadSummary() {
@@ -130,24 +129,28 @@ export default class App extends React.Component {
     console.log(summaryData);
   }
 
-  async loadAll() {
-    const url = `${this.state.url}all`;
-    const response = await fetch(url);
-    const data = await response.json();
-    this.setState({ data });
-    console.log(data);
-  }
-
   componentDidMount() {
     this.loadSummary();
   }
 
   render() {
+    const period = {
+      handleClick: this.periodChange,
+      value: this.state.currentPeriod,
+      description: this.state.periods[this.state.currentPeriod].description,
+    };
+    const people = {
+      handleClick: this.peopleChange,
+      value: this.state.currentPeopleValue,
+      description: this.state.peopleValues[this.state.currentPeopleValue].description,
+    };
     return (
       <div className="container-fluid">
         <div className="row">
           <Header
             date={this.state.date}
+            period={period}
+            people={people}
           />
         </div>
         <div className="row">
@@ -167,12 +170,9 @@ export default class App extends React.Component {
             <div className="row">
               <Statistics
                 country={this.state.country}
-                setPeople={this.setPeopleValue}
-                setPeriod={this.setPeriod}
                 statisticValues={this.state.statisticValues}
                 params={this.state.params}
-                period={this.state.period}
-                people={this.state.peopleVal}
+                period={this.state.periods[this.state.currentPeriod].name}
               />
             </div>
             <div className="row"><Chart /></div>

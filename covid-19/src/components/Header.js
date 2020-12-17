@@ -1,6 +1,7 @@
 import React from 'react';
 import icon from '../assets/images/icon.png';
 import styles from '../styles/Header.module.css';
+import Switch from './Switch';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -24,6 +25,18 @@ export default class Header extends React.Component {
             {this.state.name}
         </h1>
         <h6>По состоянию на {this.formatDate()}</h6>
+        <div className="header-switchers">
+          <Switch
+            handleClick={this.props.period.handleClick}
+            value={this.props.period.value}
+            description={this.props.period.description}
+          />
+          <Switch
+            handleClick={this.props.people.handleClick}
+            value={this.props.people.value}
+            description={this.props.people.description}
+          />
+        </div>
       </header>
     )
   }
