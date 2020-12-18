@@ -1,12 +1,10 @@
 import React from 'react';
-import style from '../styles/Countries.module.css';
+import CountriesList from './CountriesList';
 
 export default class Countries extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      readyData: null,
       searchString: '',
     };
 
@@ -14,16 +12,12 @@ export default class Countries extends React.Component {
     this.searchHandler = this.searchHandler.bind(this);
   }
 
-  sortData(key = null) {
+  sortData() {
+    const key = this.props.selectedParam.dataKey;
     const sortParam = key ? key : this.props.selectedParam.key;
     const sortFn = (a, b) => b[sortParam] - a[sortParam];
-    if (this.state.data) {
-      this.state.data.sort(sortFn);
-    } else if (this.props.data) {
-      const data = this.props.data.sort(sortFn);
-      this.setState({ data });
-    }
-    this.setState({ readyData: this.state.data });
+    const data = this.props.data.sort(sortFn);
+    return data.filter((el) => el.Country.toLowerCase().includes(this.state.searchString));
   }
 
   createSelectOptions() {
@@ -36,61 +30,14 @@ export default class Countries extends React.Component {
   handleSelect(e) {
     const key = e.target.value;
     this.props.setShowingParam(key); 
-    this.sortData(key);
-    this.filter();
   }
 
   searchHandler(e) {
     const searchString = e.target.value.toLowerCase();
     this.setState({ searchString });
-    this.filter();
-  }
-
-  filter() {
-    const { data } = this.state;
-    const filtered = data.filter((el) => el.Country.toLowerCase().includes(this.state.searchString));
-    this.setState({
-      readyData: filtered,
-    });
-  }
-
-  liClickHandler(el) {
-    if(el.Slug !== this.props.selectedCountry.Slug){
-      this.props.updateCountry(el);
-    }
-    else {
-      this.props.updateCountry('Весь мир');
-    }
-  }
-
-  createLi() {
-    if (this.state.readyData || this.state.data) {
-      const countries = this.state.readyData ? this.state.readyData : this.state.data;
-      return countries.map((el) => {
-        const flag = `https://www.countryflags.io/${el.CountryCode}/flat/16.png`;
-        const alt = `${el.Country} flag`;
-        return <li
-          className={`list-group-element ${el.Slug === this.props.selectedCountry.Slug ? style.active : ''}`}
-          key={el.Slug}
-          onClick={() => this.liClickHandler(el)}
-        >
-          <h6 className={style.smallHeader}>
-            <img src={flag} alt={alt}></img>
-            {el.Country}
-            &nbsp;
-            <span className="text-danger">
-              {el[this.props.selectedParam.key]}
-            </span>
-          </h6>
-        </li>;
-      });
-    }
-
-    return <p>loading...</p>;
   }
 
   render() {
-    if (this.props.data && !this.state.data) this.sortData();
     return (
       <div>
         <div className="input-group">
@@ -107,12 +54,15 @@ export default class Countries extends React.Component {
             value={this.state.searchString}
           />
         </div>
-        <select value={this.props.selectedParam.key} className="form-select form-select-sm" onChange={this.handleSelect}>
+        <select value={this.props.selectedParam.appKey} className="form-select form-select-sm" onChange={this.handleSelect}>
           {this.createSelectOptions()}
         </select>
-        <ul className="list-group">
-          {this.createLi()}
-        </ul>
+        <CountriesList
+          countries={this.sortData()}
+          selectedCountry={this.props.selectedCountry}
+          selectedParam={this.props.selectedParam}
+          updateCountry={this.props.updateCountry}
+        />
       </div>
     );
   }

@@ -33,22 +33,19 @@ export default class App extends React.Component {
       },
       currentPeopleValue:0,
       countries: null,
-      loading: true,
       covidData: null,
       country: 'Весь мир',  
       statisticValues: null,    
       population: null,
       selectedParam: {
-        key: 'TotalConfirmed',
+        dataKey: 'TotalConfirmed',
+        appKey: 'Confirmed',
         name: 'всего подтверждено',
       },
       params: {
-        NewConfirmed: 'подтвержденные за день',
-        NewDeaths: 'смерти за день',
-        NewRecovered: 'выздоровевшии за день',
-        TotalConfirmed: 'всего подтверждено',
-        TotalDeaths: 'всего умерло',
-        TotalRecovered: 'всего выздоровело',
+        Confirmed: 'подтверждено',
+        Deaths: 'умерло',
+        Recovered: 'выздоровело',
       },
       peopleVal: 'abs',
       date: new Date(),
@@ -69,6 +66,7 @@ export default class App extends React.Component {
     const currentPeriod = Number(!Boolean(this.state.currentPeriod));
     this.setState({ currentPeriod });
     this.updateStatisticData();
+    this.setShowingParam(this.state.selectedParam.appKey);
   }
 
   async getPopulation() {
@@ -79,14 +77,15 @@ export default class App extends React.Component {
   }
 
   updateCountry(country) {
-    this.setState({ country });
-    this.updateStatisticData();
+    this.setState({ country }, () => this.updateStatisticData());
   }
 
   setShowingParam(key) {
+    const paramKey = `${this.state.currentPeriod === 0 ? 'Total' : 'New'}${key}`;
     this.setState({
       selectedParam: {
-        key: key,
+        dataKey: paramKey,
+        appKey: key,
         name: this.state.params[key],
       }
     });
@@ -101,7 +100,6 @@ export default class App extends React.Component {
       countryData.Date = this.state.summaryData.Date;
     }
     this.setState({ date: new Date(countryData.Date) });
-    console.log(this.state.currentPeopleValue);
     if (this.state.currentPeopleValue === 1) {
       const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
       const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
@@ -144,6 +142,18 @@ export default class App extends React.Component {
       value: this.state.currentPeopleValue,
       description: this.state.peopleValues[this.state.currentPeopleValue].description,
     };
+    const emptyCountries = [{
+      "Country": "Идет загрузка",
+      "CountryCode": "AX",
+      "Slug": "ala-aland-islands",
+      "NewConfirmed": 0,
+      "TotalConfirmed": 0,
+      "NewDeaths": 0,
+      "TotalDeaths": 0,
+      "NewRecovered": 0,
+      "TotalRecovered": 0,
+      "Date": "2020-04-05T06:37:00Z"
+    },];
     return (
       <div className="container-fluid">
         <div className="row">
@@ -156,7 +166,7 @@ export default class App extends React.Component {
         <div className="row">
           <div className="col-2">
             <Countries
-              data={this.state.summaryData && this.state.summaryData.Countries ? this.state.summaryData.Countries : null}
+              data={this.state.summaryData && this.state.summaryData.Countries ? this.state.summaryData.Countries : emptyCountries}
               params={this.state.params}
               selectedCountry={this.state.country}
               selectedParam={this.state.selectedParam}
@@ -179,7 +189,6 @@ export default class App extends React.Component {
             <div className="row"><Chart /></div>
           </div>
         </div>
-        { this.state.loading ? (<div>Loading...</div>) : (<div>{this.state.covidData.Date}</div>) }
       </div>
     )
   };
