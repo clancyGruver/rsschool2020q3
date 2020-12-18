@@ -12,9 +12,10 @@ export default class Header extends React.Component {
   }
 
   formatDate() {
+    const addZero = (num)  => num * 1 < 10 ? `0${num}` : num;
     const {date} = this.props;
     const month = date.getUTCMonth() + 1;
-    return `${date.getUTCFullYear()}-${month}-${date.getUTCDate()}`
+    return `${date.getUTCFullYear()}-${addZero(month)}-${addZero(date.getUTCDate())}`;
   }
 
   render() {

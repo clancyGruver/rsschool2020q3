@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Countries from './components/Countries';
 import Chart from './components/Chart';
 import Statistics from './components/Statistics';
+import summaryData from './components/summary';
 
 
 export default class App extends React.Component {
@@ -115,9 +116,12 @@ export default class App extends React.Component {
   }
 
   async loadSummary() {
+    // TODO: remove local summary data
+    /*
     const url = `${this.state.url}summary`;
     const response = await fetch(url);
     const summaryData = await response.json();
+    */
     this.setState({
       summaryData,
       statisticValues: summaryData.Global,

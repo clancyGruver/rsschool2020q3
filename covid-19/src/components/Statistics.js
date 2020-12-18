@@ -10,9 +10,11 @@ export default class Statistics extends React.Component {
 
   statisticTable() {
     if(this.props.statisticValues){
-      const keys = Object.keys(this.props.statisticValues).filter((el) => el.startsWith(this.props.period === 'all' ? 'Total' : 'New'));
-      const rows = keys.map((key) => <tr key={key}>
-        <th scope="col">{this.props.params[key]}</th>
+      const prefix = this.props.period === 'all' ? 'Total' : 'New';
+      const keys = Object.keys(this.props.statisticValues).filter((el) => el.startsWith(prefix));
+      const nameKeys = keys.map(el => el.slice(prefix.length));
+      const rows = keys.map((key, idx) => <tr key={key}>
+        <th scope="col">{this.props.params[nameKeys[idx]]}</th>
         <th scope="col">{this.props.statisticValues[key]}</th>
       </tr>);
       return <table className="table">
