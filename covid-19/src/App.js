@@ -64,8 +64,7 @@ export default class App extends React.Component {
 
   periodChange() {
     const currentPeriod = Number(!Boolean(this.state.currentPeriod));
-    this.setState({ currentPeriod });
-    this.updateStatisticData();
+    this.setState({ currentPeriod }, () => this.updateStatisticData());
     this.setShowingParam(this.state.selectedParam.appKey);
   }
 
@@ -104,9 +103,10 @@ export default class App extends React.Component {
       const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
       const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
       if (population) {
+        const keyPrefix = this.state.currentPeriod === 0 ? 'Total' : 'New';
         const keys = Object.keys(this.state.params);
         const res = {};
-        keys.map((key) => res[key] = (countryData[key] / population * 100_000).toFixed(2));
+        keys.map((key) => res[`${keyPrefix}${key}`] = (countryData[`${keyPrefix}${key}`] / population * 100_000).toFixed(2));
         this.setState({ statisticValues: res});
       }
     } else if (this.state.currentPeopleValue === 0) {
