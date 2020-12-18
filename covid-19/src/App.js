@@ -165,17 +165,18 @@ export default class App extends React.Component {
             date={this.state.date}
             period={period}
             people={people}
+            params={this.state.params}
+            selectedParam={this.state.selectedParam}
+            setShowingParam={this.setShowingParam}
           />
         </div>
         <div className="row">
           <div className="col-2">
             <Countries
               data={this.state.summaryData && this.state.summaryData.Countries ? this.state.summaryData.Countries : emptyCountries}
-              params={this.state.params}
               selectedCountry={this.state.country}
               selectedParam={this.state.selectedParam}
               updateCountry={this.updateCountry}
-              setShowingParam={this.setShowingParam}
             />
           </div>
           <div className="col-6">

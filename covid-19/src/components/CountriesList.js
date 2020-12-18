@@ -1,5 +1,5 @@
 import React from 'react';
-import style from '../styles/Countries.module.css';
+import Style from '../styles/Countries.module.css';
 
 export default class CountriesList extends React.Component {
   liClickHandler(el) {
@@ -23,11 +23,11 @@ export default class CountriesList extends React.Component {
       const alt = `${el.Country} flag`;
       const selectedSlug = this.props.selectedCountry ? this.props.selectedCountry.Slug : 'none';
       return <li
-        className={`list-group-element ${el.Slug === selectedSlug ? style.active : ''}`}
+        className={`list-group-element ${el.Slug === selectedSlug ? Style.active : ''}`}
         key={el.Slug}
         onClick={() => this.liClickHandler(el)}
       >
-        <h6 className={style.smallHeader}>
+        <h6 className={Style.smallHeader}>
           <img src={flag} alt={alt}></img>
           {el.Country}
           &nbsp;

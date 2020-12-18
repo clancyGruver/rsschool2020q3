@@ -1,5 +1,6 @@
 import React from 'react';
 import CountriesList from './CountriesList';
+import Style from '../styles/Countries.module.css';
 
 export default class Countries extends React.Component {
   constructor(props) {
@@ -7,8 +8,6 @@ export default class Countries extends React.Component {
     this.state = {
       searchString: '',
     };
-
-    this.handleSelect = this.handleSelect.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
   }
 
@@ -20,18 +19,6 @@ export default class Countries extends React.Component {
     return data.filter((el) => el.Country.toLowerCase().includes(this.state.searchString));
   }
 
-  createSelectOptions() {
-    const paramKeys = Object.keys(this.props.params);
-    return paramKeys.map((el) => <option value={el} key={el}>
-      {this.props.params[el]}
-      </option>);
-  }
-
-  handleSelect(e) {
-    const key = e.target.value;
-    this.props.setShowingParam(key); 
-  }
-
   searchHandler(e) {
     const searchString = e.target.value.toLowerCase();
     this.setState({ searchString });
@@ -40,7 +27,7 @@ export default class Countries extends React.Component {
   render() {
     return (
       <div>
-        <div className="input-group">
+        <div className={`${Style.mb6} input-group`}>
           <span className="input-group-text" id="Search">
             <i className="fas fa-search" aria-hidden="true"></i>
           </span>
@@ -54,9 +41,6 @@ export default class Countries extends React.Component {
             value={this.state.searchString}
           />
         </div>
-        <select value={this.props.selectedParam.appKey} className="form-select form-select-sm" onChange={this.handleSelect}>
-          {this.createSelectOptions()}
-        </select>
         <CountriesList
           countries={this.sortData()}
           selectedCountry={this.props.selectedCountry}
