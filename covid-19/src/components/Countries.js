@@ -26,7 +26,7 @@ export default class Countries extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={Style.h80}>
         <div className={`${Style.mb6} input-group`}>
           <span className="input-group-text" id="Search">
             <i className="fas fa-search" aria-hidden="true"></i>

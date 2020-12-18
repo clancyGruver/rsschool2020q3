@@ -40,7 +40,7 @@ export default class CountriesList extends React.Component {
   }
 
   render() {
-    return (<ul className="list-group">
+    return (<ul className={`${Style.overflow} list-group`}>
           {this.createLi()}
         </ul>);
   }

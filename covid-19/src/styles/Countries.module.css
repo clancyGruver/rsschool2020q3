@@ -18,3 +18,12 @@ li:hover{
 .mb6{
   margin-bottom: 6px;
 }
+
+.h80{
+  height: 80vh;
+}
+
+.overflow{
+  max-height: 100%;
+  overflow-x: hidden;
+}
