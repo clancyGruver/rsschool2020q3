@@ -3,7 +3,9 @@ import Header from './components/Header';
 import Countries from './components/Countries';
 import Chart from './components/Chart';
 import Statistics from './components/Statistics';
-import summaryData from './components/summary';
+
+import summaryData from './data/summary';
+import worldGraphData from './data/worldGraph';
 
 
 export default class App extends React.Component {
@@ -18,7 +20,7 @@ export default class App extends React.Component {
         },
         1: {
           name: 'lastDay',
-          description: 'Последний день',
+          description: 'последний день',
         },
       },
       currentPeriod: 0,
@@ -35,13 +37,13 @@ export default class App extends React.Component {
       currentPeopleValue:0,
       countries: null,
       covidData: null,
-      country: 'Весь мир',  
-      statisticValues: null,    
+      country: 'Весь мир',
+      statisticValues: null,
       population: null,
       selectedParam: {
         dataKey: 'TotalConfirmed',
         appKey: 'Confirmed',
-        name: 'всего подтверждено',
+        name: 'подтверждено',
       },
       params: {
         Confirmed: 'подтверждено',
@@ -50,34 +52,28 @@ export default class App extends React.Component {
       },
       peopleVal: 'abs',
       date: new Date(),
+      graphValues: [],
+      worldGraphData: [],
     }
     this.updateCountry = this.updateCountry.bind(this);
     this.setShowingParam = this.setShowingParam.bind(this);
     this.peopleChange = this.peopleChange.bind(this);
     this.periodChange = this.periodChange.bind(this);
-    this.getPopulation();
   }
 
   peopleChange() {
     const currentPeopleValue = Number(!Boolean(this.state.currentPeopleValue));
-    this.setState({ currentPeopleValue }, () => this.updateStatisticData());
+    this.setState({ currentPeopleValue }, () => this.updateData());
   }
 
   periodChange() {
     const currentPeriod = Number(!Boolean(this.state.currentPeriod));
-    this.setState({ currentPeriod }, () => this.updateStatisticData());
+    this.setState({ currentPeriod }, () => this.updateData());
     this.setShowingParam(this.state.selectedParam.appKey);
   }
 
-  async getPopulation() {
-    const url = 'https://restcountries.eu/rest/v2/all?fields=name;population';
-    const response = await fetch(url);
-    const population = await response.json();
-    this.setState({ population });
-  }
-
   updateCountry(country) {
-    this.setState({ country }, () => this.updateStatisticData());
+    this.setState({ country }, () => this.updateData());
   }
 
   setShowingParam(key) {
@@ -88,7 +84,42 @@ export default class App extends React.Component {
         appKey: key,
         name: this.state.params[key],
       }
-    });
+    }, () => this.updateData());
+  }
+
+  updateData() {
+    this.updateStatisticData();
+    this.updateChartData();
+  }
+
+  updateChartData() {
+    console.log(this.state.selectedParam);
+    let chartData = null;
+    if (typeof this.state.country === 'object') {
+      chartData = this.loadCountryChartData();
+    } else if (typeof this.state.country === 'string') {
+      chartData = this.state.worldGraphData;
+      this.setState({
+        graphValues: chartData.map(el => {
+          return {
+            x: el.date,
+            y: el[this.state.selectedParam.dataKey],
+          };
+        }),
+      })
+    }
+
+  }
+
+  async loadCountryChartData() {
+    'https://api.covid19api.com/dayone/country/south-africa'
+  }
+
+  async getPopulation() {
+    const url = 'https://restcountries.eu/rest/v2/all?fields=name;population';
+    const response = await fetch(url);
+    const population = await response.json();
+    this.setState({ population });
   }
 
   updateStatisticData() {
@@ -115,6 +146,32 @@ export default class App extends React.Component {
     }
   }
 
+  async loadWorldData(){
+    // const path = 'world';
+    // const endDate = new Date();
+    const startDate = new Date(2020, 3, 14);
+    /*const url = `${this.state.url}${path}?from=${startDate.toISOString()}&to=${endDate.toISOString()}`;
+    const response = await fetch(url);
+    const worldData = await response.json();*/
+    const date = startDate;
+    const worldData = worldGraphData
+      .sort((a, b) => a.TotalConfirmed - b.TotalConfirmed)
+      .map(el => {
+        el.date = new Date(date.getTime());
+        date.setDate(date.getDate() + 1);
+        return el;
+      });
+    this.setState({
+      worldGraphData: worldData,
+      graphValues: worldData.map(el => {
+        return {
+          x: el.date,
+          y: el[this.state.selectedParam.dataKey],
+        };
+      }),
+    });
+  }
+
   async loadSummary() {
     // TODO: remove local summary data
     /*
@@ -128,11 +185,12 @@ export default class App extends React.Component {
       countries: summaryData.Countries,
       date: new Date(summaryData.Date),
     });
-    console.log(summaryData);
   }
 
   componentDidMount() {
     this.loadSummary();
+    this.loadWorldData();
+    this.getPopulation();
   }
 
   render() {
@@ -191,7 +249,10 @@ export default class App extends React.Component {
                 period={this.state.periods[this.state.currentPeriod].name}
               />
             </div>
-            <div className="row"><Chart /></div>
+            <div className="row"><Chart
+              values={this.state.graphValues}
+              label={this.state.selectedParam.name}
+            /></div>
           </div>
         </div>
       </div>
