@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Countries from './components/Countries';
 import Chart from './components/Chart';
 import Statistics from './components/Statistics';
+import Map from './components/Map';
 
 import summaryData from './data/summary';
 import worldGraphData from './data/worldGraph';
@@ -93,33 +94,54 @@ export default class App extends React.Component {
   }
 
   updateChartData() {
-    console.log(this.state.selectedParam);
     let chartData = null;
+    const paramKey = this.state.selectedParam.dataKey;
     if (typeof this.state.country === 'object') {
       chartData = this.loadCountryChartData();
+      chartData.then(el => console.log(el));
+      /*
+        {
+          Active: 1
+          City: ""
+          CityCode: ""
+          Confirmed: 1
+          Country: "India"
+          CountryCode: "IN"
+          Date: "2020-01-30T00:00:00Z"
+          Deaths: 0
+          Lat: "20.59"
+          Lon: "78.96"
+          Province: ""
+          Recovered: 0
+        }
+      */
     } else if (typeof this.state.country === 'string') {
       chartData = this.state.worldGraphData;
       this.setState({
-        graphValues: chartData.map(el => {
-          return {
-            x: el.date,
-            y: el[this.state.selectedParam.dataKey],
-          };
-        }),
+        graphValues: chartData
+          .sort((a, b) => a[paramKey] - b[paramKey])
+          .map(el => {
+            return {
+              x: el.date,
+              y: el[paramKey],
+            };
+          }),
       })
-    }
+    }/*
 
-  }
-
-  async loadCountryChartData() {
-    'https://api.covid19api.com/dayone/country/south-africa'
-  }
-
-  async getPopulation() {
-    const url = 'https://restcountries.eu/rest/v2/all?fields=name;population';
-    const response = await fetch(url);
-    const population = await response.json();
-    this.setState({ population });
+    if (this.state.currentPeopleValue === 1) {
+      const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
+      const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
+      if (population) {
+        const keyPrefix = this.state.currentPeriod === 0 ? 'Total' : 'New';
+        const keys = Object.keys(this.state.params);
+        const res = {};
+        keys.map((key) => res[`${keyPrefix}${key}`] = (countryData[`${keyPrefix}${key}`] / population * 100_000).toFixed(2));
+        this.setState({ statisticValues: res});
+      }
+    } else if (this.state.currentPeopleValue === 0) {
+      this.setState({ statisticValues: countryData });
+    }*/
   }
 
   updateStatisticData() {
@@ -146,6 +168,19 @@ export default class App extends React.Component {
     }
   }
 
+  async loadCountryChartData() {
+    const url = `${this.state.url}dayone/country/${this.state.country.Slug}/status/${this.state.selectedParam.appKey.toLowerCase()}`;
+    const response = await fetch(url);
+    return await response.json();
+  }
+
+  async loadPopulation() {
+    const url = 'https://restcountries.eu/rest/v2/all?fields=name;population';
+    const response = await fetch(url);
+    const population = await response.json();
+    this.setState({ population });
+  }
+
   async loadWorldData(){
     // const path = 'world';
     // const endDate = new Date();
@@ -154,8 +189,9 @@ export default class App extends React.Component {
     const response = await fetch(url);
     const worldData = await response.json();*/
     const date = startDate;
+    const paramKey = this.state.selectedParam.dataKey;
     const worldData = worldGraphData
-      .sort((a, b) => a.TotalConfirmed - b.TotalConfirmed)
+      .sort((a, b) => a[paramKey] - b[paramKey])
       .map(el => {
         el.date = new Date(date.getTime());
         date.setDate(date.getDate() + 1);
@@ -166,7 +202,7 @@ export default class App extends React.Component {
       graphValues: worldData.map(el => {
         return {
           x: el.date,
-          y: el[this.state.selectedParam.dataKey],
+          y: el[paramKey],
         };
       }),
     });
@@ -190,7 +226,7 @@ export default class App extends React.Component {
   componentDidMount() {
     this.loadSummary();
     this.loadWorldData();
-    this.getPopulation();
+    this.loadPopulation();
   }
 
   render() {
@@ -238,7 +274,7 @@ export default class App extends React.Component {
             />
           </div>
           <div className="col-6">
-            map
+            <Map />
           </div>
           <div className="col-4">
             <div className="row">
