@@ -139,15 +139,18 @@ export default class App extends React.Component {
       chartData.then(el => console.log(el));
     } else if (typeof this.state.country === 'string') {
       chartData = JSON.parse(JSON.stringify(this.state.worldChartData));
-      console.log(paramKey);
+      const date = new Date(Date.parse(chartData[0].date));
       this.setState({
         graphValues: chartData
           .sort((a, b) => a[paramKey] - b[paramKey])
           .map(el => {
-            return {
+            el.date = new Date(date.getTime());
+            const chartVal = {
               x: el.date,
               y: el[paramKey],
             };
+            date.setDate(date.getDate() + 1);
+            return chartVal;
           }),
       })
     }/*
