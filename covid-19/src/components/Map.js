@@ -7,7 +7,6 @@ export default class Map extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      mapUpdates: 0,
       colors:{
         none: {
           color: '#4a83ec',
@@ -56,7 +55,7 @@ export default class Map extends React.Component {
     const layer = e.layer;
     const toolTipVal = `
       <h5>${layer.feature.properties.name}</h5>
-      <h6>${layer.feature.properties.cases} ${layer.feature.properties.paramName}</h6>
+      <h6>${layer.feature.properties.cases || ''} ${layer.feature.properties.paramName || ''}</h6>
     `;
     layer.bindTooltip(toolTipVal).openTooltip();
     layer.feature.geometry.style = {
@@ -87,6 +86,7 @@ export default class Map extends React.Component {
       const currentScaleName = flow[scaleParamIdx];
       const previousScaleName = flow[scaleParamIdx - 1];
       if(scaleParamIdx === 0 && cases < scaleValues.none) return this.state.colors.none;
+      if(scaleParamIdx === flow.length - 1 && cases >= scaleValues.high) return this.state.colors.high;
       if(scaleValues[previousScaleName] > cases && cases <= scaleValues[currentScaleName]) return this.state.colors[currentScaleName];
     }
     return {
@@ -98,12 +98,31 @@ export default class Map extends React.Component {
   }
 
   getGeoJson() {
+    const countryNames = {
+      'United States': 'United States of America',
+      'Czech Rep.': 'Czech Republic',
+      'Bosnia and Herz.': 'Bosnia and Herzegovina',
+      'W. Sahara': 'Western Sahara',
+      'S. Sudan': 'South Sudan',
+      'Central African Rep.': 'Central African Republic',
+      'Eq. Guinea': 'Equatorial Guinea',
+      'São Tomé and Principe': 'Sao Tome and Principe',
+      'Congo': 'Congo (Brazzaville)',
+      'Dem. Rep. Congo': 'Congo (Kinshasa)',
+      'Falkland Is.': 'Falkland Islands (Malvinas)',
+      'Korea': 'Korea (North)',
+      'Dem. Rep. Korea': 'Korea (South)',
+      'Solomon Is.': 'Solomon Islands',
+    };
+    const countryNamesArr = Object.keys(countryNames);
     if(!Array.isArray(this.props.markers) || this.props.markers.length === 0){
       return WorldData;
     }
     WorldData.features.forEach(feature => {
       const marker = this.props.markers.find(marker => {
-        const propName = feature.properties.name;
+        let propName = countryNamesArr.includes(feature.properties.name)
+          ? countryNames[feature.properties.name]
+          : feature.properties.name;
         const slugEquals = marker.countrySlug.toLowerCase() === propName.toLowerCase();
         const nameEquals = marker.countryName.toLowerCase() === propName.toLowerCase();
         return slugEquals || nameEquals;
@@ -112,13 +131,7 @@ export default class Map extends React.Component {
       feature.properties.cases = marker.value;
       feature.properties.paramName = marker.paramName;
     });
-    //this.mapUpdate();
     return WorldData;
-  }
-
-  mapUpdate() {
-    const mapUpdates = this.state.mapUpdates + 1;
-    this.setState({ mapUpdates });
   }
 
   render() {

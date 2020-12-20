@@ -123,9 +123,9 @@ export default class App extends React.Component {
       high: 0, // 30%
     };
     const onePercent = (minMaxCases.max - minMaxCases.min) / 100;
-    values.none = minMaxCases.min + onePercent * 10;
-    values.low = minMaxCases.min + onePercent * 40;
-    values.medium = minMaxCases.min + onePercent * 70;
+    values.none = Math.floor(minMaxCases.min + onePercent * 10);
+    values.low = Math.round(minMaxCases.min + onePercent * 40);
+    values.medium = Math.round(minMaxCases.min + onePercent * 70);
     values.high = minMaxCases.max;
     return values;
   }
@@ -137,11 +137,12 @@ export default class App extends React.Component {
       max: 0,
     };
     const mapData = localCountries.map(country => {
-      const cases = country[this.state.selectedParam.dataKey];
+      let cases = country[this.state.selectedParam.dataKey];
+      cases = this.state.currentPeopleValue === 1 ? this.per100(country.Country, cases) : cases
       if (cases < minMaxCases.min) minMaxCases.min = cases;
       if (cases > minMaxCases.max) minMaxCases.max = cases;
       const marker = {
-        value: this.state.currentPeopleValue === 1 ? this.per100(country.Country, cases) : cases,
+        value: cases,
         countryName: country.Country,
         countrySlug: country.Slug,
         paramName: this.state.selectedParam.name,
