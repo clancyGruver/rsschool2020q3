@@ -5,7 +5,7 @@ import Chart from './components/Chart';
 import Statistics from './components/Statistics';
 import Map from './components/Map';
 
-import summaryData from './data/summary';
+// import summaryData from './data/summary';
 import worldGraphData from './data/worldGraph';
 
 
@@ -36,7 +36,7 @@ export default class App extends React.Component {
         },
       },
       currentPeopleValue:0,
-      countries: null,
+      countries: [],
       covidData: null,
       country: 'Весь мир',
       statisticValues: null,
@@ -55,7 +55,12 @@ export default class App extends React.Component {
       date: new Date(),
       graphValues: [],
       worldGraphData: [],
-    }
+      mapData: [],
+      minMaxCases: {
+        min: Number.POSITIVE_INFINITY,
+        max: Number.NEGATIVE_INFINITY,
+      },
+    };
     this.updateCountry = this.updateCountry.bind(this);
     this.setShowingParam = this.setShowingParam.bind(this);
     this.peopleChange = this.peopleChange.bind(this);
@@ -73,7 +78,12 @@ export default class App extends React.Component {
     this.setShowingParam(this.state.selectedParam.appKey);
   }
 
-  updateCountry(country) {
+  updateCountry(countryName) {
+    const country = this.state.countries.find(country => {
+      const slugEquals = country.Slug.toLowerCase() === countryName.toLowerCase();
+      const nameEquals = country.Country.toLowerCase() === countryName.toLowerCase();
+      return slugEquals || nameEquals;
+    }) || 'Весь мир';
     this.setState({ country }, () => this.updateData());
   }
 
@@ -93,11 +103,37 @@ export default class App extends React.Component {
     this.updateChartData();
   }
 
+  updateMapData() {
+    //NewConfirmed":217,"TotalConfirmed":49378,"NewDeaths":14,"TotalDeaths":2025,"NewRecovered":30,"TotalRecovered":38505,
+    const localCountries = this.state.countries;
+    const minMaxCases = {
+      max: Number.POSITIVE_INFINITY,
+      min: Number.NEGATIVE_INFINITY,
+    };
+    const mapData = localCountries.map(country => {
+      /*const countryFetchedData = this.loadCountryChartData(country.Slug);
+      countryFetchedData.then( countryData => {
+      });*/
+      const cases = country[this.state.selectedParam.dataKey];
+      if (cases < minMaxCases.min) minMaxCases.min = cases;
+      if (cases > minMaxCases.max) minMaxCases.max = cases;
+      const marker = {
+        value: cases,
+        countryName: country.Country,
+        countrySlug: country.Slug,
+        paramName: this.state.selectedParam.name,
+      };
+      this.state.population.find((el) => el.name === this.state.country.Country);
+      return marker;
+    });
+    this.setState({ mapData, minMaxCases })
+  }
+
   updateChartData() {
     let chartData = null;
     const paramKey = this.state.selectedParam.dataKey;
     if (typeof this.state.country === 'object') {
-      chartData = this.loadCountryChartData();
+      chartData = this.loadCountryChartData(this.state.country.Slug);
       chartData.then(el => console.log(el));
       /*
         {
@@ -168,8 +204,8 @@ export default class App extends React.Component {
     }
   }
 
-  async loadCountryChartData() {
-    const url = `${this.state.url}dayone/country/${this.state.country.Slug}/status/${this.state.selectedParam.appKey.toLowerCase()}`;
+  async loadCountryChartData(slug) {
+    const url = `${this.state.url}dayone/country/${slug}/status/${this.state.selectedParam.appKey.toLowerCase()}`;
     const response = await fetch(url);
     return await response.json();
   }
@@ -209,12 +245,9 @@ export default class App extends React.Component {
   }
 
   async loadSummary() {
-    // TODO: remove local summary data
-    /*
     const url = `${this.state.url}summary`;
     const response = await fetch(url);
     const summaryData = await response.json();
-    */
     this.setState({
       summaryData,
       statisticValues: summaryData.Global,
@@ -223,10 +256,11 @@ export default class App extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.loadSummary();
+  async componentDidMount() {
+    await this.loadSummary();
+    await this.loadPopulation();
+    this.updateMapData();
     this.loadWorldData();
-    this.loadPopulation();
   }
 
   render() {
@@ -274,7 +308,11 @@ export default class App extends React.Component {
             />
           </div>
           <div className="col-6">
-            <Map />
+            <Map
+              markers={this.state.mapData || this.state.countries}
+              updateCountry={this.updateCountry}
+              minMaxCases={this.minMaxCases}
+            />
           </div>
           <div className="col-4">
             <div className="row">

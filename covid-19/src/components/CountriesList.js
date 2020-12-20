@@ -9,7 +9,7 @@ export default class CountriesList extends React.Component {
     else 
       propSlug = '';
     if(el.Slug !== propSlug){
-      this.props.updateCountry(el);
+      this.props.updateCountry(el.Name);
     }
     else {
       this.props.updateCountry('Весь мир');
