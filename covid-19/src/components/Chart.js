@@ -1,9 +1,10 @@
 import React from 'react';
+import FullScreen from './FullScreen';
 import { Bar } from 'react-chartjs-2';
 
 export default class Chart extends React.Component {
   render() {
-    const chratData = {
+    const chartData = {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [
         {
@@ -45,6 +46,11 @@ export default class Chart extends React.Component {
       },
     }
 
-    return <Bar data={chratData} options={options} />
+    return (
+      <div>
+        <FullScreen />
+        <Bar data={chartData} options={options} />
+      </div>
+    )
   }
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { GeoJSON, MapContainer, CircleMarker, Tooltip } from 'react-leaflet';
 import WorldData from 'geojson-world-map';
+// import MapLegend from './MapLegend';
+
 import 'leaflet/dist/leaflet.css';
 
 export default class Map extends React.Component {
