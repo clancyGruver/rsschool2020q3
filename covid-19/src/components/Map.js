@@ -146,7 +146,11 @@ export default class Map extends React.Component {
   render() {
     const containerStyle = {height: '100%'};
     return (
-      <MapContainer center={[51.505, -0.09]} zoom={3} style={containerStyle}>
+      <MapContainer
+        center={[51.505, -0.09]}
+        zoom={0}
+        style={containerStyle}
+      >
         <GeoJSON
           data={this.getGeoJson()}
           style={(e) => this.featureStyle(e)}
