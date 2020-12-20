@@ -46,6 +46,8 @@ export default class Countries extends React.Component {
           selectedCountry={this.props.selectedCountry}
           selectedParam={this.props.selectedParam}
           updateCountry={this.props.updateCountry}
+          per100={this.props.per100}
+          per100Fn={this.props.per100Fn}
         />
       </div>
     );

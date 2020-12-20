@@ -32,7 +32,11 @@ export default class CountriesList extends React.Component {
           {el.Country}
           &nbsp;
           <span className="text-danger">
-            {el[this.props.selectedParam.dataKey]}
+            {
+              this.props.per100
+                ? this.props.per100Fn(el.Country, el[this.props.selectedParam.dataKey])
+                : el[this.props.selectedParam.dataKey]
+            }
           </span>
         </h6>
       </li>;

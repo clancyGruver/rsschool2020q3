@@ -65,6 +65,7 @@ export default class App extends React.Component {
     this.setShowingParam = this.setShowingParam.bind(this);
     this.peopleChange = this.peopleChange.bind(this);
     this.periodChange = this.periodChange.bind(this);
+    this.per100 = this.per100.bind(this);
   }
 
   peopleChange() {
@@ -103,24 +104,27 @@ export default class App extends React.Component {
   updateData() {
     this.updateStatisticData();
     this.updateChartData();
+    this.updateMapData();
+  }
+
+  per100(countryName, cases) {
+    const peopleCount = this.state.population.find((el) => el.name === countryName);
+    const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
+    return (cases / population * 100_000).toFixed(2);
   }
 
   updateMapData() {
-    //NewConfirmed":217,"TotalConfirmed":49378,"NewDeaths":14,"TotalDeaths":2025,"NewRecovered":30,"TotalRecovered":38505,
     const localCountries = this.state.countries;
     const minMaxCases = {
       max: Number.POSITIVE_INFINITY,
       min: Number.NEGATIVE_INFINITY,
     };
     const mapData = localCountries.map(country => {
-      /*const countryFetchedData = this.loadCountryChartData(country.Slug);
-      countryFetchedData.then( countryData => {
-      });*/
       const cases = country[this.state.selectedParam.dataKey];
       if (cases < minMaxCases.min) minMaxCases.min = cases;
       if (cases > minMaxCases.max) minMaxCases.max = cases;
       const marker = {
-        value: cases,
+        value: this.state.currentPeopleValue === 1 ? this.per100(country.Country, cases) : cases,
         countryName: country.Country,
         countrySlug: country.Slug,
         paramName: this.state.selectedParam.name,
@@ -180,15 +184,15 @@ export default class App extends React.Component {
     }
     this.setState({ date: new Date(countryData.Date) });
     if (this.state.currentPeopleValue === 1) {
-      const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
-      const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
-      if (population) {
-        const keyPrefix = this.state.currentPeriod === 0 ? 'Total' : 'New';
-        const keys = Object.keys(this.state.params);
-        const res = {};
-        keys.map((key) => res[`${keyPrefix}${key}`] = (countryData[`${keyPrefix}${key}`] / population * 100_000).toFixed(2));
-        this.setState({ statisticValues: res});
-      }
+      const keyPrefix = this.state.currentPeriod === 0 ? 'Total' : 'New';
+      const keys = Object.keys(this.state.params);
+      const res = {};
+      const countryName = this.state.country.Country;
+      keys.forEach((key) => {
+        const cases = countryData[`${keyPrefix}${key}`];
+        res[`${keyPrefix}${key}`] = this.per100(countryName, cases);
+      });
+      this.setState({ statisticValues: res});
     } else if (this.state.currentPeopleValue === 0) {
       this.setState({ statisticValues: countryData });
     }
@@ -295,6 +299,8 @@ export default class App extends React.Component {
               selectedCountry={this.state.country}
               selectedParam={this.state.selectedParam}
               updateCountry={this.updateCountry}
+              per100={this.state.currentPeopleValue}
+              per100Fn={this.per100}
             />
           </div>
           <div className="col-6">
