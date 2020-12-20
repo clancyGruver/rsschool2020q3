@@ -56,9 +56,11 @@ export default class App extends React.Component {
       graphValues: [],
       worldChartData: [],
       mapData: [],
-      minMaxCases: {
-        min: Number.POSITIVE_INFINITY,
-        max: Number.NEGATIVE_INFINITY,
+      scaleValues: {
+        none: 0, // 10%
+        low: 0, // 30%
+        medium: 0, //30%
+        high: 0, // 30%
       },
     };
     this.updateCountry = this.updateCountry.bind(this);
@@ -113,11 +115,26 @@ export default class App extends React.Component {
     return (cases / population * 100_000).toFixed(2);
   }
 
+  getCaseValues(minMaxCases) {
+    const values = {
+      none: 0, // 10%
+      low: 0, // 30%
+      medium: 0, //30%
+      high: 0, // 30%
+    };
+    const onePercent = (minMaxCases.max - minMaxCases.min) / 100;
+    values.none = minMaxCases.min + onePercent * 10;
+    values.low = minMaxCases.min + onePercent * 40;
+    values.medium = minMaxCases.min + onePercent * 70;
+    values.high = minMaxCases.max;
+    return values;
+  }
+
   updateMapData() {
     const localCountries = this.state.countries;
     const minMaxCases = {
-      max: Number.POSITIVE_INFINITY,
-      min: Number.NEGATIVE_INFINITY,
+      min: 0,
+      max: 0,
     };
     const mapData = localCountries.map(country => {
       const cases = country[this.state.selectedParam.dataKey];
@@ -132,7 +149,11 @@ export default class App extends React.Component {
       this.state.population.find((el) => el.name === this.state.country.Country);
       return marker;
     });
-    this.setState({ mapData, minMaxCases })
+
+    this.setState({
+      mapData,
+      scaleValues: this.getCaseValues(minMaxCases),
+    })
   }
 
   updateChartData() {
@@ -307,7 +328,7 @@ export default class App extends React.Component {
             <Map
               markers={this.state.mapData || this.state.countries}
               updateCountry={this.updateCountry}
-              minMaxCases={this.minMaxCases}
+              scaleValues={this.state.scaleValues}
             />
           </div>
           <div className="col-4">

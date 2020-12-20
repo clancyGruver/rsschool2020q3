@@ -34,12 +34,6 @@ export default class Map extends React.Component {
           fillOpacity: 1,
         },
       },
-      scaleValues: {
-        none: 0, // 10%
-        low: 0, // 30%
-        medium: 0, //30%
-        high: 0, // 30%
-      },
     };
   }
 
@@ -87,7 +81,7 @@ export default class Map extends React.Component {
 
   featureStyle(feature) {
     const flow = [ 'none', 'low', 'medium', 'high'];
-    const scaleValues = this.state.scaleValues;
+    const scaleValues = this.props.scaleValues;
     for(let scaleParamIdx = 0; scaleParamIdx < flow.length; scaleParamIdx++) {
       const cases = feature.properties.cases;
       const currentScaleName = flow[scaleParamIdx];
@@ -118,24 +112,8 @@ export default class Map extends React.Component {
       feature.properties.cases = marker.value;
       feature.properties.paramName = marker.paramName;
     });
-    this.setCaseValues();
+    //this.mapUpdate();
     return WorldData;
-  }
-
-  setCaseValues() {
-    const values = {
-      none: 0, // 10%
-      low: 0, // 30%
-      medium: 0, //30%
-      high: 0, // 30%
-    };
-    if (!this.props.minMaxCases) return;
-    const onePercent = (this.props.minMaxCases.max - this.props.minMaxCases.min) / 100;
-    values.none = this.props.minMaxCases.min + onePercent * 10;
-    values.low = this.props.minMaxCases.min + onePercent * 40;
-    values.medium = this.props.minMaxCases.min + onePercent * 70;
-    values.high = this.props.minMaxCases.max;
-    this.setState({ scaleValues: values });
   }
 
   mapUpdate() {
@@ -155,6 +133,7 @@ export default class Map extends React.Component {
           data={this.getGeoJson()}
           style={(e) => this.featureStyle(e)}
           eventHandlers={this.mapHandlers()}
+          key={`_${Math.random().toString(36).substr(2, 9)}`}
         >
         </GeoJSON>
       </MapContainer>
