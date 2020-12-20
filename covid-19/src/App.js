@@ -6,7 +6,7 @@ import Statistics from './components/Statistics';
 import Map from './components/Map';
 
 // import summaryData from './data/summary';
-import worldGraphData from './data/worldGraph';
+import worldChartData from './data/worldGraph';
 
 
 export default class App extends React.Component {
@@ -54,7 +54,7 @@ export default class App extends React.Component {
       peopleVal: 'abs',
       date: new Date(),
       graphValues: [],
-      worldGraphData: [],
+      worldChartData: [],
       mapData: [],
       minMaxCases: {
         min: Number.POSITIVE_INFINITY,
@@ -74,8 +74,10 @@ export default class App extends React.Component {
 
   periodChange() {
     const currentPeriod = Number(!Boolean(this.state.currentPeriod));
-    this.setState({ currentPeriod }, () => this.updateData());
-    this.setShowingParam(this.state.selectedParam.appKey);
+    this.setState({ currentPeriod }, () => {
+      this.setShowingParam(this.state.selectedParam.appKey);
+      this.updateData()
+    });
   }
 
   updateCountry(countryName) {
@@ -135,24 +137,9 @@ export default class App extends React.Component {
     if (typeof this.state.country === 'object') {
       chartData = this.loadCountryChartData(this.state.country.Slug);
       chartData.then(el => console.log(el));
-      /*
-        {
-          Active: 1
-          City: ""
-          CityCode: ""
-          Confirmed: 1
-          Country: "India"
-          CountryCode: "IN"
-          Date: "2020-01-30T00:00:00Z"
-          Deaths: 0
-          Lat: "20.59"
-          Lon: "78.96"
-          Province: ""
-          Recovered: 0
-        }
-      */
     } else if (typeof this.state.country === 'string') {
-      chartData = this.state.worldGraphData;
+      chartData = JSON.parse(JSON.stringify(this.state.worldChartData));
+      console.log(paramKey);
       this.setState({
         graphValues: chartData
           .sort((a, b) => a[paramKey] - b[paramKey])
@@ -226,7 +213,7 @@ export default class App extends React.Component {
     const worldData = await response.json();*/
     const date = startDate;
     const paramKey = this.state.selectedParam.dataKey;
-    const worldData = worldGraphData
+    const worldData = worldChartData
       .sort((a, b) => a[paramKey] - b[paramKey])
       .map(el => {
         el.date = new Date(date.getTime());
@@ -234,7 +221,7 @@ export default class App extends React.Component {
         return el;
       });
     this.setState({
-      worldGraphData: worldData,
+      worldChartData: worldData,
       graphValues: worldData.map(el => {
         return {
           x: el.date,
@@ -246,7 +233,7 @@ export default class App extends React.Component {
 
   async loadSummary() {
     const url = `${this.state.url}summary`;
-    const response = await fetch(url);
+    const response = await fetch(url, {mode: 'cors',});
     const summaryData = await response.json();
     this.setState({
       summaryData,
