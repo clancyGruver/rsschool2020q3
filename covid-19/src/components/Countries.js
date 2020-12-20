@@ -14,7 +14,15 @@ export default class Countries extends React.Component {
   sortData() {
     const key = this.props.selectedParam.dataKey;
     const sortParam = key ? key : this.props.selectedParam.key;
-    const sortFn = (a, b) => b[sortParam] - a[sortParam];
+    const sortFn = (a, b) => {
+      const aVal = this.props.per100
+        ? this.props.per100Fn(a.Country, a[sortParam])
+        : a[sortParam];
+      const bVal = this.props.per100
+        ? this.props.per100Fn(b.Country, b[sortParam])
+        : b[sortParam];
+      return bVal - aVal;
+    };
     const data = this.props.data.sort(sortFn);
     return data.filter((el) => el.Country.toLowerCase().includes(this.state.searchString));
   }
