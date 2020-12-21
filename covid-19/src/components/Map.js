@@ -1,7 +1,7 @@
 import React from 'react';
-import { GeoJSON, MapContainer, CircleMarker, Tooltip } from 'react-leaflet';
+import { GeoJSON, MapContainer } from 'react-leaflet';
 import WorldData from 'geojson-world-map';
-// import MapLegend from './MapLegend';
+import MapLegend from './MapLegend';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -36,21 +36,6 @@ export default class Map extends React.Component {
         },
       },
     };
-  }
-
-  markers() {
-    if (this.props.markers) {
-      return this.props.markers.map(marker => (
-        <CircleMarker
-          center={marker.coords}
-          radius={marker.radius}
-        >
-          <Tooltip>{marker.countryName}: {marker.value} {marker.paramName}</Tooltip>
-        </CircleMarker>
-        ));
-    } else {
-      return null;
-    }
   }
 
   tooltipShow(e) {
@@ -151,6 +136,7 @@ export default class Map extends React.Component {
           key={`_${Math.random().toString(36).substr(2, 9)}`}
         >
         </GeoJSON>
+        <MapLegend />
       </MapContainer>
     );
   }

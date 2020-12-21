@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
-import L from "leaflet";
+import { useEffect } from 'react';
+import { useMap } from 'react-leaflet';
+import L from 'leaflet';
 
 const getColor = d => {
   if(d === 10) return '#008500';
@@ -9,37 +10,37 @@ const getColor = d => {
 };
 
 const MapLegend = () => {
-  const mapRef = useRef();
+  const map = useMap();
 
   useEffect(() => {
     const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = () => {
-      const div = L.DomUtil.create('div', 'legend');
+      const div = L.DomUtil.create('div', 'info legend');
       const grades = [0, 10, 40, 70, 100];
       let labels = [];
       let from;
       let to;
 
-      for (let i = 0; i < grades.length; i++) {
+      for (let i = 0; i < grades.length - 1; i++) {
         from = grades[i];
         to = grades[i + 1];
 
         labels.push(
           '<i style="background:' +
-            getColor(from + 1) +
+            getColor(to) +
             '"></i> ' +
             from +
-            (to ? "&ndash;" + to : "+")
+            "&ndash;" +
+            to +
+            '%'
         );
       }
 
       div.innerHTML = labels.join("<br>");
       return div;
     }
-    legend.addTo(mapRef.current);
-
-    return legend.remove();
+    legend.addTo(map);
   }, []);
   return null;
 }

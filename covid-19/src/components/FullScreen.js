@@ -14,12 +14,12 @@ export default class FullScreen extends React.Component {
     const isFullScreen = !this.state.isFullScreen;
     this.setState({ isFullScreen });
   }
+  // {}this.state.isFullScreen
+  // : <minimize onClick={this.clickHandler} />
   
   render() {
     return (
-      {}this.state.isFullScreen
-      ? <fullScreen onClick={this.clickHandler} />
-      : <minimize onClick={this.clickHandler} />
+      <fullScreen onClick={this.clickHandler} />
     );
   }
 }
