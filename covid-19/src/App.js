@@ -157,14 +157,16 @@ export default class App extends React.Component {
     })
   }
 
-  updateChartData() {
+  async updateChartData() {
     let chartData = null;
     const paramKey = this.state.selectedParam.dataKey;
     if (typeof this.state.country === 'object') {
-      chartData = this.loadCountryChartData(this.state.country.Slug);
-      chartData.then(el => console.log(el));
+      chartData = await this.loadCountryChartData(this.state.country.Slug);
     } else if (typeof this.state.country === 'string') {
       chartData = JSON.parse(JSON.stringify(this.state.worldChartData));
+    }
+    if(chartData.length !== 0 && chartData[0].date) {
+      console.log(chartData[0]);
       const date = new Date(Date.parse(chartData[0].date));
       this.setState({
         graphValues: chartData
@@ -179,8 +181,8 @@ export default class App extends React.Component {
             return chartVal;
           }),
       })
-    }/*
-
+    }
+/*
     if (this.state.currentPeopleValue === 1) {
       const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
       const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
@@ -223,7 +225,13 @@ export default class App extends React.Component {
   async loadCountryChartData(slug) {
     const url = `${this.state.url}dayone/country/${slug}/status/${this.state.selectedParam.appKey.toLowerCase()}`;
     const response = await fetch(url);
-    return await response.json();
+    const result = await response.json();
+    if (this.state.currentPeriod === 0) return result;
+    return result.map((el, idx) => {
+      if (idx === 0) return el;
+      el.Cases = el.Cases = result[idx - 1].Cases;
+      return el;
+    })
   }
 
   async loadPopulation() {
@@ -341,10 +349,12 @@ export default class App extends React.Component {
                 period={this.state.periods[this.state.currentPeriod].name}
               />
             </div>
-            <div className="row"><Chart
-              values={this.state.graphValues}
-              label={this.state.selectedParam.name}
-            /></div>
+            <div className="row">
+              <Chart
+                values={this.state.graphValues}
+                label={this.state.selectedParam.name}
+              />
+            </div>
           </div>
         </div>
       </div>

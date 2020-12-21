@@ -41,7 +41,7 @@ const MapLegend = () => {
       return div;
     }
     legend.addTo(map);
-  }, []);
+  }, [map]);
   return null;
 }
 

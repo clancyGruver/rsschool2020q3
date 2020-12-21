@@ -1,6 +1,6 @@
 import React from 'react';
-import fullScreen from '../assets/images/full-screen.svg';
-import minimize from '../assets/images/minimize.svg';
+import Full from '../assets/images/full-screen.svg';
+// import minimize from '../assets/images/minimize.svg';
 
 export default class FullScreen extends React.Component {
   constructor(props){
@@ -19,7 +19,7 @@ export default class FullScreen extends React.Component {
   
   render() {
     return (
-      <fullScreen onClick={this.clickHandler} />
+      <Full onClick={this.clickHandler} />
     );
   }
 }
