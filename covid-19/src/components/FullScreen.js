@@ -1,5 +1,5 @@
 import React from 'react';
-import Full from '../assets/images/full-screen.svg';
+// import Full from '../assets/images/full-screen.svg';
 // import minimize from '../assets/images/minimize.svg';
 
 export default class FullScreen extends React.Component {
@@ -19,7 +19,8 @@ export default class FullScreen extends React.Component {
   
   render() {
     return (
-      <Full onClick={this.clickHandler} />
+      // <Full onClick={this.clickHandler} />
+      <p>fixme</p>
     );
   }
 }

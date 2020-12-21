@@ -159,29 +159,33 @@ export default class App extends React.Component {
 
   async updateChartData() {
     let chartData = null;
-    const paramKey = this.state.selectedParam.dataKey;
+    let paramKey = null;
+    let sortFunction = null;
     if (typeof this.state.country === 'object') {
       chartData = await this.loadCountryChartData(this.state.country.Slug);
+      paramKey = 'Cases';
+      sortFunction = (a, b) => new Date(Date.parse(a.Date)) - new Date(Date.parse(b.Date));
     } else if (typeof this.state.country === 'string') {
       chartData = JSON.parse(JSON.stringify(this.state.worldChartData));
+      paramKey = this.state.selectedParam.dataKey;
+      sortFunction = (a, b) => a[paramKey] - b[paramKey];
     }
-    if(chartData.length !== 0 && chartData[0].date) {
-      console.log(chartData[0]);
-      const date = new Date(Date.parse(chartData[0].date));
-      this.setState({
-        graphValues: chartData
-          .sort((a, b) => a[paramKey] - b[paramKey])
-          .map(el => {
-            el.date = new Date(date.getTime());
-            const chartVal = {
-              x: el.date,
-              y: el[paramKey],
-            };
-            date.setDate(date.getDate() + 1);
-            return chartVal;
-          }),
-      })
-    }
+    
+    console.log(chartData);
+    const date = new Date(Date.parse(chartData[0].Date));
+    this.setState({
+      graphValues: chartData
+        .sort(sortFunction)
+        .map(el => {
+          el.date = new Date(date.getTime());
+          const chartVal = {
+            x: el.date,
+            y: el[paramKey],
+          };
+          date.setDate(date.getDate() + 1);
+          return chartVal;
+        }),
+    })
 /*
     if (this.state.currentPeopleValue === 1) {
       const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
@@ -223,14 +227,19 @@ export default class App extends React.Component {
   }
 
   async loadCountryChartData(slug) {
-    const url = `${this.state.url}dayone/country/${slug}/status/${this.state.selectedParam.appKey.toLowerCase()}`;
+    const url = `${this.state.url}dayone/country/${slug}/status/${this.state.selectedParam.appKey.toLowerCase()}, {mode: 'cors',}`;
     const response = await fetch(url);
     const result = await response.json();
     if (this.state.currentPeriod === 0) return result;
     return result.map((el, idx) => {
-      if (idx === 0) return el;
-      el.Cases = el.Cases = result[idx - 1].Cases;
-      return el;
+      const res = {
+        Date: el.Date,
+        Cases: el.Cases,
+      };
+      if (idx === 0) return res;
+      console.log(res.Cases, result[idx - 1].Cases)
+      res.Cases = res.Cases - result[idx - 1].Cases;
+      return res;
     })
   }
 
