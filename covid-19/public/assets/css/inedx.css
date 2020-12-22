@@ -3,6 +3,8 @@
   z-index: 1001;
   background-color: white;
   width: 98%;
+  left: 10px;
+  top: 17vh;
 }
 
 .info {
