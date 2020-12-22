@@ -170,38 +170,30 @@ export default class App extends React.Component {
       paramKey = this.state.selectedParam.dataKey;
       sortFunction = (a, b) => a[paramKey] - b[paramKey];
     }
+
+    let peopleCount = null;
+    let population = null;
+    if (this.state.currentPeopleValue === 1) {
+      peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
+      population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
+    }
     
-    console.log(chartData);
-    const date = new Date(Date.parse(chartData[0].Date));
+    const date = new Date(Date.parse(chartData[0].Date || chartData[0].date));
+    const to100 = (cases) => (cases / population * 100_000).toFixed(2);
     this.setState({
       graphValues: chartData
         .sort(sortFunction)
         .map(el => {
-          el.date = new Date(date.getTime());
           const chartVal = {
-            x: el.date,
-            y: el[paramKey],
+            x: new Date(date.getTime()),
+            y: this.state.currentPeopleValue === 0 ? el[paramKey] : to100(el[paramKey]),
           };
           date.setDate(date.getDate() + 1);
           return chartVal;
         }),
     })
-/*
-    if (this.state.currentPeopleValue === 1) {
-      const peopleCount = this.state.population.find((el) => el.name === this.state.country.Country);
-      const population = peopleCount ? peopleCount.population : 7.8 * (10 ** 9);
-      if (population) {
-        const keyPrefix = this.state.currentPeriod === 0 ? 'Total' : 'New';
-        const keys = Object.keys(this.state.params);
-        const res = {};
-        keys.map((key) => res[`${keyPrefix}${key}`] = (countryData[`${keyPrefix}${key}`] / population * 100_000).toFixed(2));
-        this.setState({ statisticValues: res});
-      }
-    } else if (this.state.currentPeopleValue === 0) {
-      this.setState({ statisticValues: countryData });
-    }*/
   }
-
+  
   updateStatisticData() {
     let countryData = null;
     if (typeof this.state.country === 'object') { 
@@ -227,8 +219,8 @@ export default class App extends React.Component {
   }
 
   async loadCountryChartData(slug) {
-    const url = `${this.state.url}dayone/country/${slug}/status/${this.state.selectedParam.appKey.toLowerCase()}, {mode: 'cors',}`;
-    const response = await fetch(url);
+    const url = `${this.state.url}dayone/country/${slug}/status/${this.state.selectedParam.appKey.toLowerCase()}`;
+    const response = await fetch(url, {mode: 'cors',});
     const result = await response.json();
     if (this.state.currentPeriod === 0) return result;
     return result.map((el, idx) => {
@@ -237,7 +229,6 @@ export default class App extends React.Component {
         Cases: el.Cases,
       };
       if (idx === 0) return res;
-      console.log(res.Cases, result[idx - 1].Cases)
       res.Cases = res.Cases - result[idx - 1].Cases;
       return res;
     })
@@ -245,7 +236,7 @@ export default class App extends React.Component {
 
   async loadPopulation() {
     const url = 'https://restcountries.eu/rest/v2/all?fields=name;population';
-    const response = await fetch(url);
+    const response = await fetch(url, {mode: 'cors',});
     const population = await response.json();
     this.setState({ population });
   }
