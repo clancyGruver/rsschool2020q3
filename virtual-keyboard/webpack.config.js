@@ -6,8 +6,8 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
   entry: [
-    './src/js/main.js',
-    './src/scss/main.scss',
+    './js/main.js',
+    './css/main.scss',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -30,6 +30,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties'],
           },
         },
       },

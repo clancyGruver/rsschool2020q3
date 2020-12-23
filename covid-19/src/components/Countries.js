@@ -2,7 +2,6 @@ import React from 'react';
 import CountriesList from './CountriesList';
 import Style from '../styles/Countries.module.css';
 import FullScreen from './FullScreen';
-
 export default class Countries extends React.Component {
   constructor(props) {
     super(props);

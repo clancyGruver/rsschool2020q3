@@ -13,6 +13,3 @@ const lang = get('kbLang', '"ru"');
 
 const keyboard = new Keyboard(rowsOrder);
 keyboard.init(lang).generateLayout();
-
-const output = document.querySelector('.keyboard-input');
-output.addEventListener('focus', () => keyboard.show());
