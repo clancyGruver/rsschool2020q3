@@ -1,4 +1,5 @@
 import React from 'react';
+import FullScreen from './FullScreen';
 
 export default class Statistics extends React.Component {
   constructor(props) {
@@ -27,9 +28,12 @@ export default class Statistics extends React.Component {
   }
 
   render() {
-    return <div>
-      <h4>Статистика {this.props.country.Country || this.props.country}</h4>
-      {this.statisticTable()}
-    </div>;
+    return (
+      <div className="col">
+        <FullScreen />
+        <h4>Статистика {this.props.country.Country || this.props.country}</h4>
+        {this.statisticTable()}
+      </div>
+    );
   }
 }

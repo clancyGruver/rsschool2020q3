@@ -2,6 +2,7 @@ import React from 'react';
 import { GeoJSON, MapContainer } from 'react-leaflet';
 import WorldData from 'geojson-world-map';
 import MapLegend from './MapLegend';
+import FullScreen from './FullScreen';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -122,22 +123,31 @@ export default class Map extends React.Component {
   }
 
   render() {
-    const containerStyle = {height: '100%'};
+    const containerStyle = {
+      height: '100%',
+      position: 'relative',
+      minHeight: '65vh',
+      width: '100%',
+    };
+
     return (
-      <MapContainer
-        center={[51.505, -0.09]}
-        zoom={0}
-        style={containerStyle}
-      >
-        <GeoJSON
-          data={this.getGeoJson()}
-          style={(e) => this.featureStyle(e)}
-          eventHandlers={this.mapHandlers()}
-          key={`_${Math.random().toString(36).substr(2, 9)}`}
+      <>
+        <FullScreen />
+        <MapContainer
+          center={[51.505, -0.09]}
+          zoom={0}
+          style={containerStyle}
         >
-        </GeoJSON>
-        <MapLegend />
-      </MapContainer>
+          <GeoJSON
+            data={this.getGeoJson()}
+            style={(e) => this.featureStyle(e)}
+            eventHandlers={this.mapHandlers()}
+            key={`_${Math.random().toString(36).substr(2, 9)}`}
+          >
+          </GeoJSON>
+          <MapLegend />
+        </MapContainer>
+      </>
     );
   }
 }

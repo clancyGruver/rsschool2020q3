@@ -4,7 +4,9 @@
   background-color: white;
   width: 98%;
   left: 10px;
-  top: 17vh;
+  top: 13vh;
+  border: 2px solid darkgray;
+  border-radius: 10px;
 }
 
 .info {
@@ -33,4 +35,15 @@
   float: left;
   margin-right: 8px;
   opacity: 0.7;
+}
+
+@media (min-width: 500px) {
+  .full-screen {
+    top: 16vh;
+  }
+}
+@media (min-width: 1000px) {
+  .full-screen {
+    top: 13vh;
+  }
 }

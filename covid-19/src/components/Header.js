@@ -25,10 +25,10 @@ export default class Header extends React.Component {
       <header className={`${Style.headerCustom} header bg-light d-flex justify-content-center align-items-center`}>
         <div className="container row">
           <div className="name col">
-            <h1 className="text-uppercase">
+            <h2 className="text-uppercase">
                 <img src={icon} alt="covid-19 dashboard icon" className={Style.icon} />
                 {this.state.name}
-            </h1>
+            </h2>
             <h6>По состоянию на {this.formatDate()}</h6>
           </div>
           <div className="col d-flex flex-column align-items-end">

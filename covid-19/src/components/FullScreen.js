@@ -7,29 +7,51 @@ export default class FullScreen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      isFullScreen: true,
+      isFullScreen: false,
       rowElement: null,
+      className: null,
     }
   }
 
   clickHandler(e) {
-    const isFullScreen = !this.state.isFullScreen;
-    this.setState({ isFullScreen });
-    const rowElement = e.target.closest('.row');
-    this.setState({ rowElement }, this.changeClass());
+    if(!this.state.rowElement) {
+      let rowElement = null;
+      let className = null;
+      if(e.target.closest('.col-2')){
+        rowElement = e.target.closest('.col-2');
+        className = 'col-2';
+      } else if(e.target.closest('.col-6')) {
+        rowElement = e.target.closest('.col-6');
+        className = 'col-6';
+      } else if(e.target.closest('.row')) {
+        rowElement = e.target.closest('.row');
+        className = 'row';
+      }
+      this.setState({
+        rowElement,
+        className,
+       }, this.changeClass());
+    } else {
+      this.changeClass();
+    }
   }
 
   changeClass(){
     if(this.state.rowElement) {
-      this.state.rowElement.classList.toggle('row');
+      this.state.rowElement.classList.toggle(this.state.className);
+      if(this.state.className.startsWith('col')){
+        this.state.rowElement.classList.toggle('position-relative');
+      }
       this.state.rowElement.classList.toggle('full-screen');
+      const isFullScreen = !this.state.isFullScreen;
+      this.setState({ isFullScreen });
     }
   }
 
   render() {
     const el = this.state.isFullScreen ?
-      <img src={ToFullScreen} alt="to full screen" className={Style.icon} onClick={(e)=>this.clickHandler(e)} /> :
-      <img src={Minimize} alt="minimize screen" className={Style.icon} onClick={(e)=>this.clickHandler(e)} />
+      <img src={Minimize} alt="minimize screen" className={Style.icon} onClick={(e)=>this.clickHandler(e)} /> :
+      <img src={ToFullScreen} alt="to full screen" className={Style.icon} onClick={(e)=>this.clickHandler(e)} />;
     return el;
   }
 }

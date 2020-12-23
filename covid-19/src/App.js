@@ -324,7 +324,7 @@ export default class App extends React.Component {
           />
         </div>
         <div className="row">
-          <div className="col-2">
+          <div className="col-2 position-relative">
             <Countries
               data={this.state.summaryData && this.state.summaryData.Countries ? this.state.summaryData.Countries : emptyCountries}
               selectedCountry={this.state.country}
@@ -334,7 +334,7 @@ export default class App extends React.Component {
               per100Fn={this.per100}
             />
           </div>
-          <div className="col-6">
+          <div className="col-6 position-relative">
             <Map
               markers={this.state.mapData || this.state.countries}
               updateCountry={this.updateCountry}
