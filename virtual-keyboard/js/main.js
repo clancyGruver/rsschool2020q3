@@ -13,3 +13,5 @@ const lang = get('kbLang', '"ru"');
 
 const keyboard = new Keyboard(rowsOrder);
 keyboard.init(lang).generateLayout();
+
+export default keyboard;
