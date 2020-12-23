@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/css/main.e2d198b7.chunk.css",
+    "main.js": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/main.fe80a8d6.chunk.js",
+    "main.js.map": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/main.fe80a8d6.chunk.js.map",
+    "runtime-main.js": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/runtime-main.1067f640.js",
+    "runtime-main.js.map": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/runtime-main.1067f640.js.map",
+    "static/css/2.fa524fad.chunk.css": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/css/2.fa524fad.chunk.css",
+    "static/js/2.8841f356.chunk.js": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/2.8841f356.chunk.js",
+    "static/js/2.8841f356.chunk.js.map": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/2.8841f356.chunk.js.map",
+    "index.html": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/index.html",
+    "static/css/2.fa524fad.chunk.css.map": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/css/2.fa524fad.chunk.css.map",
+    "static/css/main.e2d198b7.chunk.css.map": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/css/main.e2d198b7.chunk.css.map",
+    "static/js/2.8841f356.chunk.js.LICENSE.txt": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/js/2.8841f356.chunk.js.LICENSE.txt",
+    "static/media/icon.a7e866c1.png": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/media/icon.a7e866c1.png",
+    "static/media/iconmonstr-github-1.04be58c1.svg": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/media/iconmonstr-github-1.04be58c1.svg",
+    "static/media/minimize.3a0d61f7.svg": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/media/minimize.3a0d61f7.svg",
+    "static/media/rs_school_js.ad178c0d.svg": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/media/rs_school_js.ad178c0d.svg",
+    "static/media/tofullscreen.cd04df6c.svg": "/rolling-scopes-school/clancygruver-JS2020Q3/tree/covid-19/static/media/tofullscreen.cd04df6c.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1067f640.js",
+    "static/css/2.fa524fad.chunk.css",
+    "static/js/2.8841f356.chunk.js",
+    "static/css/main.e2d198b7.chunk.css",
+    "static/js/main.fe80a8d6.chunk.js"
+  ]
+}
