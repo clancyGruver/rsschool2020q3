@@ -60,7 +60,7 @@ export default class Countries extends React.Component {
             per100Fn={this.props.per100Fn}
           />
         </div>
-      </>      
+      </>
     );
   }
 }

@@ -243,15 +243,15 @@ export default class App extends React.Component {
   }
 
   async loadWorldData(){
-    // const path = 'world';
-    // const endDate = new Date();
+    const path = 'world';
+    const endDate = new Date();
     const startDate = new Date(2020, 3, 14);
-    /*const url = `${this.state.url}${path}?from=${startDate.toISOString()}&to=${endDate.toISOString()}`;
-    const response = await fetch(url);
-    const worldData = await response.json();*/
+    const url = `${this.state.url}${path}?from=${startDate.toISOString()}&to=${endDate.toISOString()}`;
+    const response = await fetch(url, {mode: 'cors',});
+    let worldData = await response.json();
     const date = startDate;
     const paramKey = this.state.selectedParam.dataKey;
-    const worldData = worldChartData
+    worldData = worldData
       .sort((a, b) => a[paramKey] - b[paramKey])
       .map(el => {
         el.date = new Date(date.getTime());
