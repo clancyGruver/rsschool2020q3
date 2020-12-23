@@ -1,0 +1,27 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 60px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 100%;
+  padding: 20px 0;
+  font-size: 20px;
+}
+
+.link {
+  list-style-type: none;
+}
+
+.githubImg {
+  width: 50px;
+}
+
+.rssImg {
+  width: 100px;
+}

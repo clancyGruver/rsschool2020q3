@@ -4,6 +4,7 @@ import Countries from './components/Countries';
 import Chart from './components/Chart';
 import Statistics from './components/Statistics';
 import Map from './components/Map';
+import Footer from './components/Footer';
 
 // import summaryData from './data/summary';
 import worldChartData from './data/worldGraph';
@@ -356,6 +357,9 @@ export default class App extends React.Component {
               />
             </div>
           </div>
+        </div>
+        <div className="row">
+          <Footer />
         </div>
       </div>
     )
